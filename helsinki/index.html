@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f6fbff">
+<title>Helsinki 1.5 Days · Travel Timeline</title>
+<style>
+:root{
+  --bg:#f5f9fc; --card:#ffffff; --text:#172033; --muted:#8690a3;
+  --blue:#69aef5; --blue-soft:#eaf4ff; --mint:#72cdbf; --mint-soft:#eaf8f4;
+  --peach:#fff0e8; --lav:#f2efff; --green:#eef8f2; --shadow:0 12px 30px rgba(75,110,140,.09);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Noto Sans KR","Segoe UI",sans-serif;color:var(--text);
+background:radial-gradient(circle at 0 0,rgba(116,202,191,.13),transparent 24rem),radial-gradient(circle at 100% 20%,rgba(105,174,245,.11),transparent 22rem),var(--bg)}
+a{color:inherit;text-decoration:none}
+.wrapper{width:min(100%,980px);margin:0 auto;padding:34px 18px 60px}
+.hero{background:rgba(255,255,255,.82);border:1px solid rgba(255,255,255,.95);box-shadow:var(--shadow);border-radius:32px;padding:26px 24px 22px;margin-bottom:22px}
+.eyebrow{font-size:12px;letter-spacing:.45em;color:#7ca8d7;text-align:center;margin-bottom:12px}
+h1{margin:0;text-align:center;font-size:clamp(27px,5vw,43px);line-height:1.18;letter-spacing:-.035em}
+.subtitle{text-align:center;color:#697487;margin-top:9px;font-size:15px}
+.pills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:18px}
+.pill{padding:9px 13px;background:#eef6ff;border-radius:999px;color:#4d82b7;font-size:13px;font-weight:700}
+.note{display:flex;align-items:flex-start;gap:10px;margin-top:17px;padding:12px 14px;border-radius:18px;background:#f7fbff;color:#6d788b;font-size:13px;line-height:1.55}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.day{background:rgba(255,255,255,.68);border:1px solid rgba(255,255,255,.9);box-shadow:var(--shadow);border-radius:30px;overflow:hidden}
+.day-header{display:flex;justify-content:space-between;align-items:center;padding:20px 20px 17px}
+.day.one .day-header{background:linear-gradient(90deg,#dceeff,#eef6ff)}
+.day.two .day-header{background:linear-gradient(90deg,#dcf3eb,#eefaf6)}
+.day-title{font-weight:850;font-size:22px;letter-spacing:-.02em}
+.day-label{font-size:10px;letter-spacing:.2em;color:#6d879d;text-transform:uppercase}
+.timeline{position:relative;padding:12px 14px 20px 42px}
+.timeline:before{content:"";position:absolute;left:22px;top:25px;bottom:27px;width:2px;background:linear-gradient(var(--blue),#cbd9e5);opacity:.75}
+.day.two .timeline:before{background:linear-gradient(var(--mint),#cbd9e5)}
+.event{position:relative;display:block;background:var(--card);border-radius:22px;padding:16px;margin:0 0 14px;border:1px solid rgba(220,230,239,.75);box-shadow:0 8px 20px rgba(60,80,110,.055);transition:.18s ease}
+.event.link:hover{transform:translateY(-2px);box-shadow:0 13px 26px rgba(60,80,110,.10)}
+.event:before{content:"";position:absolute;width:11px;height:11px;border-radius:50%;left:-26px;top:24px;background:#fff;border:3px solid var(--blue);box-shadow:0 0 0 4px var(--bg)}
+.day.two .event:before{border-color:var(--mint)}
+.row{display:grid;grid-template-columns:72px 40px 1fr auto;gap:10px;align-items:start}
+.time{font-size:14px;font-weight:850;color:#38455a;line-height:1.3}
+.icon{width:38px;height:38px;display:grid;place-items:center;border-radius:14px;background:var(--blue-soft);font-size:20px}
+.day.two .icon{background:var(--mint-soft)}
+.title{font-size:16px;font-weight:850;letter-spacing:-.02em;line-height:1.35}
+.korean{font-size:12px;color:#6f7a8c;font-weight:700;margin-left:3px}
+.desc{margin-top:4px;color:var(--muted);font-size:13px;line-height:1.55}
+.menu{margin-top:8px;padding:9px 10px;border-radius:14px;background:#f8fafc;font-size:12px;line-height:1.6;color:#596679}
+.cost{display:inline-block;margin-top:7px;padding:5px 8px;border-radius:999px;background:#edf4ff;color:#4f79a8;font-size:11px;font-weight:800}
+.out{font-size:16px;color:#7ea1c5;line-height:1;padding-top:2px}
+.food{background:linear-gradient(180deg,#fff,#fffaf7)} .food .icon{background:var(--peach)}
+.shop .icon{background:var(--green)} .culture .icon{background:#eef2ff} .rest .icon{background:var(--lav)}
+.transport{margin:-4px 0 12px;display:flex;align-items:center;justify-content:center;color:#668093;font-size:12px;text-align:center}
+.transport span{background:#eef5f8;padding:7px 10px;border-radius:999px}
+.section-foot{padding:0 18px 20px}
+.tip{background:#f7fbfd;border-radius:20px;padding:13px 15px;color:#617185;font-size:12.5px;line-height:1.55}
+.choice-wrap{margin:8px 0 14px}
+.choice-title{font-size:12px;font-weight:850;color:#697789;margin:0 0 8px 4px}
+.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.choice{position:relative;background:#fff;border-radius:18px;padding:13px;border:1px solid #e4edf2;box-shadow:0 6px 16px rgba(60,80,110,.04)}
+.choice .ctitle{font-size:14px;font-weight:850;line-height:1.4}
+.choice .cmeta{font-size:11.5px;color:#738095;line-height:1.55;margin-top:6px}
+.choice .ccost{font-size:11px;font-weight:800;color:#4f79a8;margin-top:7px}
+.choice a{display:block}
+.links-panel{margin-top:18px;background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.95);box-shadow:var(--shadow);border-radius:28px;padding:20px}
+.links-panel h2{margin:0 0 13px;font-size:18px}
+.quick{display:flex;flex-wrap:wrap;gap:9px}
+.quick a{padding:10px 12px;border-radius:14px;background:#f3f7fb;font-size:13px;font-weight:750}
+.footer{text-align:center;margin-top:24px;color:#8a95a5;font-size:11px;letter-spacing:.12em}
+.source{margin-top:16px;color:#8a95a5;font-size:10.5px;line-height:1.55}
+
+.option-switch{
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;
+  margin:14px 14px 8px 42px;padding:6px;
+  background:#eef4f8;border-radius:18px;
+}
+.option-btn{
+  appearance:none;border:0;border-radius:14px;padding:11px 10px;
+  background:transparent;color:#738095;font-weight:850;font-size:12px;
+  cursor:pointer;transition:.18s ease;
+}
+.option-btn.active{
+  background:#fff;color:#355f8d;box-shadow:0 6px 16px rgba(60,80,110,.08);
+}
+.option-panel{display:none}
+.option-panel.active{display:block}
+.option-caption{
+  margin:0 14px 12px 42px;padding:11px 13px;border-radius:16px;
+  background:#f7fbff;color:#65758a;font-size:12px;line-height:1.55;
+}
+.option-caption strong{color:#355f8d}
+
+@media(max-width:760px){
+  .wrapper{padding:18px 12px 40px} .grid{grid-template-columns:1fr} .hero{padding:22px 17px 18px;border-radius:26px}
+  .row{grid-template-columns:66px 38px 1fr auto;gap:8px} .event{padding:15px 13px} .timeline{padding-left:39px}
+  .timeline:before{left:20px} .event:before{left:-25px} .choice-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body><div style="width:min(100%,980px);margin:0 auto;padding:14px 18px 0"><a href="../" style="display:inline-flex;padding:9px 12px;border-radius:14px;background:#eef5fb;color:#547da5;font:800 13px -apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;text-decoration:none">← 도시 선택</a></div>
+<div class="wrapper">
+<section class="hero">
+<div class="eyebrow">H E L S I N K I</div>
+<h1>헬싱키 1.5일 여행 타임라인</h1>
+<div class="subtitle">9/24(목)–9/25(금) · Scandic Helsinki Station 기준</div>
+<div class="pills">
+<span class="pill">Suomenlinna</span><span class="pill">Moomin</span><span class="pill">Oodi</span><span class="pill">Design District</span><span class="pill">HSL ABC 2일권</span>
+</div>
+<div class="note">💶 가격은 현재 공개 메뉴 기준의 대략값. 한화는 2026-09-22 기준 <b>€1 ≈ ₩1,559</b>로 환산했어요. 실제 결제액·메뉴는 변동 가능.</div>
+</section>
+
+<main class="grid">
+
+
+<section class="day one">
+<header class="day-header"><div class="day-title">DAY 1 · 9/24 (목)</div><div class="day-label">Choose your morning</div></header>
+
+<div class="option-switch">
+  <button class="option-btn active" id="btn-a" onclick="showOption('a')">🧖🏻‍♀️ A · Allas에서 씻기</button>
+  <button class="option-btn" id="btn-b" onclick="showOption('b')">🪥 B · 공항에서 간단 정리</button>
+</div>
+
+<div class="option-caption" id="cap-a"><strong>A안 추천:</strong> 샤워 + 사우나로 장거리 비행 꼬질함 제거 후 수오멘린나. 대신 오전 일정이 약 45~60분 늦어져요.</div>
+<div class="option-caption" id="cap-b" style="display:none"><strong>B안 추천:</strong> 공항에서 세수·양치·환복만 하고 바로 관광. 더 빠르고 저렴하지만 개운함은 덜해요.</div>
+
+<div class="option-panel active" id="panel-a">
+<div class="timeline">
+
+<a class="event link" href="https://www.google.com/maps/search/?api=1&query=Helsinki+Airport" target="_blank" rel="noopener">
+<div class="row"><div class="time">05:30</div><div class="icon">✈️</div><div><div class="title">헬싱키-반타 공항 도착</div><div class="desc">입국 · 수하물 찾기</div></div><div class="out">↗</div></div>
+</a>
+
+<div class="event rest">
+<div class="row"><div class="time">06:40<br>~07:00</div><div class="icon">🪥</div><div><div class="title">공항에서 1차 정리</div><div class="desc">양치 · 세수 · 렌즈 · 편한 옷으로 환복</div></div><div></div></div>
+</div>
+
+<div class="transport"><span>🚆 공항 → 중앙역 기차 I/P · 약 35분</span></div>
+
+<a class="event link" href="https://www.google.com/maps/search/?api=1&query=Scandic+Helsinki+Station" target="_blank" rel="noopener">
+<div class="row"><div class="time">07:45<br>~08:00</div><div class="icon">🧳</div><div><div class="title">Scandic Helsinki Station</div><div class="desc">짐 맡기기 · 얼리 체크인 가능 여부 확인</div></div><div class="out">↗</div></div>
+</a>
+
+<div class="transport"><span>🚶 호텔 → Café Engel 약 10~15분</span></div>
+
+<a class="event link food" href="https://maps.app.goo.gl/ZuQgTXyD382uWHJk7" target="_blank" rel="noopener">
+<div class="row"><div class="time">08:05<br>~08:45</div><div class="icon">🥐</div><div>
+<div class="title">Café Engel <span class="korean">(카페 엥겔)</span></div>
+<div class="desc">첫 아침은 가볍고 느긋하게</div>
+<div class="menu">추천: Engel Breakfast / French Breakfast / Eggs & Bacon Breakfast · 각 €18.20</div>
+<span class="cost">1인 약 €18.20 (약 28,400원)</span>
+</div><div class="out">↗</div></div>
+</a>
+
+<div class="transport"><span>🚶 Café Engel → Allas 약 7~10분</span></div>
+
+<a class="event link rest" href="https://www.google.com/maps/search/?api=1&query=Allas+Pool+Helsinki" target="_blank" rel="noopener">
+<div class="row"><div class="time">09:00<br>~10:00</div><div class="icon">🧖🏻‍♀️</div><div>
+<div class="title">Allas Pool · 샤워 & 사우나</div>
+<div class="desc">씻고 머리 정리하고 몸 풀기. 수건은 직접 챙기면 절약.</div>
+<div class="menu">9/24 평일 09:00~14:00 프로모션 이용 시 입장 €10 예상</div>
+<span class="cost">약 €10 (약 15,600원) · 수건 대여 시 추가비용</span>
+</div><div class="out">↗</div></div>
+</a>
+
+<div class="transport"><span>🚶 Allas → Market Square 약 3~5분 · 페리 약 15분</span></div>
+
+<a class="event link" href="https://www.google.com/maps/search/?api=1&query=Suomenlinna+Helsinki" target="_blank" rel="noopener">
+<div class="row"><div class="time">10:15<br>~13:30</div><div class="icon">⛴️</div><div><div class="title">수오멘린나</div><div class="desc">페리 이동 + 섬 산책 · 풍경 위주</div><span class="cost">HSL ABC 2일권에 페리 포함</span></div><div class="out">↗</div></div>
+</a>
+
+<div class="transport"><span>⛴️ 섬 → Market Square 약 15분 · 식당까지 도보 5분 안팎</span></div>
+
+<a class="event link food" href="https://maps.app.goo.gl/fngdEqCC1hp7Ka8GA" target="_blank" rel="noopener">
+<div class="row"><div class="time">13:45<br>~15:15</div><div class="icon">🍺</div><div>
+<div class="title">Helsinki Bryggeri Brewhouse <span class="korean">(헬싱키 브뤼게리 브루하우스)</span></div>
+<div class="desc">현지 브루어리에서 넉넉한 점심</div>
+<div class="menu">추천: 크리미 연어수프 €22.90 · 순록 미트볼 €23.90 · Fish & Chips €25.90</div>
+<span class="cost">메인 1인 약 €23~26 (약 35,900~40,500원)</span>
+</div><div class="out">↗</div></div>
+</a>
+
+<div class="transport"><span>🚶 점심 → Esplanadi 쇼핑 약 5~10분</span></div>
+
+<a class="event link shop" href="https://www.google.com/maps/search/?api=1&query=Moomin+Arabia+Store+Esplanadi+Helsinki" target="_blank" rel="noopener">
+<div class="row"><div class="time">15:15<br>~16:15</div><div class="icon">🛍️</div><div><div class="title">Moomin Arabia + Esplanadi 쇼핑</div><div class="desc">무민 머그 · 식기 · 로컬 기념품 위주. 쇼핑은 이날 집중.</div></div><div class="out">↗</div></div>
+</a>
+
+<div class="transport"><span>🚶 호텔까지 약 15분 · 약 1km</span></div>
+
+<a class="event link rest" href="https://www.google.com/maps/search/?api=1&query=Scandic+Helsinki+Station" target="_blank" rel="noopener">
+<div class="row"><div class="time">16:30<br>~18:00</div><div class="icon">🛏️</div><div><div class="title">호텔 체크인 · 제대로 휴식</div><div class="desc">짐 풀기 · 샤워 필요하면 추가로 · 잠깐 눕기</div></div><div class="out">↗</div></div>
+</a>
+
+<a class="event link food" href="https://maps.app.goo.gl/5vW9Pz7kw3jYVash6" target="_blank" rel="noopener">
+<div class="row"><div class="time">18:30<br>~20:00</div><div class="icon">🐟</div><div>
+<div class="title">Fisken på Disken <span class="korean">(피스켄 포 디스켄)</span></div>
+<div class="desc">18:30 예약 · 해산물 디너</div>
+<div class="menu">연어수프 €25 · Fish & Chips €26 · 흰살생선 €34 · 해산물 파에야 €39</div>
+<span class="cost">메인 1인 약 €25~39 (약 39,000~60,800원)</span>
+</div><div class="out">↗</div></div>
+</a>
+
+<div class="event rest">
+<div class="row"><div class="time">20:00<br>이후</div><div class="icon">🌙</div><div><div class="title">자유시간</div><div class="desc">Allas를 오전에 갔으니 밤 사우나는 생략 가능. 산책이나 일찍 쉬기.</div></div><div></div></div>
+</div>
+
+</div>
+</div>
+
+<div class="option-panel" id="panel-b">
+<div class="timeline">
+
+<a class="event link" href="https://www.google.com/maps/search/?api=1&query=Helsinki+Airport" target="_blank" rel="noopener">
+<div class="row"><div class="time">05:30</div><div class="icon">✈️</div><div><div class="title">헬싱키-반타 공항 도착</div><div class="desc">입국 · 수하물 찾기</div></div><div class="out">↗</div></div>
+</a>
+
+<div class="event rest">
+<div class="row"><div class="time">06:40<br>~07:05</div><div class="icon">🪥</div><div><div class="title">공항에서 최대한 정리</div><div class="desc">양치 · 세수 · 렌즈 · 스킨케어 · 환복. 전신 샤워는 포기.</div></div><div></div></div>
+</div>
+
+<div class="transport"><span>🚆 공항 → 중앙역 기차 I/P · 약 35분</span></div>
+
+<a class="event link" href="https://www.google.com/maps/search/?api=1&query=Scandic+Helsinki+Station" target="_blank" rel="noopener">
+<div class="row"><div class="time">07:50<br>~08:05</div><div class="icon">🧳</div><div><div class="title">Scandic Helsinki Station</div><div class="desc">짐 맡기기 · 얼리 체크인 가능 여부 확인</div></div><div class="out">↗</div></div>
+</a>
+
+<div class="transport"><span>🚶 중앙역 → Café Engel 약 10~15분</span></div>
+
+<a class="event link food" href="https://maps.app.goo.gl/ZuQgTXyD382uWHJk7" target="_blank" rel="noopener">
+<div class="row"><div class="time">08:15<br>~09:00</div><div class="icon">🥐</div><div>
+<div class="title">Café Engel <span class="korean">(카페 엥겔)</span></div>
+<div class="desc">첫 끼 + 비행 피로 풀기</div>
+<div class="menu">추천: Engel Breakfast / French Breakfast / Eggs & Bacon Breakfast · 각 €18.20</div>
+<span class="cost">1인 약 €18.20 (약 28,400원)</span>
+</div><div class="out">↗</div></div>
+</a>
+
+<div class="transport"><span>🚶 카페 → Market Square 약 5~10분 · 페리 약 15분</span></div>
+
+<a class="event link" href="https://www.google.com/maps/search/?api=1&query=Suomenlinna+Helsinki" target="_blank" rel="noopener">
+<div class="row"><div class="time">09:30<br>~12:45</div><div class="icon">⛴️</div><div><div class="title">수오멘린나</div><div class="desc">A안보다 약 45분 일찍 시작. 섬에서 조금 더 여유.</div><span class="cost">추가 샤워비 없음</span></div><div class="out">↗</div></div>
+</a>
+
+<div class="transport"><span>⛴️ 섬 → Market Square 약 15분 · 식당까지 도보 5분 안팎</span></div>
+
+<a class="event link food" href="https://maps.app.goo.gl/fngdEqCC1hp7Ka8GA" target="_blank" rel="noopener">
+<div class="row"><div class="time">13:00<br>~14:30</div><div class="icon">🍺</div><div>
+<div class="title">Helsinki Bryggeri Brewhouse <span class="korean">(헬싱키 브뤼게리 브루하우스)</span></div>
+<div class="desc">여유 점심</div>
+<div class="menu">크리미 연어수프 €22.90 · 순록 미트볼 €23.90 · Fish & Chips €25.90</div>
+<span class="cost">메인 1인 약 €23~26 (약 35,900~40,500원)</span>
+</div><div class="out">↗</div></div>
+</a>
+
+<div class="transport"><span>🚶 점심 → Esplanadi 쇼핑 약 5~10분</span></div>
+
+<a class="event link shop" href="https://www.google.com/maps/search/?api=1&query=Moomin+Arabia+Store+Esplanadi+Helsinki" target="_blank" rel="noopener">
+<div class="row"><div class="time">14:30<br>~16:00</div><div class="icon">🛍️</div><div><div class="title">Moomin Arabia + Esplanadi 쇼핑</div><div class="desc">A안보다 쇼핑 시간이 조금 더 넉넉.</div></div><div class="out">↗</div></div>
+</a>
+
+<div class="transport"><span>🚶 호텔까지 약 15분</span></div>
+
+<a class="event link rest" href="https://www.google.com/maps/search/?api=1&query=Scandic+Helsinki+Station" target="_blank" rel="noopener">
+<div class="row"><div class="time">16:15<br>~18:00</div><div class="icon">🚿</div><div><div class="title">호텔 체크인 · 드디어 샤워</div><div class="desc">제대로 씻고 휴식. B안의 핵심 보상 구간ㅋㅋ</div></div><div class="out">↗</div></div>
+</a>
+
+<a class="event link food" href="https://maps.app.goo.gl/5vW9Pz7kw3jYVash6" target="_blank" rel="noopener">
+<div class="row"><div class="time">18:30<br>~20:00</div><div class="icon">🐟</div><div>
+<div class="title">Fisken på Disken <span class="korean">(피스켄 포 디스켄)</span></div>
+<div class="desc">18:30 예약 · 해산물 디너</div>
+<div class="menu">연어수프 €25 · Fish & Chips €26 · 흰살생선 €34 · 해산물 파에야 €39</div>
+<span class="cost">메인 1인 약 €25~39 (약 39,000~60,800원)</span>
+</div><div class="out">↗</div></div>
+</a>
+
+<div class="event rest">
+<div class="row"><div class="time">20:00<br>이후</div><div class="icon">🌙</div><div><div class="title">자유시간</div><div class="desc">컨디션 따라 산책 · 카페 · 일찍 취침.</div></div><div></div></div>
+</div>
+
+</div>
+</div>
+
+<div class="section-foot"><div class="tip">💡 <b>결론:</b> €10 할인 가능하면 A안이 편안함 면에서 우세. “나는 여행 시간 1시간이 더 중요하다”면 B안. 두 버튼을 눌러 현장에서 바로 바꿔도 돼.</div></div>
+</section>
+
+<section class="day two">
+<header class="day-header"><div class="day-title">DAY 2 · 9/25 (금)</div><div class="day-label">Run · Architecture · Slow Day</div></header>
+<div class="timeline">
+
+<a class="event link rest" href="https://www.google.com/maps/search/?api=1&query=Töölönlahti+Bay+Helsinki" target="_blank" rel="noopener">
+<div class="row"><div class="time">06:30<br>~07:15</div><div class="icon">🏃🏻‍♀️</div><div>
+<div class="title">아침 조깅</div>
+<div class="desc">호텔 → Oodi 주변 → Töölönlahti 만 한 바퀴 → 호텔 복귀</div>
+<span class="cost">약 4~5km · 35~45분 느긋하게</span>
+</div><div class="out">↗</div></div>
+</a>
+
+<div class="transport"><span>🚿 호텔 복귀 · 샤워하고 천천히 조식</span></div>
+
+<div class="event food">
+<div class="row"><div class="time">07:30<br>~08:40</div><div class="icon">☕</div><div>
+<div class="title">호텔 조식</div>
+<div class="desc">러닝 후 제대로 먹고 쉬기</div>
+</div><div></div></div>
+</div>
+
+<div class="event rest">
+<div class="row"><div class="time">08:40<br>~09:30</div><div class="icon">🧳</div><div>
+<div class="title">샤워 · 짐 정리 · 여유 체크아웃</div>
+<div class="desc">서두르지 말고 준비. 체크아웃 후 짐은 호텔에 맡기기.</div>
+</div><div></div></div>
+</div>
+
+<a class="event link" href="https://www.google.com/maps/search/?api=1&query=Scandic+Helsinki+Station" target="_blank" rel="noopener">
+<div class="row"><div class="time">09:30</div><div class="icon">🧳</div><div>
+<div class="title">체크아웃 · 짐 맡기기</div>
+<div class="desc">이후 일정은 가볍게. 공항 가기 전에 짐만 픽업.</div>
+</div><div class="out">↗</div></div>
+</a>
+
+<div class="transport"><span>🚶 호텔 → Oodi 약 8~10분 · 약 0.6km</span></div>
+
+<a class="event link culture" href="https://www.google.com/maps/search/?api=1&query=Oodi+Helsinki+Central+Library" target="_blank" rel="noopener">
+<div class="row"><div class="time">09:40<br>~11:10</div><div class="icon">📚</div><div>
+<div class="title">Oodi Helsinki Central Library</div>
+<div class="desc">남친의 메인 코스. 1층 → 2층 → 3층 시민 발코니까지 천천히.</div>
+<span class="cost">입장 무료</span>
+</div><div class="out">↗</div></div>
+</a>
+
+<div class="transport"><span>🚋 / 🚶 Oodi → 박물관 약 15분</span></div>
+
+<a class="event link culture" href="https://www.google.com/maps/search/?api=1&query=Architecture+and+Design+Museum+Helsinki" target="_blank" rel="noopener">
+<div class="row"><div class="time">11:30<br>~12:50</div><div class="icon">🏛️</div><div>
+<div class="title">Architecture & Design Museum</div>
+<div class="desc">핀란드 디자인·건축 전시. 80분 정도만 보고 과밀 일정 금지.</div>
+<span class="cost">입장 €23</span>
+</div><div class="out">↗</div></div>
+</a>
+
+<div class="transport"><span>🚶 / 🚋 점심 후보로 이동 · 약 10~20분</span></div>
+
+<div class="choice-wrap">
+<div class="choice-title">13:05~14:05 · 점심은 둘 중 하나 🍔 / 🇰🇷</div>
+<div class="choice-grid">
+
+<div class="choice">
+<a href="https://maps.app.goo.gl/GU6aHSmL7hgXhXNV7" target="_blank" rel="noopener">
+<div class="ctitle">🍔 Shoku Burger Vuorikatu<br><span class="korean">(쇼쿠 버거 부오리카투)</span> ↗</div>
+<div class="cmeta">박물관에서 이동 약 15~20분 예상<br>식사 40~50분<br>호텔까지 도보 약 10분 안팎</div>
+<div class="menu">Shoku Burger €11.90 · Cheese €12.90 · Chili €13.90 · Chicken €13.50</div>
+<div class="ccost">버거 1인 약 €12~14</div>
+</a>
+</div>
+
+<div class="choice">
+<a href="https://maps.app.goo.gl/nXyguXS6ajAmbWcM7" target="_blank" rel="noopener">
+<div class="ctitle">🇰🇷 Ravintola Korea House<br><span class="korean">(라빈톨라 코리아 하우스)</span> ↗</div>
+<div class="cmeta">박물관에서 이동 약 15~20분 예상<br>식사 45~55분<br>호텔까지 도보/트램 약 10~15분</div>
+<div class="menu">두부비빔밥 €20.50 · 김치찌개 €21.50 · 양념치킨 €22 · 돼지불고기 €22.50</div>
+<div class="ccost">1인 약 €20.50~22.50</div>
+</a>
+</div>
+
+</div>
+</div>
+
+<div class="event rest">
+<div class="row"><div class="time">14:05<br>~14:35</div><div class="icon">🌿</div><div>
+<div class="title">마지막 자유 산책 · 카페 · 짧은 쇼핑</div>
+<div class="desc">무민/Design District 고정 일정 삭제. 그날 끌리면 Stockmann이나 주변만 잠깐.</div>
+</div><div></div></div>
+</div>
+
+<div class="transport"><span>🚶 / 🚋 호텔 복귀 · 약 10~15분</span></div>
+
+<a class="event link" href="https://www.google.com/maps/search/?api=1&query=Scandic+Helsinki+Station" target="_blank" rel="noopener">
+<div class="row"><div class="time">14:35<br>~14:50</div><div class="icon">🧳</div><div>
+<div class="title">호텔 복귀 · 짐 찾기</div>
+<div class="desc">체크아웃은 오전에 끝. 짐만 들고 중앙역으로.</div>
+</div><div class="out">↗</div></div>
+</a>
+
+<div class="transport"><span>🚆 중앙역 → HEL 공항 기차 I/P · 약 35분</span></div>
+
+<a class="event link" href="https://www.google.com/maps/search/?api=1&query=Helsinki+Airport" target="_blank" rel="noopener">
+<div class="row"><div class="time">15:00<br>~15:40</div><div class="icon">🚆</div><div>
+<div class="title">헬싱키 공항 이동</div>
+<div class="desc">출국 여유 시간 확보</div>
+<span class="cost">HSL ABC 2일권 사용</span>
+</div><div class="out">↗</div></div>
+</a>
+
+<div class="event">
+<div class="row"><div class="time">18:20</div><div class="icon">✈️</div><div>
+<div class="title">베를린 출발</div>
+<div class="desc">Finnair AY1437</div>
+</div><div></div></div>
+</div>
+
+</div>
+<div class="section-foot"><div class="tip">💡 둘째 날은 <b>조깅 → 조식 → 여유 체크아웃 → Oodi → 건축·디자인 박물관 → 점심</b>만 확실히. 쇼핑은 1일차에 충분히 하고, 남는 시간은 산책이나 카페로 비워뒀어.</div></div>
+</section>
+
+</main>
+
+<section class="links-panel">
+<h2>💶 대략적인 고정비 체크</h2>
+<div class="quick">
+<span>🚆 HSL ABC 2일권 €19.20 (약 29,900원)</span>
+<span>🏛️ Architecture & Design Museum €23 (약 35,900원)</span>
+<span>🥐 Café Engel 조식 약 €18.20 (약 28,400원)</span>
+<span>🍺 Bryggeri 점심 약 €23~26 (약 35,900원~약 40,500원)</span>
+<span>🐟 Fisken 저녁 메인 약 €25~39 (약 39,000원~약 60,800원)</span>
+</div>
+<div class="source">
+가격 메모: Café Engel, Helsinki Bryggeri Brewhouse, Fisken på Disken, Shoku Burger, Korea House의 현재 공개 메뉴를 기준으로 작성. 음료·추가 메뉴·서비스에 따라 실제 지출은 달라질 수 있음.
+</div>
+</section>
+
+<div class="footer">HELSINKI · A LITTLE HAPPIER EVERY DAY</div>
+</div>
+
+<script>
+function showOption(opt){
+  const a = document.getElementById('panel-a');
+  const b = document.getElementById('panel-b');
+  const ba = document.getElementById('btn-a');
+  const bb = document.getElementById('btn-b');
+  const ca = document.getElementById('cap-a');
+  const cb = document.getElementById('cap-b');
+  const isA = opt === 'a';
+  a.classList.toggle('active', isA);
+  b.classList.toggle('active', !isA);
+  ba.classList.toggle('active', isA);
+  bb.classList.toggle('active', !isA);
+  ca.style.display = isA ? 'block' : 'none';
+  cb.style.display = isA ? 'none' : 'block';
+  localStorage.setItem('helsinki-day1-option', opt);
+}
+document.addEventListener('DOMContentLoaded', function(){
+  const saved = localStorage.getItem('helsinki-day1-option');
+  if(saved === 'b') showOption('b');
+});
+</script>
+
+</body>
+</html>
