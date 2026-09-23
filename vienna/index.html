@@ -1,290 +1,213 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="ko"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f5f9fc"><meta name="apple-mobile-web-app-capable" content="yes">
-<title>Vienna · Europe Trip 2026</title><style>
-:root{--bg:#f5f9fc;--card:#fff;--text:#172033;--muted:#8490a3;--blue:#74aef4;--mint:#74ccb9;--peach:#fff0e8;--lav:#f2efff;--shadow:0 12px 30px rgba(68,92,120,.09)}
-*{box-sizing:border-box}html{scroll-behavior:smooth}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Noto Sans KR","Segoe UI",sans-serif;color:var(--text);background:radial-gradient(circle at 0 0,rgba(116,204,185,.13),transparent 26rem),radial-gradient(circle at 100% 15%,rgba(116,174,244,.12),transparent 24rem),var(--bg)}
-a{color:inherit;text-decoration:none}.wrap{width:min(100%,920px);margin:0 auto;padding:18px 14px 56px}
-.back{display:inline-flex;padding:9px 12px;border-radius:14px;background:#eef5fb;color:#557da5;font-size:13px;font-weight:800}
-.hero{margin-top:10px;background:rgba(255,255,255,.82);border-radius:30px;padding:25px 20px;box-shadow:var(--shadow);text-align:center}.hero h1{font-size:clamp(29px,6vw,45px);margin:10px 0 7px;letter-spacing:-.04em}.eyebrow{font-size:11px;letter-spacing:.42em;color:#7da7d6}.sub{color:#6f7a8c;font-size:14px}.chips{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}.chip{background:#eef6ff;color:#4f7faa;padding:8px 11px;border-radius:999px;font-size:12px;font-weight:800}.info{margin-top:14px;text-align:left;background:#f7fbff;border-radius:17px;padding:12px 14px;font-size:12.5px;color:#637386;line-height:1.6}
-.day{margin-top:18px;background:rgba(255,255,255,.72);border-radius:28px;box-shadow:var(--shadow);overflow:hidden}.dayhead{padding:19px 18px;font-size:21px;font-weight:900}.d1{background:linear-gradient(90deg,#dcecff,#eff7ff)}.d2{background:linear-gradient(90deg,#e2f4ef,#f0faf7)}.d3{background:linear-gradient(90deg,#f0eaff,#f7f3ff)}
-.timeline{position:relative;padding:14px 14px 22px 40px}.timeline:before{content:"";position:absolute;left:20px;top:25px;bottom:28px;width:2px;background:linear-gradient(var(--blue),#d2dde6)}
-.event{position:relative;display:block;background:#fff;border:1px solid #e8eef3;border-radius:21px;padding:15px 14px;margin-bottom:13px;box-shadow:0 7px 18px rgba(70,90,110,.05)}.event:before{content:"";position:absolute;width:10px;height:10px;left:-25px;top:23px;border-radius:50%;background:#fff;border:3px solid var(--blue);box-shadow:0 0 0 4px var(--bg)}
-.row{display:grid;grid-template-columns:66px 38px 1fr auto;gap:8px;align-items:start}.time{font-size:13px;font-weight:900;line-height:1.35}.ico{width:37px;height:37px;border-radius:13px;background:#edf5ff;display:grid;place-items:center;font-size:19px}.food .ico{background:var(--peach)}.rest .ico{background:var(--lav)}.shop .ico{background:#eef8f2}.title{font-size:15px;font-weight:900;line-height:1.35}.ko{font-size:12px;color:#758296;font-weight:750}.desc{margin-top:4px;font-size:12.5px;line-height:1.55;color:var(--muted)}.menu{margin-top:8px;padding:8px 9px;border-radius:13px;background:#f8fafc;font-size:11.5px;line-height:1.55;color:#5f6c7e}.cost{display:inline-block;margin-top:6px;padding:5px 8px;border-radius:999px;background:#eef5ff;color:#4e79a6;font-size:10.5px;font-weight:850}.move{margin:-4px 0 11px;text-align:center}.move span{display:inline-block;background:#edf4f7;color:#667f92;padding:7px 10px;border-radius:999px;font-size:11.5px}.move.transit-detail span,.move.transit-detail a{display:inline-block;max-width:96%;background:#edf4f7;color:#667f92;padding:9px 12px;border-radius:16px;font-size:11.2px;text-decoration:none;line-height:1.45}
-.move.transit-detail b{display:block;color:#526f83;font-size:11.7px}
-.move.transit-detail small{display:block;margin-top:3px;font-size:10.6px;color:#708596}
-.move.transit-detail em{font-style:normal;color:#4f7fa2;font-weight:800}.note{margin:0 16px 18px;padding:12px 14px;background:#f7fbfd;border-radius:18px;color:#617184;font-size:12px;line-height:1.55}
-.choice-title{margin:10px 0 8px;font-size:12px;font-weight:900;color:#68768a}.choice-grid{display:grid;grid-template-columns:1fr;gap:10px}.choice{background:#fff;border:1px solid #e7edf3;border-radius:18px;padding:13px}.choice h3{margin:0;font-size:15px}.choice p{font-size:12px;line-height:1.55;color:#748094;margin:6px 0}.choice a{display:block}.route{margin-top:18px;background:#fff;border-radius:24px;padding:18px;box-shadow:var(--shadow)}.route h2{margin:0 0 10px;font-size:18px}.footer{text-align:center;color:#98a2b0;font-size:10.5px;letter-spacing:.13em;margin-top:22px}
-@media(min-width:760px){.choice-grid{grid-template-columns:1fr 1fr}.row{grid-template-columns:75px 40px 1fr auto}}
-</style></head>
-<body><div class="wrap">
-<a class="back" href="../">← 도시 선택</a>
+<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<meta content="#f5f9fc" name="theme-color"/><meta content="yes" name="apple-mobile-web-app-capable"/>
+<title>Vienna · Europe Trip 2026</title><link href="../assets/timeline.css" rel="stylesheet"/></head>
+<body><div class="backbar"><a class="back" href="../">← 도시 선택</a></div><div class="wrapper">
 
 <section class="hero">
 <div class="eyebrow">V I E N N A · 2 0 2 6</div>
 <h1>비엔나 타임라인</h1>
-<div class="sub">9/30(수)–10/2(금) · Boutique Hotel Donauwalzer 기준</div>
-<div class="chips">
-<span class="chip">Belvedere</span><span class="chip">Schönbrunn</span><span class="chip">Hofburg</span><span class="chip">KHM</span><span class="chip">Figlmüller</span><span class="chip">Morning Run</span>
+<div class="subtitle">9/30(수)–10/2(금) · Boutique Hotel Donauwalzer 기준</div>
+<div class="pills">
+<span class="pill">Belvedere</span><span class="pill">Schönbrunn</span><span class="pill">Hofburg</span><span class="pill">KHM</span><span class="pill">Figlmüller</span><span class="pill">Morning Run</span>
 </div>
-<div class="info">🚆 9/30 Prague 09:01 → Wien Hbf 13:18 · 🚆 10/2 Wien Hbf 13:27 → Budapest. 운영시간·입장료는 여행 직전 공식 사이트에서 한 번 더 확인.</div>
+<div class="note">🚆 9/30 Prague 09:01 → Wien Hbf 13:18 · 🚆 10/2 Wien Hbf 13:27 → Budapest. 운영시간·입장료는 여행 직전 공식 사이트에서 한 번 더 확인.</div>
 </section>
-
-
-
-<section class="day">
-<div class="dayhead d1">DAY 1 · 9/30 (수) · HOTEL FIRST, BELVEDERE & ALBERTINA</div>
+<main class="grid"><section class="day one">
+<header class="day-header"><div class="day-title">DAY 1 · 9/30 (수)</div><div class="day-label"> · HOTEL FIRST, BELVEDERE &amp; ALBERTINA</div></header>
 <div class="timeline">
-
-<a class="event" href="https://www.google.com/maps/search/?api=1&query=Wien+Hauptbahnhof" target="_blank">
-<div class="row"><div class="time">13:18</div><div class="ico">🚆</div><div>
+<a class="event link" href="https://www.google.com/maps/search/?api=1&amp;query=Wien+Hauptbahnhof" target="_blank">
+<div class="row"><div class="time">13:18</div><div class="icon">🚆</div><div>
 <div class="title">Wien Hbf 도착</div>
 <div class="desc">프라하에서 도착. 락커는 쓰지 않고 숙소부터 간다.</div>
-</div><div>↗</div></div></a>
-
-<div class="move transit-detail"><a href="https://www.google.com/maps/dir/?api=1&origin=Wien%20Hauptbahnhof&destination=Boutique%20Hotel%20Donauwalzer%20Vienna&travelmode=transit" target="_blank" rel="noopener"><b>🚇 Wien Hbf → Hotel Donauwalzer · U1 → U4 → U6</b><small>Hauptbahnhof(Südtiroler Platz) → U1 ‘Leopoldau’ → Karlsplatz<br>U4 ‘Hütteldorf’ → Längenfeldgasse<br>U6 ‘Floridsdorf’ → Alser Straße<br>호텔까지 도보 약 2~3분<br><em>↗ 당일 실시간 경로 열기</em></small></a></div>
-
-<a class="event rest" href="https://www.google.com/maps/search/?api=1&query=Boutique+Hotel+Donauwalzer+Vienna" target="_blank">
-<div class="row"><div class="time">13:50<br>~14:10</div><div class="ico">🧳</div><div>
+</div><div class="out">↗</div></div></a>
+<div class="transport transit-detail"><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Wien%20Hauptbahnhof&amp;destination=Boutique%20Hotel%20Donauwalzer%20Vienna&amp;travelmode=transit" rel="noopener" target="_blank"><b>🚇 Wien Hbf → Hotel Donauwalzer · U1 → U4 → U6</b><small>Hauptbahnhof(Südtiroler Platz) → U1 ‘Leopoldau’ → Karlsplatz<br/>U4 ‘Hütteldorf’ → Längenfeldgasse<br/>U6 ‘Floridsdorf’ → Alser Straße<br/>호텔까지 도보 약 2~3분<br/><em>↗ 당일 실시간 경로 열기</em></small></a></div>
+<a class="event rest link" href="https://www.google.com/maps/search/?api=1&amp;query=Boutique+Hotel+Donauwalzer+Vienna" target="_blank">
+<div class="row"><div class="time">13:50<br/>~14:10</div><div class="icon">🧳</div><div>
 <div class="title">Hotel Donauwalzer 먼저 들르기</div>
 <div class="desc">객실 준비됐으면 체크인. 아니면 프런트에 짐 보관 가능 여부 확인 후 바로 출발.</div>
-</div><div>↗</div></div></a>
-
-<div class="move transit-detail"><a href="https://www.google.com/maps/dir/?api=1&origin=Boutique%20Hotel%20Donauwalzer%20Vienna&destination=Salm%20Brau%20Vienna&travelmode=transit" target="_blank" rel="noopener"><b>🚋 호텔 → Salm Bräu · 43 + D 트램</b><small>Alser Straße → 트램 43 ‘Schottentor’ 방향<br>Schottentor에서 트램 D ‘Absberggasse’ 방향 환승<br>Schwarzenbergplatz 하차 → Salm Bräu 도보 약 6~8분<br><em>↗ 당일 실시간 경로 열기</em></small></a></div>
-
-<a class="event food" href="https://www.google.com/maps/search/?api=1&query=Salm+Bräu+Vienna" target="_blank">
-<div class="row"><div class="time">14:35<br>~15:15</div><div class="ico">🍺</div><div>
-<div class="title">Salm Bräu <span class="ko">(살름 브로이)</span></div>
+</div><div class="out">↗</div></div></a>
+<div class="transport transit-detail"><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Boutique%20Hotel%20Donauwalzer%20Vienna&amp;destination=Salm%20Brau%20Vienna&amp;travelmode=transit" rel="noopener" target="_blank"><b>🚋 호텔 → Salm Bräu · 43 + D 트램</b><small>Alser Straße → 트램 43 ‘Schottentor’ 방향<br/>Schottentor에서 트램 D ‘Absberggasse’ 방향 환승<br/>Schwarzenbergplatz 하차 → Salm Bräu 도보 약 6~8분<br/><em>↗ 당일 실시간 경로 열기</em></small></a></div>
+<a class="event food link" href="https://www.google.com/maps/search/?api=1&amp;query=Salm+Bräu+Vienna" target="_blank">
+<div class="row"><div class="time">14:35<br/>~15:15</div><div class="icon">🍺</div><div>
+<div class="title">Salm Bräu <span class="korean">(살름 브로이)</span></div>
 <div class="desc">도착 후 늦점심. 자체 양조 맥주 한 잔 + 너무 무겁지 않은 오스트리아식.</div>
 <div class="menu">소시지·가벼운 고기 메뉴 위주 추천. 립은 다음날 후보를 위해 여기선 참기ㅋㅋ</div>
 <span class="cost">대략 1인 €15~25 (약 23,400~39,000원)</span>
-</div><div>↗</div></div></a>
-
-<div class="move"><span>🚶 Salm Bräu → Upper Belvedere 약 10~15분</span></div>
-
-<a class="event" href="https://www.google.com/maps/search/?api=1&query=Upper+Belvedere+Vienna" target="_blank">
-<div class="row"><div class="time">15:25<br>~17:20</div><div class="ico">🖼️</div><div>
-<div class="title">Upper Belvedere <span class="ko">(벨베데레 상궁)</span></div>
+</div><div class="out">↗</div></div></a>
+<div class="transport"><span>🚶 Salm Bräu → Upper Belvedere 약 10~15분</span></div>
+<a class="event link" href="https://www.google.com/maps/search/?api=1&amp;query=Upper+Belvedere+Vienna" target="_blank">
+<div class="row"><div class="time">15:25<br/>~17:20</div><div class="icon">🖼️</div><div>
+<div class="title">Upper Belvedere <span class="korean">(벨베데레 상궁)</span></div>
 <div class="desc">궁전 자체 + 클림트 〈키스〉 중심 컬렉션. 첫날 핵심.</div>
 <span class="cost">입장 약 €23 (약 35,900원)</span>
-</div><div>↗</div></div></a>
-
-<a class="event rest" href="https://www.google.com/maps/search/?api=1&query=Belvedere+Gardens+Vienna" target="_blank">
-<div class="row"><div class="time">17:20<br>~17:40</div><div class="ico">🌿</div><div>
+</div><div class="out">↗</div></div></a>
+<a class="event rest link" href="https://www.google.com/maps/search/?api=1&amp;query=Belvedere+Gardens+Vienna" target="_blank">
+<div class="row"><div class="time">17:20<br/>~17:40</div><div class="icon">🌿</div><div>
 <div class="title">Belvedere Gardens</div>
 <div class="desc">정원 산책 + 사진 타임.</div>
-</div><div>↗</div></div></a>
-
-<div class="move transit-detail"><a href="https://www.google.com/maps/dir/?api=1&origin=Upper%20Belvedere%20Vienna&destination=Albertina%20Vienna&travelmode=transit" target="_blank" rel="noopener"><b>🚋 Upper Belvedere → Albertina · 트램 D</b><small>Schloss Belvedere → 트램 D ‘Nußdorf’ 방향<br>Oper, Karlsplatz 하차 → Albertina 도보 약 4~5분<br>환승 없음<br><em>↗ 당일 실시간 경로 열기</em></small></a></div>
-
-<a class="event" href="https://www.google.com/maps/search/?api=1&query=Albertina+Vienna" target="_blank">
-<div class="row"><div class="time">18:10<br>~20:50</div><div class="ico">🎨</div><div>
+</div><div class="out">↗</div></div></a>
+<div class="transport transit-detail"><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Upper%20Belvedere%20Vienna&amp;destination=Albertina%20Vienna&amp;travelmode=transit" rel="noopener" target="_blank"><b>🚋 Upper Belvedere → Albertina · 트램 D</b><small>Schloss Belvedere → 트램 D ‘Nußdorf’ 방향<br/>Oper, Karlsplatz 하차 → Albertina 도보 약 4~5분<br/>환승 없음<br/><em>↗ 당일 실시간 경로 열기</em></small></a></div>
+<a class="event link" href="https://www.google.com/maps/search/?api=1&amp;query=Albertina+Vienna" target="_blank">
+<div class="row"><div class="time">18:10<br/>~20:50</div><div class="icon">🎨</div><div>
 <div class="title">Albertina</div>
 <div class="desc">수요일 야간개장 활용. 피그뮐러 예약이 늦어져 오히려 약 2시간 40분 여유롭게 관람.</div>
 <span class="cost">입장 약 €20.90 (약 32,600원)</span>
-</div><div>↗</div></div></a>
-
-<div class="move"><span>🚶 Albertina → Figlmüller 약 8~12분 · 21:10 전후 도착 목표</span></div>
-
-<a class="event food" href="https://www.google.com/maps/search/?api=1&query=Figlmüller+Bäckerstraße+Vienna" target="_blank">
-<div class="row"><div class="time">21:30<br>~22:45</div><div class="ico">🥩</div><div>
-<div class="title">Figlmüller Bäckerstraße <span class="ko">(피그뮐러 베커슈트라세)</span></div>
+</div><div class="out">↗</div></div></a>
+<div class="transport"><span>🚶 Albertina → Figlmüller 약 8~12분 · 21:10 전후 도착 목표</span></div>
+<a class="event food link" href="https://www.google.com/maps/search/?api=1&amp;query=Figlmüller+Bäckerstraße+Vienna" target="_blank">
+<div class="row"><div class="time">21:30<br/>~22:45</div><div class="icon">🥩</div><div>
+<div class="title">Figlmüller Bäckerstraße <span class="korean">(피그뮐러 베커슈트라세)</span></div>
 <div class="desc">21:30 예약. 슈니첼은 여기서 제대로. 주방 마감이 가까우니 앉자마자 바로 주문하기.</div>
 <div class="menu">Figlmüller Schnitzel / Wiener Schnitzel + 감자샐러드 조합 추천</div>
 <span class="cost">메인 약 €22~29 (약 34,300~45,200원)</span>
-</div><div>↗</div></div></a>
-
-<div class="move"><span>🚶 Stephansdom/Graben 바로 연결</span></div>
-
-<a class="event rest" href="https://www.google.com/maps/search/?api=1&query=Stephansplatz+Vienna" target="_blank">
-<div class="row"><div class="time">22:45<br>이후</div><div class="ico">🌙</div><div>
+</div><div class="out">↗</div></div></a>
+<div class="transport"><span>🚶 Stephansdom/Graben 바로 연결</span></div>
+<a class="event rest link" href="https://www.google.com/maps/search/?api=1&amp;query=Stephansplatz+Vienna" target="_blank">
+<div class="row"><div class="time">22:45<br/>이후</div><div class="icon">🌙</div><div>
 <div class="title">Stephansdom · Graben 야경 산책</div>
 <div class="desc">배부르게 먹고 짧게 야경 보고 호텔 복귀.</div>
-</div><div>↗</div></div></a>
-
+</div><div class="out">↗</div></div></a>
 </div>
-<div class="note">💡 숙소 먼저 들르는 안으로 변경. 락커 비용을 아끼면서도 전체 이동시간은 크게 늘지 않아 첫날 일정 유지 가능.</div>
-</section>
-
-
-
-
-
-<section class="day">
-<div class="dayhead d2">DAY 2 · 10/1 (목) · RUN, KHM & SCHÖNBRUNN</div>
+<div class="tip">💡 숙소 먼저 들르는 안으로 변경. 락커 비용을 아끼면서도 전체 이동시간은 크게 늘지 않아 첫날 일정 유지 가능.</div>
+</section><section class="day two">
+<header class="day-header"><div class="day-title">DAY 2 · 10/1 (목)</div><div class="day-label"> · RUN, KHM &amp; SCHÖNBRUNN</div></header>
 <div class="timeline">
-
-<a class="event rest" href="https://www.google.com/maps/search/?api=1&query=Rathauspark+Vienna" target="_blank">
-<div class="row"><div class="time">06:45<br>~07:25</div><div class="ico">🏃🏻‍♀️</div><div>
+<a class="event rest link" href="https://www.google.com/maps/search/?api=1&amp;query=Rathauspark+Vienna" target="_blank">
+<div class="row"><div class="time">06:45<br/>~07:25</div><div class="icon">🏃🏻‍♀️</div><div>
 <div class="title">아침 조깅</div>
 <div class="desc">호텔 → Rathaus/Volksgarten 방향 4~5km 느긋하게. 너무 무리하지 않기.</div>
 <span class="cost">약 40분</span>
-</div><div>↗</div></div></a>
-
+</div><div class="out">↗</div></div></a>
 <div class="event rest">
-<div class="row"><div class="time">07:25<br>~08:10</div><div class="ico">🚿</div><div>
+<div class="row"><div class="time">07:25<br/>~08:10</div><div class="icon">🚿</div><div>
 <div class="title">샤워 · 준비</div>
 <div class="desc">조깅 후 제대로 씻고 옷 갈아입기. 이번엔 꼬질 상태로 관광 안 감ㅋㅋ</div>
-</div><div></div></div></div>
-
-<a class="event food" href="https://www.google.com/maps/search/?api=1&query=Café+Eiles+Vienna" target="_blank">
-<div class="row"><div class="time">08:15<br>~09:15</div><div class="ico">☕</div><div>
-<div class="title">Café Eiles <span class="ko">(카페 아일레스)</span></div>
+</div><div class="out"></div></div></div>
+<a class="event food link" href="https://www.google.com/maps/search/?api=1&amp;query=Café+Eiles+Vienna" target="_blank">
+<div class="row"><div class="time">08:15<br/>~09:15</div><div class="icon">☕</div><div>
+<div class="title">Café Eiles <span class="korean">(카페 아일레스)</span></div>
 <div class="desc">조깅 후 브런치. 호텔 조식 대신 비엔나 커피하우스에서 제대로 먹기.</div>
 <div class="menu">Viennese breakfast / eggs / coffee 계열</div>
 <span class="cost">대략 1인 €12~20 (약 18,500~30,900원)</span>
-</div><div>↗</div></div></a>
-
-<div class="move transit-detail"><a href="https://www.google.com/maps/dir/?api=1&origin=Cafe%20Eiles%20Vienna&destination=Kunsthistorisches%20Museum%20Vienna&travelmode=transit" target="_blank" rel="noopener"><b>🚶 Café Eiles → KHM · 도보 추천</b><small>Rathaus/Parlament 쪽으로 약 1.2km<br>도보 15~18분 · 트램 기다리는 것보다 단순<br><em>↗ 당일 실시간 경로 열기</em></small></a></div>
-
-<a class="event" href="https://www.google.com/maps/search/?api=1&query=Kunsthistorisches+Museum+Vienna" target="_blank">
-<div class="row"><div class="time">10:00<br>~12:00</div><div class="ico">🖼️</div><div>
-<div class="title">Kunsthistorisches Museum <span class="ko">(빈 미술사 박물관, KHM)</span></div>
+</div><div class="out">↗</div></div></a>
+<div class="transport transit-detail"><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Cafe%20Eiles%20Vienna&amp;destination=Kunsthistorisches%20Museum%20Vienna&amp;travelmode=transit" rel="noopener" target="_blank"><b>🚶 Café Eiles → KHM · 도보 추천</b><small>Rathaus/Parlament 쪽으로 약 1.2km<br/>도보 15~18분 · 트램 기다리는 것보다 단순<br/><em>↗ 당일 실시간 경로 열기</em></small></a></div>
+<a class="event link" href="https://www.google.com/maps/search/?api=1&amp;query=Kunsthistorisches+Museum+Vienna" target="_blank">
+<div class="row"><div class="time">10:00<br/>~12:00</div><div class="icon">🖼️</div><div>
+<div class="title">Kunsthistorisches Museum <span class="korean">(빈 미술사 박물관, KHM)</span></div>
 <div class="desc">전관 정복 말고 핵심 위주 2시간. 회화관 + Kunstkammer 중심으로 보기.</div>
 <div class="menu">성인 €23 · 오디오가이드 €6</div>
 <span class="cost">입장 €23 (약 35,500원) · 오디오 €6 (약 9,300원)</span>
-</div><div>↗</div></div></a>
-
-<div class="move"><span>🚶 KHM → Bitzinger Albertina 약 8~10분</span></div>
-
-<a class="event food" href="https://www.google.com/maps/search/?api=1&query=Bitzinger+Würstelstand+Albertina+Vienna" target="_blank">
-<div class="row"><div class="time">12:10<br>~12:40</div><div class="ico">🌭</div><div>
-<div class="title">Bitzinger Würstelstand Albertina <span class="ko">(비트징거)</span></div>
+</div><div class="out">↗</div></div></a>
+<div class="transport"><span>🚶 KHM → Bitzinger Albertina 약 8~10분</span></div>
+<a class="event food link" href="https://www.google.com/maps/search/?api=1&amp;query=Bitzinger+Würstelstand+Albertina+Vienna" target="_blank">
+<div class="row"><div class="time">12:10<br/>~12:40</div><div class="icon">🌭</div><div>
+<div class="title">Bitzinger Würstelstand Albertina <span class="korean">(비트징거)</span></div>
 <div class="desc">Käsekrainer 간단 점심. 오래 앉지 않고 맛만 제대로.</div>
 <div class="menu">Käsekrainer + 빵/머스터드</div>
 <span class="cost">대략 1인 €7~12 (약 10,800~18,500원)</span>
-</div><div>↗</div></div></a>
-
-<div class="move transit-detail"><a href="https://www.google.com/maps/dir/?api=1&origin=Bitzinger%20Wurstelstand%20Albertina%20Vienna&destination=Schonbrunn%20Palace%20Vienna&travelmode=transit" target="_blank" rel="noopener"><b>🚇 Bitzinger → Schönbrunn · U4 직행</b><small>Bitzinger → Karlsplatz U-Bahn 도보 약 5분<br>U4 ‘Hütteldorf’ 방향 → Schönbrunn<br>궁전 정문까지 도보 약 7~10분<br>13:30 예약이라 12:40 전후 출발<br><em>↗ 당일 실시간 경로 열기</em></small></a></div>
-
-<a class="event" href="https://www.google.com/maps/search/?api=1&query=Schönbrunn+Palace+Vienna" target="_blank">
-<div class="row"><div class="time">13:20<br>도착</div><div class="ico">👑</div><div>
+</div><div class="out">↗</div></div></a>
+<div class="transport transit-detail"><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Bitzinger%20Wurstelstand%20Albertina%20Vienna&amp;destination=Schonbrunn%20Palace%20Vienna&amp;travelmode=transit" rel="noopener" target="_blank"><b>🚇 Bitzinger → Schönbrunn · U4 직행</b><small>Bitzinger → Karlsplatz U-Bahn 도보 약 5분<br/>U4 ‘Hütteldorf’ 방향 → Schönbrunn<br/>궁전 정문까지 도보 약 7~10분<br/>13:30 예약이라 12:40 전후 출발<br/><em>↗ 당일 실시간 경로 열기</em></small></a></div>
+<a class="event link" href="https://www.google.com/maps/search/?api=1&amp;query=Schönbrunn+Palace+Vienna" target="_blank">
+<div class="row"><div class="time">13:20<br/>도착</div><div class="icon">👑</div><div>
 <div class="title">Schönbrunn 도착 · 입장 준비</div>
 <div class="desc">화장실/입구 확인 후 13:30 지정 입장에 맞춰 대기.</div>
-</div><div>↗</div></div></a>
-
-<a class="event" href="https://www.google.com/maps/search/?api=1&query=Schönbrunn+Palace+Vienna" target="_blank">
-<div class="row"><div class="time">13:30<br>~17:00</div><div class="ico">🏰</div><div>
+</div><div class="out">↗</div></div></a>
+<a class="event link" href="https://www.google.com/maps/search/?api=1&amp;query=Schönbrunn+Palace+Vienna" target="_blank">
+<div class="row"><div class="time">13:30<br/>~17:00</div><div class="icon">🏰</div><div>
 <div class="title">Schönbrunn Classic Pass 풀코스</div>
-<div class="desc">Palace 내부 + Privy Garden + Orangery Garden + Maze & Labyrinth + Gloriette 전망 테라스.</div>
+<div class="desc">Palace 내부 + Privy Garden + Orangery Garden + Maze &amp; Labyrinth + Gloriette 전망 테라스.</div>
 <div class="menu">공식 예상 관람 3~4시간 · 13:30 지정 입장 기준</div>
 <span class="cost">Classic Pass €44 (약 67,900원)</span>
-</div><div>↗</div></div></a>
-
-<div class="move transit-detail"><a href="https://www.google.com/maps/dir/?api=1&origin=Schonbrunn%20Palace%20Vienna&destination=Demel%20Vienna&travelmode=transit" target="_blank" rel="noopener"><b>🚇 Schönbrunn → Demel · U4 → U1</b><small>Schönbrunn → U4 ‘Heiligenstadt’ → Karlsplatz<br>U1 ‘Leopoldau’ → Stephansplatz<br>Demel까지 도보 약 7~8분<br><em>↗ 당일 실시간 경로 열기</em></small></a></div>
-
-<a class="event food" href="https://www.google.com/maps/search/?api=1&query=Demel+Vienna" target="_blank">
-<div class="row"><div class="time">17:45<br>~18:30</div><div class="ico">🍰</div><div>
-<div class="title">Demel <span class="ko">(데멜)</span></div>
+</div><div class="out">↗</div></div></a>
+<div class="transport transit-detail"><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Schonbrunn%20Palace%20Vienna&amp;destination=Demel%20Vienna&amp;travelmode=transit" rel="noopener" target="_blank"><b>🚇 Schönbrunn → Demel · U4 → U1</b><small>Schönbrunn → U4 ‘Heiligenstadt’ → Karlsplatz<br/>U1 ‘Leopoldau’ → Stephansplatz<br/>Demel까지 도보 약 7~8분<br/><em>↗ 당일 실시간 경로 열기</em></small></a></div>
+<a class="event food link" href="https://www.google.com/maps/search/?api=1&amp;query=Demel+Vienna" target="_blank">
+<div class="row"><div class="time">17:45<br/>~18:30</div><div class="icon">🍰</div><div>
+<div class="title">Demel <span class="korean">(데멜)</span></div>
 <div class="desc">카페는 확정. 커피 + Kaiserschmarrn 또는 그날 끌리는 디저트.</div>
 <span class="cost">대략 1인 €10~20 (약 15,400~30,900원)</span>
-</div><div>↗</div></div></a>
-
+</div><div class="out">↗</div></div></a>
 <div class="event rest">
-<div class="row"><div class="time">18:30<br>~20:00</div><div class="ico">🛍️</div><div>
+<div class="row"><div class="time">18:30<br/>~20:00</div><div class="icon">🛍️</div><div>
 <div class="title">쇼핑 · 휴식 · 도심 산책</div>
 <div class="desc">Kohlmarkt/Graben 쪽으로 천천히. 쇼핑하거나 앉아서 쉬기. 야경 강행군은 삭제.</div>
-</div><div></div></div></div>
-
-<div class="move"><span>🚶 20:00 전후 Ribs of Vienna 방향 이동</span></div>
-
+</div><div class="out"></div></div></div>
+<div class="transport"><span>🚶 20:00 전후 Ribs of Vienna 방향 이동</span></div>
 <div class="choice-title">20:15 전후 · 저녁 Plan A / B 🍖🍺</div>
 <div class="choice-grid">
-
 <div class="choice">
-<a href="https://www.google.com/maps/search/?api=1&query=Ribs+of+Vienna" target="_blank">
-<h3>🍖 Plan A · Ribs of Vienna <span class="ko">(립스 오브 비엔나)</span></h3>
-<p><b>20:15쯤 워크인 도전.</b> 바로 앉거나 대기 20분 이내면 여기.</p>
+<a href="https://www.google.com/maps/search/?api=1&amp;query=Ribs+of+Vienna" target="_blank">
+<h3 class="ctitle">🍖 Plan A · Ribs of Vienna <span class="korean">(립스 오브 비엔나)</span></h3>
+<p class="cmeta"><b>20:15쯤 워크인 도전.</b> 바로 앉거나 대기 20분 이내면 여기.</p>
 <div class="menu">대표 메뉴: 1 meter of spareribs 약 €25.90 · 자리 잡으면 바로 주문</div>
 <span class="cost">1인 약 €25~35 (약 38,600~54,000원)</span>
 </a>
 </div>
-
 <div class="choice">
-<a href="https://www.google.com/maps/search/?api=1&query=1516+Brewing+Company+Vienna" target="_blank">
-<h3>🍺 Plan B · 1516 Brewing Company <span class="ko">(1516 브루잉 컴퍼니)</span></h3>
-<p>Ribs of Vienna 대기가 길면 <b>미련 없이 이동.</b> 자체 크래프트 맥주 + 립.</p>
+<a href="https://www.google.com/maps/search/?api=1&amp;query=1516+Brewing+Company+Vienna" target="_blank">
+<h3 class="ctitle">🍺 Plan B · 1516 Brewing Company <span class="korean">(1516 브루잉 컴퍼니)</span></h3>
+<p class="cmeta">Ribs of Vienna 대기가 길면 <b>미련 없이 이동.</b> 자체 크래프트 맥주 + 립.</p>
 <div class="menu">BBQ Baby Back Ribs 약 €32.90 · 자체 양조 맥주 · 늦게까지 영업</div>
 <span class="cost">1인 약 €30~45 (약 46,300~69,400원)</span>
 </a>
 </div>
-
 </div>
-
 </div>
-<div class="note">💡 Sisi Museum 삭제 확정. 오전은 KHM, 오후는 Schönbrunn Classic Pass, 저녁 전에는 Demel + 쇼핑/휴식으로 숨통을 확보.</div>
-</section>
-
-
-
-
-<section class="day">
-<div class="dayhead d3">DAY 3 · 10/2 (금) · RUN, CHECK-OUT & SHOPPING</div>
+<div class="tip">💡 Sisi Museum 삭제 확정. 오전은 KHM, 오후는 Schönbrunn Classic Pass, 저녁 전에는 Demel + 쇼핑/휴식으로 숨통을 확보.</div>
+</section><section class="day three">
+<header class="day-header"><div class="day-title">DAY 3 · 10/2 (금)</div><div class="day-label"> · RUN, CHECK-OUT &amp; SHOPPING</div></header>
 <div class="timeline">
-
-<a class="event rest" href="https://www.google.com/maps/search/?api=1&query=Volksgarten+Vienna" target="_blank">
-<div class="row"><div class="time">06:30<br>~07:15</div><div class="ico">🏃🏻‍♀️</div><div>
+<a class="event rest link" href="https://www.google.com/maps/search/?api=1&amp;query=Volksgarten+Vienna" target="_blank">
+<div class="row"><div class="time">06:30<br/>~07:15</div><div class="icon">🏃🏻‍♀️</div><div>
 <div class="title">아침 조깅</div>
 <div class="desc">마지막 빈 모닝런 4~5km. 전날 많이 걸었으면 3~4km로 축소.</div>
-</div><div>↗</div></div></a>
-
+</div><div class="out">↗</div></div></a>
 <div class="event rest">
-<div class="row"><div class="time">07:15<br>~08:20</div><div class="ico">🚿</div><div>
+<div class="row"><div class="time">07:15<br/>~08:20</div><div class="icon">🚿</div><div>
 <div class="title">샤워 · 패킹 · 체크아웃</div>
 <div class="desc">호텔 조식 없음. 체크아웃 후 캐리어 들고 Wien Hbf로 이동.</div>
-</div><div></div></div></div>
-
-<div class="move transit-detail"><a href="https://www.google.com/maps/dir/?api=1&origin=Boutique%20Hotel%20Donauwalzer%20Vienna&destination=Wien%20Hauptbahnhof&travelmode=transit" target="_blank" rel="noopener"><b>🚇 Hotel → Wien Hbf · U6 → U4 → U1</b><small>Alser Straße → U6 ‘Siebenhirten’ → Längenfeldgasse<br>U4 ‘Heiligenstadt’ → Karlsplatz<br>U1 ‘Oberlaa’ → Hauptbahnhof<br><em>↗ 당일 실시간 경로 열기</em></small></a></div>
-
-<a class="event" href="https://www.google.com/maps/search/?api=1&query=Wien+Hauptbahnhof" target="_blank">
-<div class="row"><div class="time">08:45<br>전후</div><div class="ico">🧳</div><div>
+</div><div class="out"></div></div></div>
+<div class="transport transit-detail"><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Boutique%20Hotel%20Donauwalzer%20Vienna&amp;destination=Wien%20Hauptbahnhof&amp;travelmode=transit" rel="noopener" target="_blank"><b>🚇 Hotel → Wien Hbf · U6 → U4 → U1</b><small>Alser Straße → U6 ‘Siebenhirten’ → Längenfeldgasse<br/>U4 ‘Heiligenstadt’ → Karlsplatz<br/>U1 ‘Oberlaa’ → Hauptbahnhof<br/><em>↗ 당일 실시간 경로 열기</em></small></a></div>
+<a class="event link" href="https://www.google.com/maps/search/?api=1&amp;query=Wien+Hauptbahnhof" target="_blank">
+<div class="row"><div class="time">08:45<br/>전후</div><div class="icon">🧳</div><div>
 <div class="title">Wien Hbf 락커에 짐 보관</div>
 <div class="desc">이후 몸만 가볍게 도심으로. 호텔 재방문 없음.</div>
-</div><div>↗</div></div></a>
-
-<div class="move transit-detail"><a href="https://www.google.com/maps/dir/?api=1&origin=Wien%20Hauptbahnhof&destination=Cafe%20Museum%20Vienna&travelmode=transit" target="_blank" rel="noopener"><b>🚇 Wien Hbf → Café Museum · U1</b><small>Hauptbahnhof → U1 ‘Leopoldau’ → Karlsplatz<br>Oper/Karlsplatz 출구 → Café Museum 도보 4~6분<br><em>↗ 당일 실시간 경로 열기</em></small></a></div>
-
-<a class="event food" href="https://www.google.com/maps/search/?api=1&query=Café+Museum+Vienna" target="_blank">
-<div class="row"><div class="time">09:10<br>~10:00</div><div class="ico">☕</div><div>
-<div class="title">Café Museum <span class="ko">(카페 무제움)</span></div>
+</div><div class="out">↗</div></div></a>
+<div class="transport transit-detail"><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Wien%20Hauptbahnhof&amp;destination=Cafe%20Museum%20Vienna&amp;travelmode=transit" rel="noopener" target="_blank"><b>🚇 Wien Hbf → Café Museum · U1</b><small>Hauptbahnhof → U1 ‘Leopoldau’ → Karlsplatz<br/>Oper/Karlsplatz 출구 → Café Museum 도보 4~6분<br/><em>↗ 당일 실시간 경로 열기</em></small></a></div>
+<a class="event food link" href="https://www.google.com/maps/search/?api=1&amp;query=Café+Museum+Vienna" target="_blank">
+<div class="row"><div class="time">09:10<br/>~10:00</div><div class="icon">☕</div><div>
+<div class="title">Café Museum <span class="korean">(카페 무제움)</span></div>
 <div class="desc">마지막 날 브런치. Café Sacher는 너무 달까 고민되니 우선 제외.</div>
 <span class="cost">대략 1인 €12~20 (약 18,700~31,200원)</span>
-</div><div>↗</div></div></a>
-
-<div class="move transit-detail"><a href="https://www.google.com/maps/dir/?api=1&origin=Cafe%20Museum%20Vienna&destination=Kohlmarkt%20Vienna&travelmode=transit" target="_blank" rel="noopener"><b>🚶 Café Museum → 쇼핑 구역 · 도보</b><small>Oper → Kärntner Straße → Stephansplatz → Graben → Kohlmarkt<br>이동 자체가 쇼핑 동선이라 교통편 불필요<br><em>↗ 당일 실시간 경로 열기</em></small></a></div>
-
-<a class="event shop" href="https://www.google.com/maps/search/?api=1&query=Kohlmarkt+Vienna" target="_blank">
-<div class="row"><div class="time">10:00<br>~11:30</div><div class="ico">🛍️</div><div>
+</div><div class="out">↗</div></div></a>
+<div class="transport transit-detail"><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Cafe%20Museum%20Vienna&amp;destination=Kohlmarkt%20Vienna&amp;travelmode=transit" rel="noopener" target="_blank"><b>🚶 Café Museum → 쇼핑 구역 · 도보</b><small>Oper → Kärntner Straße → Stephansplatz → Graben → Kohlmarkt<br/>이동 자체가 쇼핑 동선이라 교통편 불필요<br/><em>↗ 당일 실시간 경로 열기</em></small></a></div>
+<a class="event shop link" href="https://www.google.com/maps/search/?api=1&amp;query=Kohlmarkt+Vienna" target="_blank">
+<div class="row"><div class="time">10:00<br/>~11:30</div><div class="icon">🛍️</div><div>
 <div class="title">Kohlmarkt · Graben · Kärntner Straße 쇼핑</div>
 <div class="desc">마지막 날 쇼핑 블록. 기념품·패션·잡화 자유롭게. 한 곳에 오래 머물지 않기.</div>
-</div><div>↗</div></div></a>
-
-<div class="move transit-detail"><a href="https://www.google.com/maps/dir/?api=1&origin=Stephansplatz%20Vienna&destination=Wien%20Hauptbahnhof&travelmode=transit" target="_blank" rel="noopener"><b>🚇 도심 → Wien Hbf · U1 직행</b><small>Stephansplatz → U1 ‘Oberlaa’ 방향<br>Hauptbahnhof 하차 · 약 7~10분<br>짐 찾고 13:27 Budapest 열차 플랫폼 확인<br><em>↗ 당일 실시간 경로 열기</em></small></a></div>
-
-<a class="event" href="https://www.google.com/maps/search/?api=1&query=Wien+Hauptbahnhof" target="_blank">
-<div class="row"><div class="time">11:30<br>~12:00</div><div class="ico">🧳</div><div>
+</div><div class="out">↗</div></div></a>
+<div class="transport transit-detail"><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Stephansplatz%20Vienna&amp;destination=Wien%20Hauptbahnhof&amp;travelmode=transit" rel="noopener" target="_blank"><b>🚇 도심 → Wien Hbf · U1 직행</b><small>Stephansplatz → U1 ‘Oberlaa’ 방향<br/>Hauptbahnhof 하차 · 약 7~10분<br/>짐 찾고 13:27 Budapest 열차 플랫폼 확인<br/><em>↗ 당일 실시간 경로 열기</em></small></a></div>
+<a class="event link" href="https://www.google.com/maps/search/?api=1&amp;query=Wien+Hauptbahnhof" target="_blank">
+<div class="row"><div class="time">11:30<br/>~12:00</div><div class="icon">🧳</div><div>
 <div class="title">Hbf 복귀 · 짐 찾기</div>
 <div class="desc">플랫폼 확인 + 간단 간식/물 구매.</div>
-</div><div>↗</div></div></a>
-
+</div><div class="out">↗</div></div></a>
 <div class="event">
-<div class="row"><div class="time">13:27</div><div class="ico">🚆</div><div>
+<div class="row"><div class="time">13:27</div><div class="icon">🚆</div><div>
 <div class="title">Budapest 출발</div>
 <div class="desc">빈 일정 종료. 굴라시는 헝가리에서 😎🇭🇺</div>
-</div><div></div></div></div>
-
+</div><div class="out"></div></div></div>
 </div>
-<div class="note">💡 Albertina를 첫날로 옮긴 덕분에 마지막 날 오전에 1시간 30분 쇼핑 시간 확보.</div>
-</section>
+<div class="tip">💡 Albertina를 첫날로 옮긴 덕분에 마지막 날 오전에 1시간 30분 쇼핑 시간 확보.</div>
+</section></main>
 
 
-<section class="route">
+<section class="links-panel">
 <h2>🍽️ 비엔나 음식 캐릭터</h2>
 <p>Figlmüller 슈니첼 · Bitzinger Käsekrainer · Ribs of Vienna/1516 립 · Salm Bräu 맥주 · Café Eiles/데멜/카페 무제움. 굴라시는 부다페스트에서.</p>
 </section>
-
 <div class="note">🚦 교통 메모: 호텔은 U6 Alser Straße에서 약 100m. Vienna 이동은 WienMobil에서 출발 직전 플랫폼만 확인.</div>
 <div class="footer">VIENNA · PALACES · ART · SCHNITZEL · BEER</div>
 </div></body></html>
