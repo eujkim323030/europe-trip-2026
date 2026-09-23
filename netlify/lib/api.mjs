@@ -1,5 +1,6 @@
 import { createHash, createHmac, timingSafeEqual, randomBytes } from 'node:crypto';
 import { validateItinerary } from '../../assets/itinerary-model.js';
+import { lookupRoutes, validRouteRequest } from './routes.mjs';
 
 const COOKIE = 'trip_editor';
 const HOURS = 12 * 60 * 60;
@@ -9,7 +10,7 @@ const response = (status, data, headers = {}) => new Response(JSON.stringify(dat
   status, headers: { 'Content-Type':'application/json; charset=utf-8', 'Cache-Control':'no-store', 'X-Content-Type-Options':'nosniff', ...headers },
 });
 
-export function createHandler({store, seeds, pin, secret, now = () => Date.now(), secure = true}) {
+export function createHandler({store, seeds, pin, secret, routeKey, routeLookup=lookupRoutes, now = () => Date.now(), secure = true}) {
   const configured = () => /^\d{10,}$/.test(pin || '') && (secret || '').length >= 32;
   const sign = value => createHmac('sha256', secret).update(value).digest('base64url');
   function session(request) {
@@ -21,12 +22,12 @@ export function createHandler({store, seeds, pin, secret, now = () => Date.now()
     try { const value = JSON.parse(Buffer.from(payload,'base64url').toString()); return value.exp > now() && value.exp <= now()+HOURS*1000; } catch { return false; }
   }
   const cookie = (token, age=HOURS) => `${COOKIE}=${token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=${age}${secure?'; Secure':''}`;
-  async function limit(ip) {
-    const key = 'auth/'+createHmac('sha256',secret).update(ip || 'unknown').digest('hex');
+  async function limit(ip,prefix='auth',maximum=10) {
+    const key = prefix+'/'+createHmac('sha256',secret).update(ip || 'unknown').digest('hex');
     for(let i=0;i<5;i++) {
       const old = await store.getWithMetadata(key,{type:'json',consistency:'strong'});
       const state = old?.data.resetAt > now() ? old.data : {count:0,resetAt:now()+15*60*1000};
-      if (state.count >= 10) return false;
+      if (state.count >= maximum) return false;
       const result = await store.setJSON(key,{count:state.count+1,resetAt:state.resetAt},old?{onlyIfMatch:old.etag}:{onlyIfNew:true});
       if(result.modified) return true;
     }
@@ -38,6 +39,17 @@ export function createHandler({store, seeds, pin, secret, now = () => Date.now()
       const resource = url.pathname.split('/').filter(Boolean).at(-1);
       if (!['GET','POST','PUT','DELETE'].includes(request.method)) return response(405,{error:'지원하지 않는 요청입니다.'});
       if (request.method !== 'GET' && request.headers.get('origin') !== url.origin) return response(403,{error:'같은 사이트에서만 편집할 수 있습니다.'});
+      if(resource==='routes') {
+        if(request.method==='GET')return response(200,{configured:!!routeKey});
+        if(request.method!=='POST')return response(405,{error:'지원하지 않는 요청입니다.'});
+        if(!session(request))return response(401,{error:'경로 조회에는 PIN 인증이 필요합니다.'});
+        if(!routeKey)return response(503,{error:'자동 교통 조회 연결 전입니다. 실시간 길찾기로 확인한 이동시간을 입력해 주세요.'});
+        const raw=await request.text();if(raw.length>3000)return response(400,{error:'장소·날짜를 확인해 주세요.'});
+        let body;try{body=JSON.parse(raw);}catch{return response(400,{error:'장소·날짜를 확인해 주세요.'});}
+        if(!validRouteRequest(body))return response(400,{error:'장소·날짜를 확인해 주세요.'});
+        if(!await limit('site','routes',60))return response(429,{error:'경로 조회는 15분에 60회까지 가능해요. 잠시 뒤 다시 시도해 주세요.'});
+        try{return response(200,await routeLookup(body,{key:routeKey}));}catch(e){return response(502,{error:e.message});}
+      }
       if (resource === 'session') {
         if(request.method === 'GET') return response(200,{authenticated:session(request),configured:configured()});
         if(request.method === 'DELETE') return response(200,{authenticated:false},{'Set-Cookie':cookie('',0)});

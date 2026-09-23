@@ -15,9 +15,9 @@ class MemoryStore {
   }
 }
 const origin = 'https://trip.example';
-function setup() {
+function setup(extra={}) {
   const store = new MemoryStore();
-  const handler = createHandler({ store, seeds, pin: '3141592653', secret: 'a'.repeat(64) });
+  const handler = createHandler({ store, seeds, pin: '3141592653', secret: 'a'.repeat(64),...extra });
   const request = (path, method='GET', body, cookie='', otherOrigin=origin) => handler(new Request(origin+'/api/trip/'+path, {
     method, headers: { Origin: otherOrigin, 'Content-Type':'application/json', Cookie:cookie },
     ...(body === undefined ? {} : {body:JSON.stringify(body)}),
@@ -66,4 +66,24 @@ test('missing server credentials disable login, excessive guesses are limited', 
 test('storage failure is an error, never a successful empty itinerary', async () => {
   const handler=createHandler({store:{getWithMetadata:async()=>{throw new Error('down');}},seeds,pin:'123',secret:'x'});
   assert.equal((await handler(new Request(origin+'/api/trip/vienna'),{})).status,503);
+});
+test('route API requires authenticated same-origin requests; no key fails closed',async()=>{
+  const {request,login}=setup();const input={origin:'A',destination:'B',mode:'auto',departureTime:'2026-09-30T08:00:00Z'};
+  assert.equal((await request('routes','POST',input)).status,401);
+  assert.equal((await request('routes','POST',input,await login())).status,503);
+  assert.equal((await (await request('routes')).json()).configured,false);
+});
+test('route API limits cost and does not publish the key',async()=>{
+  let calls=0;const {request,login}=setup({routeKey:'private-key',routeLookup:async()=>{calls++;return {routes:[]};}});
+  const cookie=await login(),input={origin:'A',destination:'B',mode:'walking',departureTime:'2026-09-30T08:00:00Z'};
+  assert.equal((await request('routes','POST',{},cookie)).status,400);
+  assert.equal((await request('routes','POST',input,cookie,'https://evil.example')).status,403);
+  for(let i=0;i<60;i++)assert.equal((await request('routes','POST',input,cookie)).status,200);
+  assert.equal((await request('routes','POST',input,cookie)).status,429);assert.equal(calls,60);
+  assert.ok(!(await (await request('routes')).text()).includes('private-key'));
+});
+test('invalid new schedule fields cannot enter shared storage',async()=>{
+  const {request,login}=setup(),data=structuredClone(seeds.vienna);
+  data.lanes[0].items[0].schedule={start:600,duration:-20,travel:null,buffer:5,fixed:false,place:'Vienna',mode:'walking',from:null};
+  assert.equal((await request('vienna','PUT',{data,revision:null},await login())).status,400);
 });

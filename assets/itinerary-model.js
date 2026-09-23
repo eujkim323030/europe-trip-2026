@@ -1,3 +1,4 @@
+import { scheduleValid } from './schedule.js';
 export const CITIES = ['helsinki', 'berlin', 'prague', 'vienna', 'budapest'];
 export const CATEGORIES = ['', 'food', 'rest', 'shop', 'culture', 'spa', 'night'];
 export const FIELDS = ['time', 'title', 'description', 'menu', 'cost', 'icon', 'category', 'mapLink'];
@@ -100,7 +101,7 @@ export function validateItinerary(data, seed) {
     const lane = data.lanes[i];
     if (lane.id !== seed.lanes[i].id || lane.label !== seed.lanes[i].label || !Array.isArray(lane.items)) return false;
     for (const item of lane.items) {
-      if (++total > 250 || !cardValid(item) || !item.title.trim()) return false;
+      if (++total > 250 || !cardValid(item) || !item.title.trim() || !scheduleValid(item.schedule)) return false;
       if (typeof item.id !== 'string' || !/^[a-zA-Z0-9-]{1,80}$/.test(item.id) || ids.has(item.id)) return false;
       ids.add(item.id);
       if (!['event','choices'].includes(item.kind)) return false;

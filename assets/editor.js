@@ -1,8 +1,11 @@
 import { extractItinerary, moveItem, FIELDS, CATEGORIES, safeLink } from './itinerary-model.js';
+import {prepareSchedules,analyzeLane,recalculateLane,normalizeSchedule,displayTime,departureISO,placeOf,routeKey} from './schedule.js';
+import {scheduleFields,scheduleBadge,daySummary} from './schedule-ui.js';
 
 const city = location.pathname.split('/').filter(Boolean)[0];
 const {data:initial,templates} = extractItinerary(document,city);
 const baseline = new Map(initial.lanes.flatMap(l=>l.items).map(i=>[i.id,i]));
+const baselineOrigins=new Map(initial.lanes.flatMap(l=>l.items.map((item,i)=>[item.id,l.items[i-1]?.id||null])));
 const lanes = new Map(Array.from(document.querySelectorAll('.timeline')).map(el=>[el.dataset.lane,el]));
 let saved=structuredClone(initial), draft=null, revision=null, ready=false, busy=false, dirty=false, authenticated=false;
 const toolbar=document.createElement('section');
@@ -75,9 +78,11 @@ function cardView(card,template,base) {
   return node;
 }
 
-function itemView(item) {
+function itemView(item,row,previous) {
   const base=baseline.get(item.sourceId);const template=templates.get(item.sourceId);
   const wrapper=el('div','itinerary-item');wrapper.dataset.item=item.id;
+  if(row)wrapper.append(scheduleBadge(item,row,previous));
+  if(item.transport.length&&item.sourceId&&baselineOrigins.get(item.sourceId)!==(previous?.sourceId||null))wrapper.append(el('p','schedule-late old-route-warning','⚠ 아래 교통 안내는 기존 순서 기준입니다. 현재 순서 길찾기로 확인해 주세요.'));
   for(const route of item.transport) {
     const transport=el('div','transport'+(route.description||route.mapLink?' transit-detail':''));
     const box=el(route.mapLink?'a':'span');if(route.mapLink)setLink(box,route.mapLink);
@@ -110,7 +115,8 @@ function itemView(item) {
 
 function render() {
   for(const lane of data().lanes) {
-    const container=lanes.get(lane.id);container.replaceChildren(...lane.items.map(itemView));
+    const rows=analyzeLane(lane);
+    const container=lanes.get(lane.id);container.replaceChildren(daySummary(lane,!!draft,()=>previewTimes(lane.id),()=>previewRoutes(lane.id)),...lane.items.map((item,i)=>itemView(item,rows[i],lane.items[i-1])));
     if(draft)container.append(button('+ 일정 추가',()=>addItem(lane.id),'add-event'));
   }
   document.body.classList.toggle('is-editing',!!draft);
@@ -121,7 +127,7 @@ function render() {
 async function load() {
   if(draft||busy)return;
   busy=true;actions();message('공유 일정을 불러오는 중…');
-  try {const result=await api(city);saved=result.data;revision=result.revision;ready=true;render();message(result.updatedAt?'공유 일정 · '+new Date(result.updatedAt).toLocaleString('ko-KR')+' 저장':'공유 일정 · 편집 후 저장하면 함께 볼 수 있어요.');}
+  try {const result=await api(city);saved=prepareSchedules(result.data);revision=result.revision;ready=true;render();message(result.updatedAt?'공유 일정 · '+new Date(result.updatedAt).toLocaleString('ko-KR')+' 저장':'공유 일정 · 편집 후 저장하면 함께 볼 수 있어요.');}
   catch(e){ready=false;message(e.message+' 현재 화면의 일정은 계속 볼 수 있어요.',true);}
   finally{busy=false;actions();}
 }
@@ -167,7 +173,7 @@ async function login() {
 async function startEdit() {
   if(busy||!ready)return;
   busy=true;actions();
-  try{if(!await login())return;const current=await api(city);saved=current.data;revision=current.revision;draft=structuredClone(saved);dirty=false;render();message('시간·내용·교통을 수정하거나, ☰ 손잡이와 ↑↓ 버튼으로 순서를 바꾸세요.');}
+  try{if(!await login())return;const current=await api(city);saved=prepareSchedules(current.data);revision=current.revision;draft=structuredClone(saved);dirty=false;render();message('소요·이동시간을 입력하면 여유와 부족 시간을 보여드려요. 시간 다시 계산 → 확인 → 저장으로 공유하세요.');}
   catch(e){message(e.message,true);}finally{busy=false;actions();}
 }
 async function save() {
@@ -190,9 +196,9 @@ async function lock() {
   try{await api('session',{method:'DELETE'});authenticated=false;draft=null;dirty=false;render();message('편집을 잠갔어요.');}catch(e){message(e.message,true);}
 }
 
-function cardFields(form,card) {
+function cardFields(form,card,includeTime=true) {
   const fields={};
-  fields.time=field(form,'시간',card.time,{multiline:true,max:80});
+  if(includeTime)fields.time=field(form,'시간 메모',card.time,{multiline:true,max:80});
   fields.title=field(form,'일정명',card.title,{multiline:true,max:300});fields.title.required=true;
   fields.description=field(form,'메모',card.description,{multiline:true});
   fields.menu=field(form,'메뉴·추가 안내',card.menu,{multiline:true,max:2000});
@@ -200,7 +206,7 @@ function cardFields(form,card) {
   fields.mapLink=field(form,'지도 링크',card.mapLink,{type:'url',max:2000});
   fields.icon=field(form,'아이콘',card.icon,{max:20});
   fields.category=selector(form,'종류',card.category,[['','관광·이동'],['food','식사·카페'],['rest','휴식'],['shop','쇼핑'],['culture','문화'],['spa','온천'],['night','야경']]);
-  return ()=>Object.fromEntries(FIELDS.map(k=>[k,fields[k].value]));
+  return ()=>Object.fromEntries(FIELDS.map(k=>[k,fields[k]?fields[k].value:card[k]]));
 }
 function blankItem() {return {id:crypto.randomUUID(),sourceId:null,kind:'event',time:'',title:'새 일정',description:'',menu:'',cost:'',icon:'📍',category:'',mapLink:'',transport:[]};}
 function addItem(laneId) {if(!busy)editItem(null,laneId);}
@@ -210,12 +216,18 @@ function editItem(id,newLaneId) {
   const original=id?lane.items.find(i=>i.id===id):blankItem();
   const {form,error,footer}=formDialog(id?'일정 수정':'새 일정 추가');
   const destination=selector(form,'날짜·일정안',lane.id,draft.lanes.map(l=>[l.id,l.label]));
+  const previous=lane.items[id?lane.items.findIndex(i=>i.id===id)-1:lane.items.length-1];
+  const readSchedule=scheduleFields(form,original,previous,{field,selector,lookup:async destinationPlace=>{
+    if(!placeOf(previous||{})||!destinationPlace)throw new Error('앞 일정과 현재 일정의 장소명·주소를 먼저 입력해 주세요.');
+    const row=analyzeLane(lane).find(r=>r.id===previous.id);
+    return api('routes',{method:'POST',body:JSON.stringify({origin:placeOf(previous),destination:destinationPlace,mode:'auto',departureTime:departureISO(city,lane,row?.actualEnd??null)})});
+  }});
   let readMain,readOptions=[];
   if(original.kind==='choices') {
     const title=field(form,'선택 일정 제목',original.title,{max:300});
     readMain=()=>({...original,title:title.value});
     original.options.forEach((option,index)=>{const group=el('fieldset');group.append(el('legend','',`선택 ${index+1}`));form.append(group);readOptions.push(cardFields(group,option));});
-  } else readMain=cardFields(form,original);
+  } else readMain=cardFields(form,original,false);
   const routes=el('details','transport-fields');routes.append(el('summary','','이 일정으로 오는 교통 안내'));form.append(routes);
   routes.append(el('p','','순서나 날짜를 바꿀 때 함께 이동합니다. 경로가 달라지면 안내도 확인해 주세요.'));
   const readers=[];
@@ -234,13 +246,52 @@ function editItem(id,newLaneId) {
   },'danger'));
   form.append(error,footer);
   form.addEventListener('submit',e=>{
-    e.preventDefault();const next={...original,...readMain(),transport:readers.map(r=>r()).filter(r=>r.title||r.description||r.mapLink)};
+    e.preventDefault();let timing;try{timing=readSchedule();}catch(err){error.textContent=err.message;return;}
+    const next={...original,...readMain(),...timing,transport:readers.map(r=>r()).filter(r=>r.title||r.description||r.mapLink)};
     if(readOptions.length)next.options=readOptions.map(r=>r());
     if(!next.title.trim()||![next.mapLink,...next.transport.map(t=>t.mapLink),...(next.options||[]).map(o=>o.mapLink)].every(safeLink)){error.textContent='일정명과 http/https 지도 링크를 확인해 주세요.';return;}
     if(id)lane.items[lane.items.findIndex(i=>i.id===id)]=next;else lane.items.push(next);
     if(destination.value!==lane.id)moveItem(draft,next.id,destination.value);
     modal.close();render();markDirty();
   });modal.showModal();
+}
+
+function previewTimes(laneId,prepared=null,routeNote='') {
+  if(!draft||busy)return;
+  const lane=draft.lanes.find(l=>l.id===laneId),next=recalculateLane(prepared||lane),rows=analyzeLane(next);
+  const {form,footer}=formDialog('시간 다시 계산 · 미리보기');
+  form.append(el('p','','첫 일정 시작부터 소요·이동·여유시간을 더해요. 🔒 고정 시간은 유지하고, 정보가 부족한 구간은 그대로 둡니다. 적용 후 저장해야 공유돼요.'));
+  if(routeNote){form.append(el('p','',routeNote));const attribution=el('span','google-attribution','Google Maps');attribution.setAttribute('translate','no');form.append(attribution);}
+  const list=el('div','time-preview');
+  lane.items.forEach((item,i)=>{
+    const row=el('div','time-preview-row');const before=normalizeSchedule(item).start,after=normalizeSchedule(next.items[i]).start;
+    row.append(el('strong','',item.title),el('div','',`${displayTime(before)} → ${displayTime(after)}${rows[i].fixed?' · 🔒 고정':''}`));
+    if(i)row.append(el('div','',rows[i].travel===null?'이동시간 미정':`이동 ${rows[i].travel}분 + 여유 ${rows[i].buffer}분`));
+    if(rows[i].gap<0)row.append(el('p','schedule-late',`${-rows[i].gap}분 부족 · 도착 예상 ${displayTime(rows[i].arrival)}`));
+    if(rows[i].warnings.length)row.append(el('p','schedule-unknown',rows[i].warnings.join(' · ')));
+    list.append(row);
+  });
+  form.append(list);footer.append(button('돌아가기',closeDialog),button('재계산 적용',()=>{
+    draft.lanes[draft.lanes.indexOf(lane)]=next;closeDialog();render();markDirty();
+  },'primary'));form.append(footer);form.addEventListener('submit',e=>e.preventDefault());modal.showModal();
+}
+
+async function previewRoutes(laneId) {
+  if(!draft||busy)return;
+  busy=true;actions();const lane=structuredClone(draft.lanes.find(l=>l.id===laneId));let checked=0,skipped=0;
+  try{
+    const configuration=await api('routes');if(!configuration.configured)throw new Error('자동 교통 조회 연결 전입니다. 이동시간을 직접 입력한 뒤 시간 다시 계산을 사용해 주세요.');
+    for(let i=1;i<lane.items.length;i++){
+      const previous=lane.items[i-1],item=lane.items[i];
+      const end=analyzeLane(recalculateLane(lane))[i-1].actualEnd;
+      if(!placeOf(previous)||!placeOf(item)||end===null){skipped++;continue;}
+      message(`교통 조회 중 ${i}/${lane.items.length-1} · ${item.title}`);
+      const result=await api('routes',{method:'POST',body:JSON.stringify({origin:placeOf(previous),destination:placeOf(item),mode:'auto',departureTime:departureISO(city,lane,end)})});
+      const best=result.routes[0];item.schedule.travel=best.minutes;item.schedule.mode=best.mode;item.schedule.buffer=Math.max(item.schedule.buffer,5+best.transfers*3);item.schedule.from=routeKey(previous,item);checked++;
+    }
+    busy=false;previewTimes(laneId,lane,`${checked}구간 조회 · 정보 부족 ${skipped}구간. 빠른 경로를 선택하고 기본 5분 + 환승당 3분의 여유를 확보했어요. 실제 운행은 당일 확인해 주세요.`);
+    message('조회 결과를 미리보기에서 확인한 뒤 적용해 주세요.');
+  }catch(e){message(e.message+' 현재 편집 내용은 그대로 유지됩니다.',true);}finally{busy=false;actions();}
 }
 
 function step(id,delta) {

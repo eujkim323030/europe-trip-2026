@@ -28,4 +28,12 @@
 .drop-after{box-shadow:0 4px #355f8d}
 .add-event{width:100%;border-style:dashed;margin-top:8px;background:#edf5fd}
 .itinerary-item .title,.itinerary-item .desc,.itinerary-item .time,.itinerary-item .menu{white-space:pre-line}
+.schedule-summary{margin:0 0 18px;padding:14px 16px;border:1px solid #dce6ef;border-radius:16px;background:#f4f9ff;color:#355f8d;line-height:1.65;font-size:13px}
+.schedule-summary p{margin:5px 0}.schedule-summary small{display:block;color:#65758a}
+.recalculate{display:block;margin-top:10px;border:1px solid #bfd1e2;border-radius:10px;background:white;color:#355f8d;padding:10px 14px;min-height:44px;font:inherit;font-weight:700;cursor:pointer}
+.schedule-badge{margin:12px 0 6px 18px;padding:8px 12px;border-left:3px solid #a6bdd6;font-size:12px;line-height:1.65;background:#f7fbff;border-radius:0 10px 10px 0}
+.schedule-meta{color:#51677f}.schedule-gap{color:#26634e}.schedule-late{color:#a33838;font-weight:700}.schedule-unknown{color:#826322}
+.current-route{display:inline-block;margin-top:7px;padding:5px 0;color:#355f8d;font-weight:700;text-decoration:none}
+.duration-preview{color:#355f8d;font-weight:700}.time-preview-row{padding:12px 0;border-bottom:1px solid #dce6ef;font-size:13px;line-height:1.7}.time-preview-row strong{display:block}.time-preview-row p{margin:4px 0}
+.google-attribution{font-family:Arial,sans-serif;font-size:13px;font-weight:400;font-style:normal;letter-spacing:normal;white-space:nowrap;color:#5e5e5e;display:block;margin:10px 0}.route-results{border-radius:12px;background:#fff;padding:0 10px}.route-policy{font-size:12px;display:block;margin-top:10px;color:#51677f}.old-route-warning{font-size:12px;margin:6px 18px;line-height:1.6}
 @media(max-width:480px){.editor-dialog{padding:16px}.dialog-actions{bottom:-16px}.editor-hint{width:100%}.editor-toolbar{top:4px}.editor-toolbar button{padding:8px 10px}}
