@@ -1,4 +1,241 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f5f9fc"><title>Vienna · Europe Trip 2026</title><style>
-:root{--bg:#f5f9fc;--text:#172033;--muted:#7f8a9d;--blue:#72aef5;--mint:#74cdbf;--card:#fff;--shadow:0 14px 34px rgba(64,92,120,.10)}
-*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Noto Sans KR","Segoe UI",sans-serif;color:var(--text);background:radial-gradient(circle at 0 0,rgba(116,205,191,.14),transparent 28rem),radial-gradient(circle at 100% 10%,rgba(114,174,245,.13),transparent 25rem),var(--bg)}a{color:inherit;text-decoration:none}.wrap{width:min(100%,860px);margin:0 auto;padding:28px 18px 60px}.hero{padding:28px 20px 20px;text-align:center}.eyebrow{font-size:12px;letter-spacing:.38em;color:#7ca8d7;margin-bottom:12px}h1{margin:0;font-size:clamp(30px,7vw,52px);letter-spacing:-.045em}.sub{color:var(--muted);margin-top:10px;line-height:1.6}.city-grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:24px}.card{display:block;background:rgba(255,255,255,.84);border:1px solid rgba(255,255,255,.95);border-radius:26px;padding:20px;box-shadow:var(--shadow);transition:.18s ease}.card:hover{transform:translateY(-2px)}.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.city{font-size:23px;font-weight:850;letter-spacing:-.03em}.date{font-size:12px;color:#7390a9;background:#eef6ff;padding:7px 9px;border-radius:999px;font-weight:800}.desc{margin-top:7px;color:var(--muted);line-height:1.5;font-size:14px}.arrow{margin-top:16px;color:#6e9bc7;font-weight:800;font-size:13px}.ready{opacity:.68}.ready .date{background:#f2f3f6;color:#8a92a1}.footer{text-align:center;color:#97a1af;font-size:11px;letter-spacing:.14em;margin-top:28px}.back{display:inline-flex;align-items:center;gap:7px;margin-bottom:18px;padding:9px 12px;border-radius:14px;background:#eef5fb;color:#547da5;font-size:13px;font-weight:800}.placeholder{margin-top:22px;background:rgba(255,255,255,.84);border-radius:28px;padding:28px 22px;box-shadow:var(--shadow);text-align:center}.placeholder .emoji{font-size:42px}.placeholder h2{font-size:24px;margin:12px 0 8px}.placeholder p{color:var(--muted);line-height:1.65;margin:0}@media(min-width:700px){.city-grid{grid-template-columns:1fr 1fr}}
-</style></head><body><div class="wrap"><a class="back" href="../">← 도시 선택</a><section class="hero"><div class="eyebrow">EUROPE · 2026</div><h1>🇦🇹 Vienna</h1><div class="sub">9/30–10/02</div></section><section class="placeholder"><div class="emoji">🗺️</div><h2>타임라인 준비 중</h2><p>건축 · 미술관 · 카페<br>다음 대화에서 식당·동선·교통·비용까지 헬싱키처럼 채울 예정이에요.</p></section></div></body></html>
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f9fc"><meta name="apple-mobile-web-app-capable" content="yes">
+<title>Vienna · Europe Trip 2026</title><style>
+:root{--bg:#f5f9fc;--card:#fff;--text:#172033;--muted:#8490a3;--blue:#74aef4;--mint:#74ccb9;--peach:#fff0e8;--lav:#f2efff;--shadow:0 12px 30px rgba(68,92,120,.09)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Noto Sans KR","Segoe UI",sans-serif;color:var(--text);background:radial-gradient(circle at 0 0,rgba(116,204,185,.13),transparent 26rem),radial-gradient(circle at 100% 15%,rgba(116,174,244,.12),transparent 24rem),var(--bg)}
+a{color:inherit;text-decoration:none}.wrap{width:min(100%,920px);margin:0 auto;padding:18px 14px 56px}
+.back{display:inline-flex;padding:9px 12px;border-radius:14px;background:#eef5fb;color:#557da5;font-size:13px;font-weight:800}
+.hero{margin-top:10px;background:rgba(255,255,255,.82);border-radius:30px;padding:25px 20px;box-shadow:var(--shadow);text-align:center}.hero h1{font-size:clamp(29px,6vw,45px);margin:10px 0 7px;letter-spacing:-.04em}.eyebrow{font-size:11px;letter-spacing:.42em;color:#7da7d6}.sub{color:#6f7a8c;font-size:14px}.chips{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}.chip{background:#eef6ff;color:#4f7faa;padding:8px 11px;border-radius:999px;font-size:12px;font-weight:800}.info{margin-top:14px;text-align:left;background:#f7fbff;border-radius:17px;padding:12px 14px;font-size:12.5px;color:#637386;line-height:1.6}
+.day{margin-top:18px;background:rgba(255,255,255,.72);border-radius:28px;box-shadow:var(--shadow);overflow:hidden}.dayhead{padding:19px 18px;font-size:21px;font-weight:900}.d1{background:linear-gradient(90deg,#dcecff,#eff7ff)}.d2{background:linear-gradient(90deg,#e2f4ef,#f0faf7)}.d3{background:linear-gradient(90deg,#f0eaff,#f7f3ff)}
+.timeline{position:relative;padding:14px 14px 22px 40px}.timeline:before{content:"";position:absolute;left:20px;top:25px;bottom:28px;width:2px;background:linear-gradient(var(--blue),#d2dde6)}
+.event{position:relative;display:block;background:#fff;border:1px solid #e8eef3;border-radius:21px;padding:15px 14px;margin-bottom:13px;box-shadow:0 7px 18px rgba(70,90,110,.05)}.event:before{content:"";position:absolute;width:10px;height:10px;left:-25px;top:23px;border-radius:50%;background:#fff;border:3px solid var(--blue);box-shadow:0 0 0 4px var(--bg)}
+.row{display:grid;grid-template-columns:66px 38px 1fr auto;gap:8px;align-items:start}.time{font-size:13px;font-weight:900;line-height:1.35}.ico{width:37px;height:37px;border-radius:13px;background:#edf5ff;display:grid;place-items:center;font-size:19px}.food .ico{background:var(--peach)}.rest .ico{background:var(--lav)}.shop .ico{background:#eef8f2}.title{font-size:15px;font-weight:900;line-height:1.35}.ko{font-size:12px;color:#758296;font-weight:750}.desc{margin-top:4px;font-size:12.5px;line-height:1.55;color:var(--muted)}.menu{margin-top:8px;padding:8px 9px;border-radius:13px;background:#f8fafc;font-size:11.5px;line-height:1.55;color:#5f6c7e}.cost{display:inline-block;margin-top:6px;padding:5px 8px;border-radius:999px;background:#eef5ff;color:#4e79a6;font-size:10.5px;font-weight:850}.move{margin:-4px 0 11px;text-align:center}.move span{display:inline-block;background:#edf4f7;color:#667f92;padding:7px 10px;border-radius:999px;font-size:11.5px}.note{margin:0 16px 18px;padding:12px 14px;background:#f7fbfd;border-radius:18px;color:#617184;font-size:12px;line-height:1.55}
+.choice-title{margin:10px 0 8px;font-size:12px;font-weight:900;color:#68768a}.choice-grid{display:grid;grid-template-columns:1fr;gap:10px}.choice{background:#fff;border:1px solid #e7edf3;border-radius:18px;padding:13px}.choice h3{margin:0;font-size:15px}.choice p{font-size:12px;line-height:1.55;color:#748094;margin:6px 0}.choice a{display:block}.route{margin-top:18px;background:#fff;border-radius:24px;padding:18px;box-shadow:var(--shadow)}.route h2{margin:0 0 10px;font-size:18px}.footer{text-align:center;color:#98a2b0;font-size:10.5px;letter-spacing:.13em;margin-top:22px}
+@media(min-width:760px){.choice-grid{grid-template-columns:1fr 1fr}.row{grid-template-columns:75px 40px 1fr auto}}
+</style></head>
+<body><div class="wrap">
+<a class="back" href="../">← 도시 선택</a>
+
+<section class="hero">
+<div class="eyebrow">V I E N N A · 2 0 2 6</div>
+<h1>비엔나 타임라인</h1>
+<div class="sub">9/30(수)–10/2(금) · Boutique Hotel Donauwalzer 기준</div>
+<div class="chips">
+<span class="chip">Belvedere</span><span class="chip">Schönbrunn</span><span class="chip">Hofburg</span><span class="chip">KHM</span><span class="chip">Figlmüller</span><span class="chip">Morning Run</span>
+</div>
+<div class="info">🚆 9/30 Prague 09:01 → Wien Hbf 13:18 · 🚆 10/2 Wien Hbf 13:27 → Budapest. 운영시간·입장료는 여행 직전 공식 사이트에서 한 번 더 확인.</div>
+</section>
+
+<section class="day">
+<div class="dayhead d1">DAY 1 · 9/30 (수) · ARRIVE & BELVEDERE</div>
+<div class="timeline">
+
+<a class="event" href="https://www.google.com/maps/search/?api=1&query=Wien+Hauptbahnhof" target="_blank">
+<div class="row"><div class="time">13:18</div><div class="ico">🚆</div><div><div class="title">Wien Hbf 도착</div><div class="desc">프라하에서 도착 · 중앙역 락커에 캐리어 보관.</div></div><div>↗</div></div></a>
+
+<div class="move"><span>🧳 락커 보관 후 Belvedere 방향 이동</span></div>
+
+<a class="event food" href="https://www.google.com/maps/search/?api=1&query=Salm+Bräu+Vienna" target="_blank">
+<div class="row"><div class="time">13:40<br>~14:30</div><div class="ico">🍺</div><div>
+<div class="title">Salm Bräu <span class="ko">(살름 브로이)</span></div>
+<div class="desc">도착 후 늦점심. 자체 양조 맥주 한 잔 + 너무 무겁지 않은 오스트리아식.</div>
+<div class="menu">맥주 테이스팅/소시지·가벼운 고기 메뉴 위주 추천. 립은 다음날 후보를 위해 여기선 참기ㅋㅋ</div>
+<span class="cost">대략 1인 €15~25 (23,400원~39,000원)</span>
+</div><div>↗</div></div></a>
+
+<div class="move"><span>🚶 Salm Bräu → Upper Belvedere 약 10~15분</span></div>
+
+<a class="event" href="https://www.google.com/maps/search/?api=1&query=Upper+Belvedere+Vienna" target="_blank">
+<div class="row"><div class="time">14:40<br>~16:40</div><div class="ico">🖼️</div><div>
+<div class="title">Upper Belvedere <span class="ko">(벨베데레 상궁)</span></div>
+<div class="desc">궁전 자체 + 클림트 〈키스〉 중심 컬렉션. 첫날 핵심.</div>
+<span class="cost">입장 약 €23 (35,900원)</span>
+</div><div>↗</div></div></a>
+
+<a class="event rest" href="https://www.google.com/maps/search/?api=1&query=Belvedere+Gardens+Vienna" target="_blank">
+<div class="row"><div class="time">16:40<br>~17:15</div><div class="ico">🌿</div><div><div class="title">Belvedere Gardens</div><div class="desc">상궁·정원 천천히 산책. 사진 타임.</div></div><div>↗</div></div></a>
+
+<div class="move"><span>🚶/🚋 Hbf 복귀 → 짐 회수 → 호텔 약 35~45분</span></div>
+
+<a class="event rest" href="https://www.google.com/maps/search/?api=1&query=Boutique+Hotel+Donauwalzer+Vienna" target="_blank">
+<div class="row"><div class="time">17:30<br>~18:30</div><div class="ico">🛏️</div><div><div class="title">Hotel Donauwalzer 체크인 · 휴식</div><div class="desc">짐 풀고 잠깐 쉬기.</div></div><div>↗</div></div></a>
+
+<div class="move"><span>🚇 호텔 → Innere Stadt 약 20~25분</span></div>
+
+<a class="event food" href="https://www.google.com/maps/search/?api=1&query=Figlmüller+Bäckerstraße+Vienna" target="_blank">
+<div class="row"><div class="time">19:15<br>~20:45</div><div class="ico">🥩</div><div>
+<div class="title">Figlmüller Bäckerstraße <span class="ko">(피그뮐러 베커슈트라세)</span></div>
+<div class="desc">비엔나 첫날 저녁. 슈니첼은 여기서 제대로.</div>
+<div class="menu">Figlmüller Schnitzel / Wiener Schnitzel + 감자샐러드 조합 추천</div>
+<span class="cost">메인 약 €22~29 (34,300원~45,200원)</span>
+</div><div>↗</div></div></a>
+
+<div class="move"><span>🚶 Stephansdom/Graben 바로 연결</span></div>
+
+<a class="event rest" href="https://www.google.com/maps/search/?api=1&query=Stephansplatz+Vienna" target="_blank">
+<div class="row"><div class="time">20:45<br>~21:45</div><div class="ico">🌙</div><div><div class="title">Stephansdom · Graben 야경 산책</div><div class="desc">첫날은 여기까지만. 궁전 하나를 제대로 보고 저녁도 제대로 먹는 날.</div></div><div>↗</div></div></a>
+
+</div>
+<div class="note">💡 도착일은 호텔을 먼저 찍지 않고 Hbf 락커를 활용해서 동선을 줄였어.</div>
+</section>
+
+<section class="day">
+<div class="dayhead d2">DAY 2 · 10/1 (목) · PALACE & MUSEUM DAY</div>
+<div class="timeline">
+
+<a class="event rest" href="https://www.google.com/maps/search/?api=1&query=Rathauspark+Vienna" target="_blank">
+<div class="row"><div class="time">06:30<br>~07:15</div><div class="ico">🏃🏻‍♀️</div><div>
+<div class="title">아침 조깅</div>
+<div class="desc">호텔 → Rathaus/Volksgarten 방향 4~5km 느긋하게. 관광 전 몸만 깨우기.</div>
+<span class="cost">약 35~45분</span>
+</div><div>↗</div></div></a>
+
+<div class="move"><span>🚿 호텔 복귀 → 샤워</span></div>
+
+<a class="event food" href="https://www.google.com/maps/search/?api=1&query=Café+Eiles+Vienna" target="_blank">
+<div class="row"><div class="time">07:45<br>~08:45</div><div class="ico">☕</div><div>
+<div class="title">Café Eiles <span class="ko">(카페 아일레스)</span></div>
+<div class="desc">조깅 후 브런치. 호텔 조식 대신 비엔나 커피하우스에서 제대로 먹기.</div>
+<div class="menu">Viennese breakfast / eggs / coffee 계열</div>
+<span class="cost">대략 1인 €12~20 (18,700원~31,200원)</span>
+</div><div>↗</div></div></a>
+
+<div class="move"><span>🚇 Café Eiles → Schönbrunn 약 25~35분</span></div>
+
+<a class="event" href="https://www.google.com/maps/search/?api=1&query=Schönbrunn+Palace+Vienna" target="_blank">
+<div class="row"><div class="time">09:30<br>~12:00</div><div class="ico">👑</div><div>
+<div class="title">Schönbrunn Palace + Gardens</div>
+<div class="desc">궁전 내부 + 정원. 빈 메인 궁전 코스.</div>
+</div><div>↗</div></div></a>
+
+<div class="move"><span>🚇 Schönbrunn → Albertina/Opera 권역 약 25~30분</span></div>
+
+<a class="event food" href="https://www.google.com/maps/search/?api=1&query=Bitzinger+Würstelstand+Albertina+Vienna" target="_blank">
+<div class="row"><div class="time">12:35<br>~13:10</div><div class="ico">🌭</div><div>
+<div class="title">Bitzinger Würstelstand Albertina <span class="ko">(비트징거)</span></div>
+<div class="desc">꼭 먹고 싶은 케제크라이너 간단 점심. 여기서는 길게 안 앉고 맛만 제대로.</div>
+<div class="menu">Käsekrainer + 빵/머스터드</div>
+<span class="cost">대략 1인 €7~12 (10,900원~18,700원)</span>
+</div><div>↗</div></div></a>
+
+<div class="move"><span>🚶 Bitzinger → Hofburg 약 8~12분</span></div>
+
+<a class="event" href="https://www.google.com/maps/search/?api=1&query=Sisi+Museum+Hofburg+Vienna" target="_blank">
+<div class="row"><div class="time">13:25<br>~15:00</div><div class="ico">👸</div><div>
+<div class="title">Hofburg + Sisi Museum</div>
+<div class="desc">황실 아파트 + 시시 박물관. 합스부르크 궁정 생활 파트.</div>
+</div><div>↗</div></div></a>
+
+<div class="move"><span>🚶 Hofburg → Demel 약 5분</span></div>
+
+<a class="event food" href="https://www.google.com/maps/search/?api=1&query=Demel+Vienna" target="_blank">
+<div class="row"><div class="time">15:10<br>~16:00</div><div class="ico">🍰</div><div>
+<div class="title">Demel <span class="ko">(데멜)</span></div>
+<div class="desc">오후 커피 + 디저트. 너무 단 케이크만 고집하지 말고 Kaiserschmarrn이나 커피 중심.</div>
+<span class="cost">대략 1인 €10~20 (15,600원~31,200원)</span>
+</div><div>↗</div></div></a>
+
+<div class="move"><span>🚶 Demel → KHM 약 8~10분</span></div>
+
+<a class="event" href="https://www.google.com/maps/search/?api=1&query=Kunsthistorisches+Museum+Vienna" target="_blank">
+<div class="row"><div class="time">16:15<br>~20:15</div><div class="ico">🖼️</div><div>
+<div class="title">Kunsthistorisches Museum <span class="ko">(빈 미술사 박물관, KHM)</span></div>
+<div class="desc">목요일 야간관람 활용. 이 날 미술관 메인 이벤트라 시간 넉넉히.</div>
+</div><div>↗</div></div></a>
+
+<div class="choice-title">20:30 이후 저녁 · 그날 땡기는 걸로 선택 🍖🍺</div>
+<div class="choice-grid">
+
+<div class="choice">
+<a href="https://www.google.com/maps/search/?api=1&query=Ribs+of+Vienna" target="_blank">
+<h3>🍖 Ribs of Vienna <span class="ko">(립스 오브 비엔나)</span></h3>
+<p>립 자체가 목적이면 이쪽. 지하 벽돌 아치 공간 + 대표 메뉴 1m spareribs.</p>
+<div class="menu">1 meter of spareribs 약 €25.90</div>
+<span class="cost">1인 약 €25~35 (39,000원~54,600원)</span>
+</a>
+</div>
+
+<div class="choice">
+<a href="https://www.google.com/maps/search/?api=1&query=1516+Brewing+Company+Vienna" target="_blank">
+<h3>🍺 1516 Brewing Company <span class="ko">(1516 브루잉 컴퍼니)</span></h3>
+<p>맥주까지 중요하면 이쪽. 크래프트 비어 + Baby Back Ribs 조합.</p>
+<div class="menu">BBQ Baby Back Ribs 약 €32.90 · 자체 맥주</div>
+<span class="cost">1인 약 €30~45 (46,800원~70,200원)</span>
+</a>
+</div>
+
+</div>
+
+</div>
+<div class="note">💡 Day 2는 진짜 “궁전+황실+미술관” 날. 저녁은 <b>립 전문성 = Ribs of Vienna / 맥주 재미 = 1516</b>로 현장에서 결정.</div>
+</section>
+
+<section class="day">
+<div class="dayhead d3">DAY 3 · 10/2 (금) · RUN, CHECK-OUT & ALBERTINA</div>
+<div class="timeline">
+
+<a class="event rest" href="https://www.google.com/maps/search/?api=1&query=Volksgarten+Vienna" target="_blank">
+<div class="row"><div class="time">06:30<br>~07:15</div><div class="ico">🏃🏻‍♀️</div><div>
+<div class="title">아침 조깅</div>
+<div class="desc">마지막 빈 모닝런 4~5km. 전날 많이 걸었으면 3~4km로 축소.</div>
+</div><div>↗</div></div></a>
+
+<div class="event rest">
+<div class="row"><div class="time">07:15<br>~08:20</div><div class="ico">🚿</div><div>
+<div class="title">샤워 · 패킹 · 체크아웃</div>
+<div class="desc">호텔 조식 없음. 체크아웃 후 캐리어 들고 Wien Hbf로 이동.</div>
+</div><div></div></div></div>
+
+<div class="move"><span>🚇 Hotel Donauwalzer → Wien Hbf 약 25~35분</span></div>
+
+<a class="event" href="https://www.google.com/maps/search/?api=1&query=Wien+Hauptbahnhof" target="_blank">
+<div class="row"><div class="time">08:45<br>전후</div><div class="ico">🧳</div><div>
+<div class="title">Wien Hbf 락커에 짐 보관</div>
+<div class="desc">이후 몸만 가볍게 도심으로. 호텔 재방문 없음.</div>
+</div><div>↗</div></div></a>
+
+<div class="move"><span>🚇 Hbf → 도심 브런치 약 15~20분</span></div>
+
+<a class="event food" href="https://www.google.com/maps/search/?api=1&query=Café+Museum+Vienna" target="_blank">
+<div class="row"><div class="time">09:10<br>~10:00</div><div class="ico">☕</div><div>
+<div class="title">Café Museum <span class="ko">(카페 무제움)</span></div>
+<div class="desc">마지막 날 브런치 우선안. 데멜은 전날 갔고, Café Sacher는 너무 달까 고민되니 중복 없이 전통 커피하우스 경험.</div>
+<span class="cost">대략 1인 €12~20 (18,700원~31,200원)</span>
+</div><div>↗</div></div></a>
+
+<div class="move"><span>🚶 Café Museum → Albertina 약 10~12분</span></div>
+
+<a class="event" href="https://www.google.com/maps/search/?api=1&query=Albertina+Vienna" target="_blank">
+<div class="row"><div class="time">10:15<br>~11:35</div><div class="ico">🎨</div><div>
+<div class="title">Albertina</div>
+<div class="desc">마지막 미술관. 핵심 작품 위주로 80분 압축 관람.</div>
+</div><div>↗</div></div></a>
+
+<div class="move"><span>🚇 Albertina → Wien Hbf 약 15~20분</span></div>
+
+<a class="event" href="https://www.google.com/maps/search/?api=1&query=Wien+Hauptbahnhof" target="_blank">
+<div class="row"><div class="time">12:00<br>~12:25</div><div class="ico">🧳</div><div>
+<div class="title">Hbf 복귀 · 짐 찾기</div>
+<div class="desc">플랫폼 확인 + 간단 간식/물 구매.</div>
+</div><div>↗</div></div></a>
+
+<div class="event">
+<div class="row"><div class="time">13:27</div><div class="ico">🚆</div><div>
+<div class="title">Budapest 출발</div>
+<div class="desc">빈 일정 종료. 굴라시는 헝가리로 넘긴다ㅋㅋ 🇭🇺</div>
+</div><div></div></div></div>
+
+</div>
+<div class="note">💡 Café Sacher는 필수에서 제외하고 <b>Café Museum을 마지막 날 브런치 우선안</b>으로 뒀어. Sacher-Torte가 갑자기 당기면 현장에서 교체 가능.</div>
+</section>
+
+<section class="route">
+<h2>🍽️ 비엔나 음식 캐릭터</h2>
+<p>Figlmüller 슈니첼 · Bitzinger Käsekrainer · Ribs of Vienna/1516 립 · Salm Bräu 맥주 · Café Eiles/데멜/카페 무제움. 굴라시는 부다페스트에서.</p>
+</section>
+
+<div class="footer">VIENNA · PALACES · ART · SCHNITZEL · BEER</div>
+</div></body></html>
