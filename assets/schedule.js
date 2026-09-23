@@ -69,6 +69,33 @@ export function recalculateLane(lane) {
   });
   return next;
 }
+export function reflowAfterEdit(lane,edited) {
+  const next=structuredClone(lane),index=next.items.findIndex(item=>item.id===edited.id),notes=[];
+  next.items[index]=structuredClone(edited);
+  let previous=normalizeSchedule(edited),cursor=previous.start===null||previous.duration===null?null:previous.start+previous.duration,changed=0;
+  for(let i=index+1;i<next.items.length;i++) {
+    if(cursor===null){notes.push('시작·소요시간이 미정인 구간 이후는 유지했어요.');break;}
+    const item=next.items[i],s=normalizeSchedule(item),oldPrevious=normalizeSchedule(lane.items[i-1]);
+    const stale=s.from!==null&&s.from!==routeKey(next.items[i-1],item);
+    let interval;
+    if(!stale&&s.travel!==null)interval=s.travel+s.buffer;
+    else {
+      notes.push('이동시간 미정 구간은 기존 간격을 유지했어요. 이동시간을 확인해 주세요.');
+      if(s.start===null||oldPrevious.start===null||oldPrevious.duration===null)break;
+      interval=Math.max(0,s.start-oldPrevious.start-oldPrevious.duration);
+    }
+    const arrival=cursor+interval,start=s.fixed?s.start:arrival;
+    if(start===null)break;
+    if(start>2879||(s.duration!==null&&start+s.duration>2879))throw new Error('자동 조정하면 일정이 이틀을 넘어요. 날짜를 나눠 주세요.');
+    if(s.fixed&&arrival>start)notes.push(`${item.title}: 고정 시간까지 ${arrival-start}분 부족해요.`);
+    if(start!==s.start){
+      item.schedule={...s,start};
+      item.time=displayTime(start)+(s.duration===null?'':'\n~'+displayTime(start+s.duration));changed++;
+    }
+    cursor=s.duration===null?null:Math.max(start,arrival)+s.duration;
+  }
+  return {lane:next,changed,notes:[...new Set(notes)]};
+}
 export function directionsLink(previous,item) {
   const origin=placeOf(previous||{}),destination=placeOf(item);
   if(!origin||!destination)return '';

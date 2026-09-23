@@ -1,5 +1,5 @@
 import { extractItinerary, moveItem, FIELDS, CATEGORIES, safeLink } from './itinerary-model.js';
-import {prepareSchedules,analyzeLane,recalculateLane,normalizeSchedule,displayTime,departureISO,placeOf,routeKey} from './schedule.js';
+import {prepareSchedules,analyzeLane,recalculateLane,reflowAfterEdit,normalizeSchedule,displayTime,departureISO,placeOf,routeKey} from './schedule.js';
 import {scheduleFields,scheduleBadge,daySummary} from './schedule-ui.js';
 
 const city = location.pathname.split('/').filter(Boolean)[0];
@@ -173,7 +173,7 @@ async function login() {
 async function startEdit() {
   if(busy||!ready)return;
   busy=true;actions();
-  try{if(!await login())return;const current=await api(city);saved=prepareSchedules(current.data);revision=current.revision;draft=structuredClone(saved);dirty=false;render();message('소요·이동시간을 입력하면 여유와 부족 시간을 보여드려요. 시간 다시 계산 → 확인 → 저장으로 공유하세요.');}
+  try{if(!await login())return;const current=await api(city);saved=prepareSchedules(current.data);revision=current.revision;draft=structuredClone(saved);dirty=false;render();message('시작·소요시간을 수정하고 적용하면 뒤의 유동 일정이 자동 조정돼요. 확인 후 저장으로 공유하세요.');}
   catch(e){message(e.message,true);}finally{busy=false;actions();}
 }
 async function save() {
@@ -250,9 +250,16 @@ function editItem(id,newLaneId) {
     const next={...original,...readMain(),...timing,transport:readers.map(r=>r()).filter(r=>r.title||r.description||r.mapLink)};
     if(readOptions.length)next.options=readOptions.map(r=>r());
     if(!next.title.trim()||![next.mapLink,...next.transport.map(t=>t.mapLink),...(next.options||[]).map(o=>o.mapLink)].every(safeLink)){error.textContent='일정명과 http/https 지도 링크를 확인해 주세요.';return;}
-    if(id)lane.items[lane.items.findIndex(i=>i.id===id)]=next;else lane.items.push(next);
+    const before=normalizeSchedule(original);
+    let automatic=null;
+    if(id&&destination.value===lane.id&&(before.start!==timing.schedule.start||before.duration!==timing.schedule.duration)){
+      try{automatic=reflowAfterEdit(lane,next);}catch(err){error.textContent=err.message;return;}
+    }
+    if(automatic)draft.lanes[draft.lanes.indexOf(lane)]=automatic.lane;
+    else if(id)lane.items[lane.items.findIndex(i=>i.id===id)]=next;else lane.items.push(next);
     if(destination.value!==lane.id)moveItem(draft,next.id,destination.value);
     modal.close();render();markDirty();
+    if(automatic)message(`뒤 일정 ${automatic.changed}개를 자동 조정했어요. ${automatic.notes.join(' ')} 확인 후 저장하면 함께 반영됩니다.`);
   });modal.showModal();
 }
 

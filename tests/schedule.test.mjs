@@ -1,7 +1,50 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { normalizeSchedule, analyzeLane, recalculateLane, scheduleValid, routeKey,departureISO,prepareSchedules } from '../assets/schedule.js';
+import { normalizeSchedule, analyzeLane, recalculateLane, scheduleValid, routeKey,departureISO,prepareSchedules, reflowAfterEdit } from '../assets/schedule.js';
 const item=(id,start,duration,travel=0,fixed=false)=>({id,title:id,time:'',mapLink:'',transport:[],schedule:{start,duration,travel,buffer:0,fixed,mode:'walking',place:id,from:null}});
+
+test('editing dinner reflows locally despite missing morning and travel information',()=>{
+  const lane={items:[item('morning',600,null,null),item('dinner',1110,90,null),item('night',1200,null,null)]};
+  const edited=structuredClone(lane.items[1]);edited.schedule.duration=120;
+  const result=reflowAfterEdit(lane,edited);
+  assert.equal(result.lane.items[2].schedule.start,1230);
+  assert.equal(result.lane.items[2].schedule.travel,null);
+  assert.equal(lane.items[2].schedule.start,1200);
+  assert.equal(result.changed,1);assert.match(result.notes.join(' '),/이동시간/);
+});
+test('automatic changes include travel and buffer, shrink durations and preserve reservation status',()=>{
+  const lane={items:[item('a',600,90),item('b',720,30,20),item('c',800,20,10)]};
+  lane.items[1].schedule.buffer=5;lane.items[1].schedule.reserved=true;
+  const edited=structuredClone(lane.items[0]);edited.schedule.duration=30;
+  const result=reflowAfterEdit(lane,edited);
+  assert.equal(result.lane.items[1].schedule.start,655);
+  assert.equal(result.lane.items[2].schedule.start,695);
+  assert.equal(result.lane.items[1].schedule.reserved,true);
+});
+test('fixed appointments retain time and report a deficit, with delay carried forward',()=>{
+  const lane={items:[item('a',600,30),item('b',660,30,10,true),item('c',720,20,10)]};
+  const edited=structuredClone(lane.items[0]);edited.schedule.duration=120;
+  const result=reflowAfterEdit(lane,edited);
+  assert.equal(result.lane.items[1].schedule.start,660);
+  assert.equal(result.lane.items[2].schedule.start,770);
+  assert.match(result.notes.join(' '),/70분 부족/);
+});
+test('unknown travel preserves existing nonnegative spacing and unknown duration stops following changes',()=>{
+  const lane={items:[item('a',600,60),item('b',680,null,null),item('c',800,20,10)]};
+  const edited=structuredClone(lane.items[0]);edited.schedule.duration=90;
+  const result=reflowAfterEdit(lane,edited);
+  assert.equal(result.lane.items[1].schedule.start,710);
+  assert.equal(result.lane.items[2].schedule.start,800);
+  assert.match(result.notes.join(' '),/소요시간/);
+});
+test('automatic changes handle midnight and reject out-of-range starts without partial mutation',()=>{
+  const lane={items:[item('a',1410,30),item('b',1450,20,10)]};
+  const edited=structuredClone(lane.items[0]);edited.schedule.duration=60;
+  assert.equal(reflowAfterEdit(lane,edited).lane.items[1].schedule.start,1480);
+  edited.schedule.start=2870;
+  assert.throws(()=>reflowAfterEdit(lane,edited),/이틀/);
+  assert.equal(lane.items[0].schedule.start,1410);
+});
 test('legacy ranges are parsed, vague starts and unknown durations remain unknown',()=>{
   assert.equal(normalizeSchedule({time:'10:00\n~11:30',transport:[]}).duration,90);
   assert.equal(normalizeSchedule({time:'완주 후\n~17:30',transport:[]}).start,null);

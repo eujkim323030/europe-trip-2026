@@ -3,7 +3,7 @@ const el=(tag,cls,text)=>{const n=document.createElement(tag);n.className=cls;if
 export function scheduleFields(form,item,previous,{field,selector,lookup}) {
   const s=normalizeSchedule(item),group=el('fieldset','schedule-fields');
   group.append(el('legend','','시간과 이동'));form.append(group);
-  group.append(el('p','','도시 현지 시간 기준 · 빈칸은 미정 · 소요시간을 바꾸면 종료·여유·부족 시간을 다시 계산해요.'));
+  group.append(el('p','','도시 현지 시간 기준 · 시작·소요시간을 바꾸고 적용하면 같은 날짜의 뒤 유동 일정이 자동 조정돼요. 고정 시간은 유지해요. 이동시간이 미정이면 기존 간격을 사용하므로 실제 경로를 확인해 주세요.'));
   const start=field(group,'시작 시간',s.start===null?'':clockTime(s.start),{type:'time'});
   const day=selector(group,'시작 날짜',s.start>=1440?'1':'0',[['0','해당 날짜'],['1','다음날 (자정 이후)']]);
   const duration=field(group,'소요시간 (분)',s.duration??'',{type:'number'});duration.min='0';duration.max='1440';duration.step='1';
