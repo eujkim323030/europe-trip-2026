@@ -1,112 +1,142 @@
-<!DOCTYPE html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f5f9fc"><title>Prague · Europe Trip 2026</title><style>
-:root{
-  --bg:#f5f9fc; --card:#ffffff; --text:#172033; --muted:#8690a3;
-  --blue:#69aef5; --blue-soft:#eaf4ff; --mint:#72cdbf; --mint-soft:#eaf8f4;
-  --peach:#fff0e8; --lav:#f2efff; --green:#eef8f2; --shadow:0 12px 30px rgba(75,110,140,.09);
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Noto Sans KR","Segoe UI",sans-serif;color:var(--text);
-background:radial-gradient(circle at 0 0,rgba(116,202,191,.13),transparent 24rem),radial-gradient(circle at 100% 20%,rgba(105,174,245,.11),transparent 22rem),var(--bg)}
-a{color:inherit;text-decoration:none}
-.wrapper{width:min(100%,980px);margin:0 auto;padding:34px 18px 60px}
-.hero{background:rgba(255,255,255,.82);border:1px solid rgba(255,255,255,.95);box-shadow:var(--shadow);border-radius:32px;padding:26px 24px 22px;margin-bottom:22px}
-.eyebrow{font-size:12px;letter-spacing:.45em;color:#7ca8d7;text-align:center;margin-bottom:12px}
-h1{margin:0;text-align:center;font-size:clamp(27px,5vw,43px);line-height:1.18;letter-spacing:-.035em}
-.subtitle{text-align:center;color:#697487;margin-top:9px;font-size:15px}
-.pills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:18px}
-.pill{padding:9px 13px;background:#eef6ff;border-radius:999px;color:#4d82b7;font-size:13px;font-weight:700}
-.note{display:flex;align-items:flex-start;gap:10px;margin-top:17px;padding:12px 14px;border-radius:18px;background:#f7fbff;color:#6d788b;font-size:13px;line-height:1.55}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.day{background:rgba(255,255,255,.68);border:1px solid rgba(255,255,255,.9);box-shadow:var(--shadow);border-radius:30px;overflow:hidden}
-.day-header{display:flex;justify-content:space-between;align-items:center;padding:20px 20px 17px}
-.day.one .day-header{background:linear-gradient(90deg,#dceeff,#eef6ff)}
-.day.two .day-header{background:linear-gradient(90deg,#dcf3eb,#eefaf6)}
-.day-title{font-weight:850;font-size:22px;letter-spacing:-.02em}
-.day-label{font-size:10px;letter-spacing:.2em;color:#6d879d;text-transform:uppercase}
-.timeline{position:relative;padding:12px 14px 20px 42px}
-.timeline:before{content:"";position:absolute;left:22px;top:25px;bottom:27px;width:2px;background:linear-gradient(var(--blue),#cbd9e5);opacity:.75}
-.day.two .timeline:before{background:linear-gradient(var(--mint),#cbd9e5)}
-.event{position:relative;display:block;background:var(--card);border-radius:22px;padding:16px;margin:0 0 14px;border:1px solid rgba(220,230,239,.75);box-shadow:0 8px 20px rgba(60,80,110,.055);transition:.18s ease}
-.event.link:hover{transform:translateY(-2px);box-shadow:0 13px 26px rgba(60,80,110,.10)}
-.event:before{content:"";position:absolute;width:11px;height:11px;border-radius:50%;left:-26px;top:24px;background:#fff;border:3px solid var(--blue);box-shadow:0 0 0 4px var(--bg)}
-.day.two .event:before{border-color:var(--mint)}
-.row{display:grid;grid-template-columns:72px 40px 1fr auto;gap:10px;align-items:start}
-.time{font-size:14px;font-weight:850;color:#38455a;line-height:1.3}
-.icon{width:38px;height:38px;display:grid;place-items:center;border-radius:14px;background:var(--blue-soft);font-size:20px}
-.day.two .icon{background:var(--mint-soft)}
-.title{font-size:16px;font-weight:850;letter-spacing:-.02em;line-height:1.35}
-.korean{font-size:12px;color:#6f7a8c;font-weight:700;margin-left:3px}
-.desc{margin-top:4px;color:var(--muted);font-size:13px;line-height:1.55}
-.menu{margin-top:8px;padding:9px 10px;border-radius:14px;background:#f8fafc;font-size:12px;line-height:1.6;color:#596679}
-.cost{display:inline-block;margin-top:7px;padding:5px 8px;border-radius:999px;background:#edf4ff;color:#4f79a8;font-size:11px;font-weight:800}
-.out{font-size:16px;color:#7ea1c5;line-height:1;padding-top:2px}
-.food{background:linear-gradient(180deg,#fff,#fffaf7)} .food .icon{background:var(--peach)}
-.shop .icon{background:var(--green)} .culture .icon{background:#eef2ff} .rest .icon{background:var(--lav)}
-.transport{margin:-4px 0 12px;display:flex;align-items:center;justify-content:center;color:#668093;font-size:12px;text-align:center}
-.transport span{background:#eef5f8;padding:7px 10px;border-radius:999px}
-.section-foot{padding:0 18px 20px}
-.tip{background:#f7fbfd;border-radius:20px;padding:13px 15px;color:#617185;font-size:12.5px;line-height:1.55}
-.choice-wrap{margin:8px 0 14px}
-.choice-title{font-size:12px;font-weight:850;color:#697789;margin:0 0 8px 4px}
-.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.choice{position:relative;background:#fff;border-radius:18px;padding:13px;border:1px solid #e4edf2;box-shadow:0 6px 16px rgba(60,80,110,.04)}
-.choice .ctitle{font-size:14px;font-weight:850;line-height:1.4}
-.choice .cmeta{font-size:11.5px;color:#738095;line-height:1.55;margin-top:6px}
-.choice .ccost{font-size:11px;font-weight:800;color:#4f79a8;margin-top:7px}
-.choice a{display:block}
-.links-panel{margin-top:18px;background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.95);box-shadow:var(--shadow);border-radius:28px;padding:20px}
-.links-panel h2{margin:0 0 13px;font-size:18px}
-.quick{display:flex;flex-wrap:wrap;gap:9px}
-.quick a{padding:10px 12px;border-radius:14px;background:#f3f7fb;font-size:13px;font-weight:750}
-.footer{text-align:center;margin-top:24px;color:#8a95a5;font-size:11px;letter-spacing:.12em}
-.source{margin-top:16px;color:#8a95a5;font-size:10.5px;line-height:1.55}
-
-@media(max-width:760px){
-  .wrapper{padding:18px 12px 40px} .grid{grid-template-columns:1fr} .hero{padding:22px 17px 18px;border-radius:26px}
-  .row{grid-template-columns:66px 38px 1fr auto;gap:8px} .event{padding:15px 13px} .timeline{padding-left:39px}
-  .timeline:before{left:20px} .event:before{left:-25px} .choice-grid{grid-template-columns:1fr}
-}
-
-.grid{grid-template-columns:1fr}.day.three .day-header{background:linear-gradient(90deg,#eee6ff,#f7f3ff)}
-.day.three .event:before{border-color:#b49bdc}.day.three .icon{background:var(--lav)}
-.day-title{margin:0}.row{grid-template-columns:90px 40px minmax(0,1fr) auto}.title{overflow-wrap:anywhere}
-.quick a:hover,.quick a:focus-visible{background:#dceeff}a:focus-visible{outline:3px solid #355f8d;outline-offset:3px}
-@media(max-width:480px){.row{grid-template-columns:66px minmax(0,1fr) auto}.row>.icon{display:none}.time{font-size:12px}.day-label{letter-spacing:.06em}.note{display:block}}
-
-.cost{border-radius:12px}.source a{text-decoration:underline}.korean{display:block;margin:4px 0 0}.desc{color:#697487}
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f9fc"><meta name="apple-mobile-web-app-capable" content="yes">
+<title>Prague · Europe Trip 2026</title><style>
+:root{--bg:#f5f9fc;--card:#fff;--text:#172033;--muted:#8490a3;--blue:#74aef4;--mint:#74ccb9;--peach:#fff0e8;--lav:#f2efff;--shadow:0 12px 30px rgba(68,92,120,.09)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Noto Sans KR","Segoe UI",sans-serif;color:var(--text);background:radial-gradient(circle at 0 0,rgba(116,204,185,.13),transparent 26rem),radial-gradient(circle at 100% 15%,rgba(116,174,244,.12),transparent 24rem),var(--bg)}
+a{color:inherit;text-decoration:none}.wrap{width:min(100%,920px);margin:0 auto;padding:18px 14px 56px}.back{display:inline-flex;padding:9px 12px;border-radius:14px;background:#eef5fb;color:#557da5;font-size:13px;font-weight:800}
+.hero{margin-top:10px;background:rgba(255,255,255,.82);border-radius:30px;padding:25px 20px;box-shadow:var(--shadow);text-align:center}.hero h1{font-size:clamp(29px,6vw,45px);margin:10px 0 7px;letter-spacing:-.04em}.eyebrow{font-size:11px;letter-spacing:.42em;color:#7da7d6}.sub{color:#6f7a8c;font-size:14px}.chips{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}.chip{background:#eef6ff;color:#4f7faa;padding:8px 11px;border-radius:999px;font-size:12px;font-weight:800}.info{margin-top:14px;text-align:left;background:#f7fbff;border-radius:17px;padding:12px 14px;font-size:12.5px;color:#637386;line-height:1.6}
+.day{margin-top:18px;background:rgba(255,255,255,.72);border-radius:28px;box-shadow:var(--shadow);overflow:hidden}.dayhead{padding:19px 18px;font-size:21px;font-weight:900}.d1{background:linear-gradient(90deg,#dcecff,#eff7ff)}.d2{background:linear-gradient(90deg,#e2f4ef,#f0faf7)}.timeline{position:relative;padding:14px 14px 22px 40px}.timeline:before{content:"";position:absolute;left:20px;top:25px;bottom:28px;width:2px;background:linear-gradient(var(--blue),#d2dde6)}
+.event{position:relative;display:block;background:#fff;border:1px solid #e8eef3;border-radius:21px;padding:15px 14px;margin-bottom:13px;box-shadow:0 7px 18px rgba(70,90,110,.05)}.event:before{content:"";position:absolute;width:10px;height:10px;left:-25px;top:23px;border-radius:50%;background:#fff;border:3px solid var(--blue);box-shadow:0 0 0 4px var(--bg)}
+.row{display:grid;grid-template-columns:66px 38px 1fr auto;gap:8px;align-items:start}.time{font-size:13px;font-weight:900;line-height:1.35}.ico{width:37px;height:37px;border-radius:13px;background:#edf5ff;display:grid;place-items:center;font-size:19px}.food .ico{background:var(--peach)}.rest .ico{background:var(--lav)}.title{font-size:15px;font-weight:900;line-height:1.35}.ko{font-size:12px;color:#758296;font-weight:750}.desc{margin-top:4px;font-size:12.5px;line-height:1.55;color:var(--muted)}.menu{margin-top:8px;padding:8px 9px;border-radius:13px;background:#f8fafc;font-size:11.5px;line-height:1.55;color:#5f6c7e}.cost{display:inline-block;margin-top:6px;padding:5px 8px;border-radius:999px;background:#eef5ff;color:#4e79a6;font-size:10.5px;font-weight:850}.move{margin:-4px 0 11px;text-align:center}.move span{display:inline-block;background:#edf4f7;color:#667f92;padding:7px 10px;border-radius:999px;font-size:11.5px}.move.transit-detail span,.move.transit-detail a{display:inline-block;max-width:96%;background:#edf4f7;color:#667f92;padding:9px 12px;border-radius:16px;font-size:11.2px;text-decoration:none;line-height:1.45}
+.move.transit-detail b{display:block;color:#526f83;font-size:11.7px}
+.move.transit-detail small{display:block;margin-top:3px;font-size:10.6px;color:#708596}
+.move.transit-detail em{font-style:normal;color:#4f7fa2;font-weight:800}.note{margin:0 16px 18px;padding:12px 14px;background:#f7fbfd;border-radius:18px;color:#617184;font-size:12px;line-height:1.55}.route{margin-top:18px;background:#fff;border-radius:24px;padding:18px;box-shadow:var(--shadow)}.route h2{margin:0 0 10px;font-size:18px}.footer{text-align:center;color:#98a2b0;font-size:10.5px;letter-spacing:.13em;margin-top:22px}
 </style></head>
-<body><main class="wrapper"><a class="pill" href="../">← 도시 선택</a><header class="hero" style="margin-top:20px"><div class="eyebrow">EUROPE · 2026</div><h1>🇨🇿 Prague<br>산책과 체코 맥주의 이틀</h1><div class="subtitle">프라하 체류 9/28–9/30 · 상세 일정 9/28 월–9/29 화</div><nav class="pills" aria-label="날짜별 바로가기"><a class="pill" href="#day-one">9/28 도착 · 코젤 · 야경</a><a class="pill" href="#day-two">9/29 조깅 · 스트라호프 · 꼴레뇨</a></nav><div class="note">🕒 프라하 현지 시각 기준 · 고정 시간 외에는 이동 여유를 포함한 계획입니다. 이동시간은 도보 속도·출발 위치·교통 상황에 따른 대략치입니다.</div><div class="note">💰 한화는 예산용 가정 1 CZK ≈ 60원으로 환산(실시간 환율 아님). 가격·예산은 대략치이며 실제 메뉴와 결제 환율에 따라 달라집니다. 식당 일정 확정은 예약 완료를 뜻하지 않습니다.</div></header><div class="grid">
-<section class="day one" id="day-one"><header class="day-header"><h2 class="day-title">DAY 1 · 9/28 월</h2><div class="day-label">ARRIVAL &amp; KOZEL</div></header><div class="timeline"><a class="event  link" href="https://www.google.com/maps/search/?api=1&amp;query=Prague%20Florenc%20bus%20station" target="_blank" rel="noopener noreferrer"><div class="row"><div class="time">14:20</div><div class="icon" aria-hidden="true">🚌</div><div><div class="title">Praha Florenc<span class="korean">프라하 플로렌츠 버스터미널</span></div><div class="desc">프라하 도착 · 짐을 챙기고 가벼운 늦점심부터 시작.</div></div><div class="out" aria-hidden="true">↗</div></div></a>
-<div class="transport"><span>🚶 터미널 → 주변 식당 · 약 5–10분</span></div>
-<div class="event food "><div class="row"><div class="time">14:35<br>–15:10</div><div class="icon" aria-hidden="true">🥪</div><div><div class="title">가벼운 늦점심</div><div class="desc">Florenc(플로렌츠) 주변에서 샌드위치·수프 등으로 간단히. 18:00 고기 저녁을 위해 가볍게 먹기.</div><div class="cost">1인 예산 150–250 CZK ≈ 9,000–15,000원</div></div><div class="out" aria-hidden="true"></div></div></div>
-<div class="transport"><span>🚕 Florenc → Hotel Klárov · 약 15–25분, 교통 상황에 따라 변동</span></div>
-<a class="event rest link" href="https://www.google.com/maps/search/?api=1&amp;query=Hotel%20Klarov%20Prague" target="_blank" rel="noopener noreferrer"><div class="row"><div class="time">15:30<br>전후</div><div class="icon" aria-hidden="true">🧳</div><div><div class="title">Hotel Klárov<span class="korean">호텔 클라로프</span></div><div class="desc">체크인 · 짐 정리 후 잠깐 휴식.</div><div class="menu">숙박비는 기존 예약 기준 · 차량 이동비 별도.</div></div><div class="out" aria-hidden="true">↗</div></div></a>
-<div class="transport"><span>🚶 숙소 → 말라스트라나·블타바 강변 · 약 5–10분</span></div>
-<a class="event  link" href="https://www.google.com/maps/search/?api=1&amp;query=Mala%20Strana%20Prague" target="_blank" rel="noopener noreferrer"><div class="row"><div class="time">16:15<br>–17:20</div><div class="icon" aria-hidden="true">🌿</div><div><div class="title">Malá Strana / Vltava<span class="korean">말라스트라나 / 블타바강</span></div><div class="desc">골목과 강변을 천천히 산책. 저녁 식당 이동 시간을 남겨두기.</div><div class="cost">산책 무료 · 0 CZK / 0원</div></div><div class="out" aria-hidden="true">↗</div></div></a>
-<div class="transport"><span>🚶 말라스트라나·강변 → Naše maso Dlouhá · 약 25–35분</span></div>
-<a class="event food link" href="https://www.google.com/maps/search/?api=1&amp;query=Nase%20maso%20Dlouha%2039%20Prague" target="_blank" rel="noopener noreferrer"><div class="row"><div class="time">18:00<br>–19:15</div><div class="icon" aria-hidden="true">🥩</div><div><div class="title">Naše maso Dlouhá<span class="korean">나셰 마소 들로우하</span></div><div class="desc">첫날 저녁 확정 · Dlouhá 727/39. 고기 요리로 든든하게 저녁.</div><div class="menu">버거·소시지·그릴 고기 중 현장 메뉴를 보고 주문. 6명 좌석은 현장 상황에 따라 달라질 수 있음.</div><div class="cost">1인 예산 300–500 CZK ≈ 18,000–30,000원</div></div><div class="out" aria-hidden="true">↗</div></div></a>
-<div class="transport"><span>🚶 Naše maso → 구시가 광장 · 약 10분</span></div>
-<a class="event  link" href="https://www.google.com/maps/search/?api=1&amp;query=Old%20Town%20Square%20Prague%20Astronomical%20Clock" target="_blank" rel="noopener noreferrer"><div class="row"><div class="time">19:25<br>–20:00</div><div class="icon" aria-hidden="true">🕰️</div><div><div class="title">Staroměstské náměstí / Pražský orloj<span class="korean">스타로므네스트스케 나므네스티 / 프라슈스키 오를로이</span></div><div class="desc">Old Town Square(구시가 광장)와 천문시계 외관을 보며 저녁 산책.</div><div class="cost">광장·천문시계 외관 무료 · 0 CZK / 0원</div></div><div class="out" aria-hidden="true">↗</div></div></a>
-<div class="transport"><span><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Old%20Town%20Square%2C%20Prague&amp;destination=Kozlovna%20U%20Paukerta%20N%C3%A1rodn%C3%AD%20981%2F17%2C%20Prague&amp;travelmode=walking" target="_blank" rel="noopener noreferrer">🚶 구시가 광장 → Kozlovna U Paukerta · 약 8–12분</a></span></div>
-<a class="event food link" href="https://www.google.com/maps/search/?api=1&amp;query=Kozlovna%20U%20Paukerta%20N%C3%A1rodn%C3%AD%20981%2F17%2C%20Prague" target="_blank" rel="noopener noreferrer"><div class="row"><div class="time">20:15<br>–21:15</div><div class="icon" aria-hidden="true">🍺</div><div><div class="title">Kozlovna U Paukerta<span class="korean">코즐로브나 우 파우케르타</span></div><div class="desc">첫날 2차 확정 · Národní 981/17, Prague. Velkopopovický Kozel(벨코포포비츠키 코젤) 탱크 생맥주를 즐기는 시간.</div><div class="menu">코젤 생맥주 + 가벼운 안주. 청소년은 무알코올 음료 선택. 예산은 주문량에 따른 추정치.</div><div class="cost">성인 1인 2차 예산 150–300 CZK ≈ 9,000–18,000원</div></div><div class="out" aria-hidden="true">↗</div></div></a>
-<div class="transport"><span><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Kozlovna%20U%20Paukerta%20N%C3%A1rodn%C3%AD%20981%2F17%2C%20Prague&amp;destination=Old%20Town%20Bridge%20Tower%2C%20Prague&amp;travelmode=walking" target="_blank" rel="noopener noreferrer">🚶 Kozlovna U Paukerta → 카를교 구시가 쪽 입구 · 약 3–5분</a></span></div>
-<a class="event  link" href="https://www.google.com/maps/search/?api=1&amp;query=Charles%20Bridge%20Prague" target="_blank" rel="noopener noreferrer"><div class="row"><div class="time">21:15<br>–22:00</div><div class="icon" aria-hidden="true">🌉</div><div><div class="title">Karlův most / Charles Bridge<span class="korean">카를루프 모스트 / 카를교</span></div><div class="desc">입구 이동을 포함한 야경 산책. 구시가 쪽에서 말라스트라나 쪽으로 건너기.</div><div class="cost">무료 · 0 CZK / 0원</div></div><div class="out" aria-hidden="true">↗</div></div></a>
-<div class="transport"><span>🚶 카를교 말라스트라나 쪽 → Hotel Klárov · 약 10–15분</span></div>
-<a class="event rest link" href="https://www.google.com/maps/search/?api=1&amp;query=Hotel%20Klarov%20Prague" target="_blank" rel="noopener noreferrer"><div class="row"><div class="time">22:15<br>전후</div><div class="icon" aria-hidden="true">🛏️</div><div><div class="title">Hotel Klárov<span class="korean">호텔 클라로프</span></div><div class="desc">숙소 복귀 · 다음 날 아침 조깅 준비 후 휴식.</div></div><div class="out" aria-hidden="true">↗</div></div></a>
-</div></section>
-<section class="day two" id="day-two"><header class="day-header"><h2 class="day-title">DAY 2 · 9/29 화</h2><div class="day-label">STRAHOV &amp; PORK KNEE</div></header><div class="timeline"><a class="event  link" href="https://www.google.com/maps/search/?api=1&amp;query=Hotel%20Klarov%20Prague" target="_blank" rel="noopener noreferrer"><div class="row"><div class="time">06:30<br>–07:15</div><div class="icon" aria-hidden="true">🏃</div><div><div class="title">Vltava riverside jogging<span class="korean">블타바 강변 아침 조깅</span></div><div class="desc">4–5km 가볍게 달리기. Hotel Klárov(호텔 클라로프) 출발·복귀, 강변을 따라 거리와 컨디션에 맞춰 왕복.</div><div class="menu">45분 안에 마무리 · 숙소에서 강변 접근 약 5분. 밝고 통행 가능한 구간을 따라 탄력적으로 조정.</div><div class="cost">무료 · 0 CZK / 0원</div></div><div class="out" aria-hidden="true">↗</div></div></a>
-<a class="event rest link" href="https://www.google.com/maps/search/?api=1&amp;query=Hotel%20Klarov%20Prague" target="_blank" rel="noopener noreferrer"><div class="row"><div class="time">07:15<br>–09:00</div><div class="icon" aria-hidden="true">🚿</div><div><div class="title">Hotel Klárov<span class="korean">호텔 클라로프</span></div><div class="desc">샤워 · 조식 · 오전 관광 준비.</div><div class="menu">조식은 숙박 예약의 포함 여부 기준. 별도 결제 시 현장 요금 확인.</div></div><div class="out" aria-hidden="true">↗</div></div></a>
-<div class="transport"><span>🚶 숙소 → 프라하성 · 오르막 포함 약 20–30분</span></div>
-<a class="event  link" href="https://www.google.com/maps/search/?api=1&amp;query=Prague%20Castle" target="_blank" rel="noopener noreferrer"><div class="row"><div class="time">09:00<br>–11:20</div><div class="icon" aria-hidden="true">🏰</div><div><div class="title">Pražský hrad / Malá Strana<span class="korean">프라슈스키 흐라트 / 말라스트라나</span></div><div class="desc">프라하성·말라스트라나 유동 관광. 체력과 대기 상황에 따라 관람 범위를 조절하고 12:00 점심을 우선.</div><div class="menu">외부 산책 중심. 성 내부 유료 관람은 선택이며 티켓 비용 별도.</div></div><div class="out" aria-hidden="true">↗</div></div></a>
-<div class="transport"><span>🚶 프라하성 → Strahov · 약 20–25분 / 말라스트라나 출발 시 약 30–40분 · 11:50 도착 목표</span></div>
-<a class="event food link" href="https://www.google.com/maps/search/?api=1&amp;query=Pivovar%20Strahov%20Prague" target="_blank" rel="noopener noreferrer"><div class="row"><div class="time">12:00<br>고정</div><div class="icon" aria-hidden="true">🍻</div><div><div class="title">Pivovar Strahov<span class="korean">피보바르 스트라호프</span></div><div class="desc">일행 6명 고정 점심 · 성인 5명 + 청소년 1명. Strahovské nádvoří 301의 수도원 양조장.</div><div class="menu">체코 음식 + 자체 양조 맥주. 굴라시 339 CZK ≈ 20,340원, 스비치코바 359 CZK ≈ 21,540원 참고.</div><div class="cost">1인 점심 예산 400–650 CZK ≈ 24,000–39,000원</div></div><div class="out" aria-hidden="true">↗</div></div></a>
-<div class="transport"><span>🚶 Strahov → 말라스트라나 · 내리막 약 25–35분</span></div>
-<div class="event  "><div class="row"><div class="time">점심 후<br>–18:00</div><div class="icon" aria-hidden="true">☕</div><div><div class="title">오후 자유관광</div><div class="desc">말라스트라나·강변·구시가 산책, 카페 또는 숙소 휴식. 출발 위치에 맞춰 저녁 식당까지 여유 있게 이동.</div><div class="menu">카페 1인 예산 100–200 CZK ≈ 6,000–12,000원 · 선택 관람료 별도.</div></div><div class="out" aria-hidden="true"></div></div></div>
-<div class="transport"><span>🚶 구시가 광장 → 저녁 식당 약 5–10분 / Hotel Klárov 출발 시 약 10–15분</span></div>
-<a class="event food link" href="https://www.google.com/maps/search/?api=1&amp;query=Potrefena%20husa%20Platnerska%2088/9%20Prague" target="_blank" rel="noopener noreferrer"><div class="row"><div class="time">18:30<br>–20:00</div><div class="icon" aria-hidden="true">🍖</div><div><div class="title">Potrefená husa Platnéřská<span class="korean">포트레페나 후사 플라트네르슈스카</span></div><div class="desc">둘째 날 저녁 확정 · 6명. Platnéřská 88/9에서 꼴레뇨 + 탱크맥주 중심으로 주문.</div><div class="menu">꼴레뇨 1kg 약 475 CZK ≈ 28,500원 / 접시(참고가). 나눠 먹고 다른 체코 요리를 추가. 꼴레뇨 조리 최소 약 30분 고려.</div><div class="cost">1인 저녁 예산 450–700 CZK ≈ 27,000–42,000원</div></div><div class="out" aria-hidden="true">↗</div></div></a>
-<div class="transport"><span>🚶 저녁 식당 → Hotel Klárov · 약 10–15분</span></div>
-<a class="event rest link" href="https://www.google.com/maps/search/?api=1&amp;query=Hotel%20Klarov%20Prague" target="_blank" rel="noopener noreferrer"><div class="row"><div class="time">20:15<br>전후</div><div class="icon" aria-hidden="true">🛏️</div><div><div class="title">Hotel Klárov<span class="korean">호텔 클라로프</span></div><div class="desc">식사 후 숙소 복귀 · 휴식.</div></div><div class="out" aria-hidden="true">↗</div></div></a>
-</div></section>
-</div><section class="links-panel"><h2>식당 메뉴 · 공식 안내</h2><div class="quick"><a href="https://nasemaso.dlouha.ambi.cz/menu/denni-nabidka" target="_blank" rel="noopener noreferrer">Naše maso Dlouhá · 나셰 마소 들로우하 ↗</a><a href="https://www.kozlovnaupaukerta.cz/" target="_blank" rel="noopener noreferrer">Kozlovna U Paukerta · 코즐로브나 우 파우케르타 ↗</a><a href="https://www.klasterni-pivovar.cz/cs/menu" target="_blank" rel="noopener noreferrer">Pivovar Strahov · 피보바르 스트라호프 ↗</a><a href="https://www.husaplatnerska.cz/" target="_blank" rel="noopener noreferrer">Potrefená husa Platnéřská · 포트레페나 후사 플라트네르슈스카 ↗</a></div><p class="source">메뉴·매장 정보 확인: 2026-09-22. 꼴레뇨 참고가는 <a href="https://www.pragueexperience.com/restaurants/menuwine/menu.asp?PlaceID=1533" target="_blank" rel="noopener noreferrer">Prague Experience 메뉴</a> 기준. 각 장소 카드를 누르면 Google Maps가 열립니다.</p></section><div class="footer">EUROPE TRIP 2026 · PRAGUE</div></main></body></html>
+<body><div class="wrap">
+<a class="back" href="../">← 도시 선택</a>
+
+<section class="hero">
+<div class="eyebrow">P R A G U E · 2 0 2 6</div>
+<h1>프라하 타임라인</h1>
+<div class="sub">9/28(월)–9/30(수) · Hotel Klárov 기준</div>
+<div class="chips"><span class="chip">Naše maso</span><span class="chip">Night Walk</span><span class="chip">Morning Run</span><span class="chip">Strahov Brewery 12:00</span></div>
+<div class="info">🚍 9/28 Berlin Südkreuz 10:20 → Prague Florenc 14:20 · 🚆 9/30 Prague 09:01 → Vienna Hbf 13:18.</div>
+</section>
+
+<section class="day">
+<div class="dayhead d1">DAY 1 · 9/28 (월) · ARRIVE & NIGHT PRAGUE</div>
+<div class="timeline">
+
+<a class="event" href="https://www.google.com/maps/search/?api=1&query=Prague+Florenc" target="_blank">
+<div class="row"><div class="time">14:20</div><div class="ico">🚌</div><div><div class="title">Prague Florenc 도착</div><div class="desc">Berlin Südkreuz에서 이동 후 도착.</div></div><div>↗</div></div></a>
+
+<div class="move"><span>🚶 도착 직후 늦점심 · 약 5~10분</span></div>
+
+<a class="event food" href="https://www.google.com/maps/search/?api=1&query=Bagel+Lounge+Florenc+Prague" target="_blank">
+<div class="row"><div class="time">14:30<br>~15:10</div><div class="ico">🥯</div><div>
+<div class="title">Bagel Lounge Florenc <span class="ko">(베이글 라운지 플로렌츠)</span></div>
+<div class="desc">저녁 Naše maso를 위해 가볍게 배만 채우는 늦점심.</div>
+<div class="menu">베이글·샌드위치·커피 위주. 너무 무겁지 않게.</div>
+<span class="cost">대략 1인 €8~15 (12,500원~23,400원)</span>
+</div><div>↗</div></div></a>
+
+<div class="move transit-detail"><a href="https://www.google.com/maps/dir/?api=1&origin=Florenc%20Prague&destination=Hotel%20Klarov%20Prague&travelmode=transit" target="_blank" rel="noopener"><b>🚇 Florenc → Hotel Klárov · Metro B → A</b><small>Florenc → Metro B ‘Zličín’ 방향 → Můstek<br>Můstek에서 Metro A ‘Nemocnice Motol’ 방향 → Malostranská<br>Malostranská → Hotel Klárov 도보 약 2~4분<br><em>↗ 당일 실시간 경로 열기</em></small></a></div>
+
+<a class="event" href="https://www.google.com/maps/search/?api=1&query=Hotel+Klarov+Prague" target="_blank">
+<div class="row"><div class="time">15:30</div><div class="ico">🧳</div><div><div class="title">Hotel Klárov 체크인</div><div class="desc">짐 풀고 잠깐 정리.</div></div><div>↗</div></div></a>
+
+<a class="event rest" href="https://www.google.com/maps/search/?api=1&query=Mala+Strana+Prague" target="_blank">
+<div class="row"><div class="time">16:00<br>~17:30</div><div class="ico">🌿</div><div><div class="title">말라스트라나 · 강변 산책</div><div class="desc">남친과 둘이 천천히. 첫날은 무리하지 않고 프라하 분위기만 잡기.</div></div><div>↗</div></div></a>
+
+<div class="move transit-detail"><a href="https://www.google.com/maps/dir/?api=1&origin=Hotel%20Klarov%20Prague&destination=Nase%20maso%20Prague&travelmode=transit" target="_blank" rel="noopener"><b>🚇 Hotel Klárov → Naše maso · Metro A 1정거장</b><small>호텔 → Malostranská 역 도보 2~4분<br>Metro A ‘Depo Hostivař’ 방향 → Staroměstská<br>Naše maso/Dlouhá까지 도보 약 8~10분<br><em>↗ 당일 실시간 경로 열기</em></small></a></div>
+
+<a class="event food" href="https://www.google.com/maps/search/?api=1&query=Nase+maso+Dlouha+Prague" target="_blank">
+<div class="row"><div class="time">18:00<br>~19:15</div><div class="ico">🥩</div><div>
+<div class="title">Naše maso Dlouhá <span class="ko">(나셰 마소)</span></div>
+<div class="desc">첫날 메인 이벤트. 정육점+비스트로 계열 육식 코스.</div>
+<div class="menu">버거·스테이크·타르타르/육회류 등 현장 메뉴에서 선택.</div>
+<span class="cost">대략 1인 €15~30 (23,400원~46,800원)</span>
+</div><div>↗</div></div></a>
+
+<div class="move"><span>🚶 Naše maso → Old Town Square 약 8~10분</span></div>
+
+<a class="event" href="https://www.google.com/maps/search/?api=1&query=Old+Town+Square+Prague" target="_blank">
+<div class="row"><div class="time">19:25<br>~20:00</div><div class="ico">🏛️</div><div><div class="title">Old Town Square</div><div class="desc">구시가 광장 야경 산책.</div></div><div>↗</div></div></a>
+
+<a class="event" href="https://www.google.com/maps/search/?api=1&query=Prague+Astronomical+Clock" target="_blank">
+<div class="row"><div class="time">20:00<br>~20:15</div><div class="ico">🕰️</div><div><div class="title">Astronomical Clock</div><div class="desc">천문시계 보고 다음 코스로.</div></div><div>↗</div></div></a>
+
+<div class="move"><span>🚶 구시가/천문시계 → U Paukerta 약 10~15분</span></div>
+<a class="event food" href="https://www.google.com/maps/search/?api=1&query=Kozlovna+U+Paukerta+Prague" target="_blank">
+<div class="row"><div class="time">20:15<br>~21:15</div><div class="ico">🍺</div><div>
+<div class="title">Kozlovna U Paukerta <span class="ko">(코즐로브나 우 파우케르타)</span></div>
+<div class="desc">첫날 2차. 코젤 생맥 맛 우선 픽.</div>
+<div class="menu">탱크 Velkopopovický Kozel 11° · Kozel Black · unfiltered Kozel 중 선택</div>
+<span class="cost">맥주 1~2잔 기준 가볍게</span>
+</div><div>↗</div></div></a>
+<div class="move"><span>🚶 U Paukerta → Charles Bridge 약 10~15분</span></div>
+
+<a class="event" href="https://www.google.com/maps/search/?api=1&query=Charles+Bridge+Prague" target="_blank">
+<div class="row"><div class="time">20:20<br>~21:00</div><div class="ico">🌙</div><div><div class="title">Charles Bridge 야경</div><div class="desc">밤 카를교 건너 말라스트라나 쪽으로 숙소 복귀.</div></div><div>↗</div></div></a>
+
+<div class="move"><span>🚶 카를교 서쪽 → Hotel Klárov 약 12~15분</span></div>
+
+<a class="event rest" href="https://www.google.com/maps/search/?api=1&query=Hotel+Klarov+Prague" target="_blank">
+<div class="row"><div class="time">21:15<br>전후</div><div class="ico">🛏️</div><div><div class="title">숙소 복귀</div><div class="desc">첫날 종료. 다음날 아침 조깅 대비.</div></div><div>↗</div></div></a>
+
+</div>
+<div class="note">💡 Day 1은 일행 없이 남친과 둘이 움직이는 코스. 늦점심은 가볍게, 저녁과 야경에 힘을 실었어.</div>
+</section>
+
+<section class="day">
+<div class="dayhead d2">DAY 2 · 9/29 (화) · RUN & STRAHOV</div>
+<div class="timeline">
+
+<a class="event" href="https://www.google.com/maps/search/?api=1&query=Charles+Bridge+Prague" target="_blank">
+<div class="row"><div class="time">06:30<br>~07:15</div><div class="ico">🏃🏻‍♀️</div><div>
+<div class="title">아침 조깅 · Vltava & Charles Bridge</div>
+<div class="desc">Hotel Klárov → 강변 → 카를교/캄파 쪽 → 호텔 복귀. 사람 적은 아침 프라하를 달리는 코스.</div>
+<span class="cost">약 4~5km · 35~45분 느긋하게</span>
+</div><div>↗</div></div></a>
+
+<div class="move"><span>🚿 숙소 복귀 → 샤워 → 조식</span></div>
+
+<div class="event food"><div class="row"><div class="time">07:30<br>~09:00</div><div class="ico">☕</div><div><div class="title">호텔 조식 · 천천히 준비</div><div class="desc">오전 일정은 여유 있게.</div></div><div></div></div></div>
+
+<div class="event rest"><div class="row"><div class="time">09:00<br>~11:00</div><div class="ico">🏰</div><div><div class="title">프라하성/말라스트라나 유동 관광</div><div class="desc">12시 Strahov 고정 일정에 맞춰 근처에서 움직이기.</div></div><div></div></div></div>
+
+<div class="move transit-detail"><a href="https://www.google.com/maps/dir/?api=1&origin=Prague%20Castle&destination=Pivovar%20Strahov%20Prague&travelmode=transit" target="_blank" rel="noopener"><b>🚋 Prague Castle → Strahov · 트램 22/23</b><small>Pražský hrad → 22 ‘Bílá Hora’ 또는 23 ‘Královka’ 방향<br>Pohořelec 하차 → Pivovar Strahov 도보 약 5분<br>성 서쪽에 이미 있으면 도보 15~20분도 가능<br><em>↗ 당일 실시간 경로 열기</em></small></a></div>
+
+<a class="event food" href="https://www.google.com/maps/search/?api=1&query=Pivovar+Strahov+Prague" target="_blank">
+<div class="row"><div class="time">12:00<br>~14:00</div><div class="ico">🍺</div><div>
+<div class="title">Pivovar Strahov <span class="ko">(스트라호프 수도원 양조장)</span></div>
+<div class="desc">일행들과 다 같이 고정 일정. 자체 양조 맥주 + 체코식 점심.</div>
+<div class="menu">Amber Lager 89 CZK · Dark Lager 89 CZK · IPA 97 CZK · 굴라시/포크너클/갈비 등</div>
+<span class="cost">맥주+식사 1인 대략 €15~30 (23,400원~46,800원)</span>
+</div><div>↗</div></div></a>
+
+<div class="event rest"><div class="row"><div class="time">14:00<br>~17:30</div><div class="ico">🌆</div><div><div class="title">오후 자유 관광 · 프라하성/말라스트라나</div><div class="desc">일행과 움직이거나 각자 자유롭게. 성 내부 운영 제한에 따라 현장 조정.</div></div><div></div></div></div>
+
+<div class="move transit-detail"><a href="https://www.google.com/maps/dir/?api=1&origin=Pivovar%20Strahov%20Prague&destination=Malostranske%20namesti%20Prague&travelmode=transit" target="_blank" rel="noopener"><b>🚋 Strahov → 저녁권역 · 22/23</b><small>Pohořelec → 트램 22/23 시내 방향 → Malostranské náměstí<br>Pork’s Mostecká면 도보 3~5분<br>구시가 쪽 식당으로 바꾸면 Malostranská에서 Metro A → Staroměstská 1정거장<br><em>↗ 당일 실시간 경로 열기</em></small></a></div>
+
+<a class="event food" href="https://www.google.com/maps/search/?api=1&query=Pork%27s+Mostecka+Prague" target="_blank">
+<div class="row"><div class="time">18:30<br>~20:00</div><div class="ico">🍖</div><div>
+<div class="title">Pork's Mostecká <span class="ko">(포크스 모스테츠카)</span></div>
+<div class="desc">둘째 날 꼴레뇨 후보. 카를교 말라스트라나 쪽이라 일행 숙소가 달라도 모이기 편한 편.</div>
+<div class="menu">Pork knuckle 약 479 CZK · Pilsner Urquell 0.5L 약 75 CZK</div>
+<span class="cost">1인 대략 €15~25 (23,400원~39,000원)</span>
+</div><div>↗</div></div></a>
+
+<div class="event rest"><div class="row"><div class="time">20:00<br>이후</div><div class="ico">🌙</div><div><div class="title">야경 / 강변 / 자유시간</div><div class="desc">체력과 분위기 따라 유동적으로.</div></div><div></div></div></div>
+
+</div>
+<div class="note">💡 Day 2 핵심은 아침 조깅 + 12:00 Strahov. 저녁 Pork's는 우선 후보로 넣어뒀고 최종 검토 가능.</div>
+</section>
+
+<div class="note">🚦 교통 메모: PID Lítačka 앱 추천. Metro A/B/C는 매일 05:00~24:00 운영. 종이표는 플랫폼 진입 전에 유효화.</div>
+<section class="route"><h2>🚆 9/30 · Vienna 이동</h2><p>Prague 09:01 → Vienna Hbf 13:18</p></section>
+
+<div class="footer">PRAGUE · RUN EARLY · EAT WELL · WALK LATE</div>
+</div></body></html>

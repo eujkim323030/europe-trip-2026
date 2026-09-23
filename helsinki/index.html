@@ -51,7 +51,10 @@ h1{margin:0;text-align:center;font-size:clamp(27px,5vw,43px);line-height:1.18;le
 .food{background:linear-gradient(180deg,#fff,#fffaf7)} .food .icon{background:var(--peach)}
 .shop .icon{background:var(--green)} .culture .icon{background:#eef2ff} .rest .icon{background:var(--lav)}
 .transport{margin:-4px 0 12px;display:flex;align-items:center;justify-content:center;color:#668093;font-size:12px;text-align:center}
-.transport span{background:#eef5f8;padding:7px 10px;border-radius:999px}
+.transport span{background:#eef5f8;padding:7px 10px;border-radius:999px}.transport.transit-detail span,.transport.transit-detail a{display:inline-block;max-width:94%;background:#eef5f8;padding:9px 12px;border-radius:16px;color:#668093;text-decoration:none;line-height:1.45}
+.transport.transit-detail b{display:block;color:#516d82;font-size:11.8px}
+.transport.transit-detail small{display:block;margin-top:3px;font-size:10.7px;color:#6e8495}
+.transport.transit-detail em{font-style:normal;color:#4f7fa2;font-weight:800}
 .section-foot{padding:0 18px 20px}
 .tip{background:#f7fbfd;border-radius:20px;padding:13px 15px;color:#617185;font-size:12.5px;line-height:1.55}
 .choice-wrap{margin:8px 0 14px}
@@ -134,7 +137,7 @@ h1{margin:0;text-align:center;font-size:clamp(27px,5vw,43px);line-height:1.18;le
 <div class="row"><div class="time">06:40<br>~07:00</div><div class="icon">🪥</div><div><div class="title">공항에서 1차 정리</div><div class="desc">양치 · 세수 · 렌즈 · 편한 옷으로 환복</div></div><div></div></div>
 </div>
 
-<div class="transport"><span>🚆 공항 → 중앙역 기차 I/P · 약 35분</span></div>
+<div class="transport transit-detail"><a href="https://www.google.com/maps/dir/?api=1&origin=Helsinki%20Airport&destination=Scandic%20Helsinki%20Station&travelmode=transit" target="_blank" rel="noopener"><b>🚆 HEL 공항 → Helsinki Central · I/P 통근열차</b><small>터미널 지하 Airport Station → 행선지 ‘Helsinki’인 I 또는 P 탑승<br>Helsinki Central 하차 → Scandic Helsinki Station 도보 약 3~5분<br>HSL ABC권 사용 · 열차 약 27~32분<br><em>↗ 당일 실시간 경로 열기</em></small></a></div>
 
 <a class="event link" href="https://www.google.com/maps/search/?api=1&query=Scandic+Helsinki+Station" target="_blank" rel="noopener">
 <div class="row"><div class="time">07:45<br>~08:00</div><div class="icon">🧳</div><div><div class="title">Scandic Helsinki Station</div><div class="desc">짐 맡기기 · 얼리 체크인 가능 여부 확인</div></div><div class="out">↗</div></div>
@@ -162,13 +165,13 @@ h1{margin:0;text-align:center;font-size:clamp(27px,5vw,43px);line-height:1.18;le
 </div><div class="out">↗</div></div>
 </a>
 
-<div class="transport"><span>🚶 Allas → Market Square 약 3~5분 · 페리 약 15분</span></div>
+<div class="transport transit-detail"><a href="https://www.google.com/maps/dir/?api=1&origin=Allas%20Sea%20Pool%20Helsinki&destination=Suomenlinna%20ferry%20terminal&travelmode=transit" target="_blank" rel="noopener"><b>⛴️ Market Square → Suomenlinna · HSL 페리</b><small>Allas → Kauppatori/Market Square 선착장 도보 3~5분<br>Suomenlinna행 HSL 페리 탑승 → 약 15분<br>ABC권에 zone A가 포함되어 별도 페리표 불필요<br><em>↗ 당일 실시간 경로 열기</em></small></a></div>
 
 <a class="event link" href="https://www.google.com/maps/search/?api=1&query=Suomenlinna+Helsinki" target="_blank" rel="noopener">
 <div class="row"><div class="time">10:15<br>~13:30</div><div class="icon">⛴️</div><div><div class="title">수오멘린나</div><div class="desc">페리 이동 + 섬 산책 · 풍경 위주</div><span class="cost">HSL ABC 2일권에 페리 포함</span></div><div class="out">↗</div></div>
 </a>
 
-<div class="transport"><span>⛴️ 섬 → Market Square 약 15분 · 식당까지 도보 5분 안팎</span></div>
+<div class="transport transit-detail"><a href="https://www.google.com/maps/dir/?api=1&origin=Suomenlinna%20ferry%20terminal&destination=Kauppatori%20Helsinki&travelmode=transit" target="_blank" rel="noopener"><b>⛴️ Suomenlinna → Market Square · HSL 페리</b><small>메인 선착장 → Kauppatori행 페리<br>약 15분 → Market Square 하선<br>하선 후 식당까지 도보 5분 안팎<br><em>↗ 당일 실시간 경로 열기</em></small></a></div>
 
 <a class="event link food" href="https://maps.app.goo.gl/fngdEqCC1hp7Ka8GA" target="_blank" rel="noopener">
 <div class="row"><div class="time">13:45<br>~15:15</div><div class="icon">🍺</div><div>
@@ -218,7 +221,7 @@ h1{margin:0;text-align:center;font-size:clamp(27px,5vw,43px);line-height:1.18;le
 <div class="row"><div class="time">06:40<br>~07:05</div><div class="icon">🪥</div><div><div class="title">공항에서 최대한 정리</div><div class="desc">양치 · 세수 · 렌즈 · 스킨케어 · 환복. 전신 샤워는 포기.</div></div><div></div></div>
 </div>
 
-<div class="transport"><span>🚆 공항 → 중앙역 기차 I/P · 약 35분</span></div>
+<div class="transport transit-detail"><a href="https://www.google.com/maps/dir/?api=1&origin=Helsinki%20Airport&destination=Scandic%20Helsinki%20Station&travelmode=transit" target="_blank" rel="noopener"><b>🚆 HEL 공항 → Helsinki Central · I/P 통근열차</b><small>터미널 지하 Airport Station → 행선지 ‘Helsinki’인 I 또는 P 탑승<br>Helsinki Central 하차 → Scandic Helsinki Station 도보 약 3~5분<br>HSL ABC권 사용 · 열차 약 27~32분<br><em>↗ 당일 실시간 경로 열기</em></small></a></div>
 
 <a class="event link" href="https://www.google.com/maps/search/?api=1&query=Scandic+Helsinki+Station" target="_blank" rel="noopener">
 <div class="row"><div class="time">07:50<br>~08:05</div><div class="icon">🧳</div><div><div class="title">Scandic Helsinki Station</div><div class="desc">짐 맡기기 · 얼리 체크인 가능 여부 확인</div></div><div class="out">↗</div></div>
@@ -235,13 +238,13 @@ h1{margin:0;text-align:center;font-size:clamp(27px,5vw,43px);line-height:1.18;le
 </div><div class="out">↗</div></div>
 </a>
 
-<div class="transport"><span>🚶 카페 → Market Square 약 5~10분 · 페리 약 15분</span></div>
+<div class="transport transit-detail"><a href="https://www.google.com/maps/dir/?api=1&origin=Caf%C3%A9%20Engel%20Helsinki&destination=Suomenlinna%20ferry%20terminal&travelmode=transit" target="_blank" rel="noopener"><b>⛴️ Café Engel → Suomenlinna · Market Square에서 HSL 페리</b><small>Café Engel → Kauppatori 도보 약 5분<br>Suomenlinna행 HSL 페리 약 15분<br>ABC권 사용 가능<br><em>↗ 당일 실시간 경로 열기</em></small></a></div>
 
 <a class="event link" href="https://www.google.com/maps/search/?api=1&query=Suomenlinna+Helsinki" target="_blank" rel="noopener">
 <div class="row"><div class="time">09:30<br>~12:45</div><div class="icon">⛴️</div><div><div class="title">수오멘린나</div><div class="desc">A안보다 약 45분 일찍 시작. 섬에서 조금 더 여유.</div><span class="cost">추가 샤워비 없음</span></div><div class="out">↗</div></div>
 </a>
 
-<div class="transport"><span>⛴️ 섬 → Market Square 약 15분 · 식당까지 도보 5분 안팎</span></div>
+<div class="transport transit-detail"><a href="https://www.google.com/maps/dir/?api=1&origin=Suomenlinna%20ferry%20terminal&destination=Kauppatori%20Helsinki&travelmode=transit" target="_blank" rel="noopener"><b>⛴️ Suomenlinna → Market Square · HSL 페리</b><small>메인 선착장 → Kauppatori행 페리<br>약 15분 → Market Square 하선<br>하선 후 식당까지 도보 5분 안팎<br><em>↗ 당일 실시간 경로 열기</em></small></a></div>
 
 <a class="event link food" href="https://maps.app.goo.gl/fngdEqCC1hp7Ka8GA" target="_blank" rel="noopener">
 <div class="row"><div class="time">13:00<br>~14:30</div><div class="icon">🍺</div><div>
@@ -328,7 +331,7 @@ h1{margin:0;text-align:center;font-size:clamp(27px,5vw,43px);line-height:1.18;le
 </div><div class="out">↗</div></div>
 </a>
 
-<div class="transport"><span>🚋 / 🚶 Oodi → 박물관 약 15분</span></div>
+<div class="transport transit-detail"><a href="https://www.google.com/maps/dir/?api=1&origin=Oodi%20Helsinki%20Central%20Library&destination=Architecture%20and%20Design%20Museum%20Helsinki&travelmode=transit" target="_blank" rel="noopener"><b>🚋 Oodi → Architecture & Design Museum · 9/25 공사 반영</b><small>Oodi → Ylioppilastalo 정류장 도보 약 8분<br>트램 10B ‘Kolmikulma’ 방향 → 종점 Kolmikulma 하차<br>박물관까지 약 300m 도보<br>Johanneksenkirkko 정류장은 9월 공사로 미운행 · 그냥 도보면 약 20~25분<br><em>↗ 당일 실시간 경로 열기</em></small></a></div>
 
 <a class="event link culture" href="https://www.google.com/maps/search/?api=1&query=Architecture+and+Design+Museum+Helsinki" target="_blank" rel="noopener">
 <div class="row"><div class="time">11:30<br>~12:50</div><div class="icon">🏛️</div><div>
@@ -381,7 +384,7 @@ h1{margin:0;text-align:center;font-size:clamp(27px,5vw,43px);line-height:1.18;le
 </div><div class="out">↗</div></div>
 </a>
 
-<div class="transport"><span>🚆 중앙역 → HEL 공항 기차 I/P · 약 35분</span></div>
+<div class="transport transit-detail"><a href="https://www.google.com/maps/dir/?api=1&origin=Helsinki%20Central%20Railway%20Station&destination=Helsinki%20Airport&travelmode=transit" target="_blank" rel="noopener"><b>🚆 Helsinki Central → HEL 공항 · I/P 통근열차</b><small>Helsinki Central → Airport/Lentoasema 방면 I 또는 P<br>Airport Station 하차 → 터미널은 역 바로 위<br>ABC 2일권 사용 · 약 30~35분<br><em>↗ 당일 실시간 경로 열기</em></small></a></div>
 
 <a class="event link" href="https://www.google.com/maps/search/?api=1&query=Helsinki+Airport" target="_blank" rel="noopener">
 <div class="row"><div class="time">15:00<br>~15:40</div><div class="icon">🚆</div><div>
@@ -418,6 +421,7 @@ h1{margin:0;text-align:center;font-size:clamp(27px,5vw,43px);line-height:1.18;le
 </div>
 </section>
 
+<div class="source">🚦 교통 메모: 9/25에는 Architecture & Design Museum 앞 트램 공사로 10B가 Kolmikulma까지만 운행. 출발 직전 HSL 앱에서 플랫폼/지연만 확인.</div>
 <div class="footer">HELSINKI · A LITTLE HAPPIER EVERY DAY</div>
 </div>
 
