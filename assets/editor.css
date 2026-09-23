@@ -1,0 +1,31 @@
+.editor-toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 8px;position:sticky;top:8px;z-index:10;padding:10px;border:1px solid #dce6ef;border-radius:18px;background:rgba(247,251,255,.97);box-shadow:0 5px 20px #29435b12}
+.editor-toolbar button,.editor-dialog button,.card-edit-controls button,.add-event{font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;border:1px solid #d5e3ef;border-radius:12px;padding:10px 14px;color:#355f8d;background:white;min-height:42px}
+.editor-toolbar .primary,.editor-dialog .primary{background:#355f8d;color:white;border-color:#355f8d}
+.editor-toolbar button:disabled,.editor-dialog button:disabled{opacity:.5;cursor:wait}
+.editor-hint,.editor-status{color:#65758a;font-size:12px;line-height:1.6}
+.editor-status{margin:8px 6px 18px;min-height:20px}
+.is-error,.form-error{color:#a33838}
+.editor-dialog{width:min(560px,calc(100% - 24px));max-height:88dvh;overflow:auto;border:1px solid #dce6ef;border-radius:24px;padding:22px;color:#172033;background:#f8fbff;box-shadow:0 20px 80px #17203340}
+.editor-dialog::backdrop{background:#17203366}
+.editor-dialog h2{margin:0 0 14px;font-size:22px}
+.editor-dialog p{font-size:13px;line-height:1.6}
+.editor-field{display:block;margin:12px 0;font-size:13px;font-weight:700;color:#51677f}
+.editor-field>span{display:block;margin-bottom:6px}
+.editor-field input,.editor-field textarea,.editor-field select{display:block;width:100%;min-width:0;border:1px solid #cbdbe8;border-radius:10px;padding:10px;background:white;color:#172033;font-family:inherit;font-size:16px;font-weight:400;line-height:1.5}
+.editor-field textarea{resize:vertical}
+.editor-dialog fieldset{border:1px solid #dbe6ef;border-radius:14px;margin:12px 0;padding:10px;min-width:0}
+.editor-dialog legend{font-size:13px;font-weight:700;color:#51677f}
+.dialog-actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;position:sticky;bottom:-22px;background:#f8fbff;padding:14px 0 8px;border-top:1px solid #dbe6ef;margin-top:18px}
+.editor-dialog .danger{color:#a33838;margin-right:auto}
+.transport-fields summary{cursor:pointer;color:#355f8d;font-size:14px;font-weight:700}
+.card-edit-controls{display:flex;gap:6px;justify-content:flex-end;margin:8px 0}
+.card-edit-controls button{padding:6px 10px;min-width:40px}
+.drag-handle{touch-action:none;cursor:grab!important;margin-right:auto}
+.editable-item{border-radius:16px;outline:1px dashed #bfd1e2;padding:4px;margin-bottom:12px;cursor:pointer}
+.editable-item .event:hover{transform:none}
+.dragging{opacity:.55}
+.drop-before{box-shadow:0 -4px #355f8d}
+.drop-after{box-shadow:0 4px #355f8d}
+.add-event{width:100%;border-style:dashed;margin-top:8px;background:#edf5fd}
+.itinerary-item .title,.itinerary-item .desc,.itinerary-item .time,.itinerary-item .menu{white-space:pre-line}
+@media(max-width:480px){.editor-dialog{padding:16px}.dialog-actions{bottom:-16px}.editor-hint{width:100%}.editor-toolbar{top:4px}.editor-toolbar button{padding:8px 10px}}

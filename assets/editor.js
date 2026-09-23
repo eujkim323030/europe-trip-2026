@@ -1,0 +1,279 @@
+import { extractItinerary, moveItem, FIELDS, CATEGORIES, safeLink } from './itinerary-model.js';
+
+const city = location.pathname.split('/').filter(Boolean)[0];
+const {data:initial,templates} = extractItinerary(document,city);
+const baseline = new Map(initial.lanes.flatMap(l=>l.items).map(i=>[i.id,i]));
+const lanes = new Map(Array.from(document.querySelectorAll('.timeline')).map(el=>[el.dataset.lane,el]));
+let saved=structuredClone(initial), draft=null, revision=null, ready=false, busy=false, dirty=false, authenticated=false;
+const toolbar=document.createElement('section');
+toolbar.className='editor-toolbar'; toolbar.setAttribute('aria-label','공유 일정 편집');
+document.querySelector('.hero').after(toolbar);
+const status=document.createElement('p'); status.className='editor-status'; status.setAttribute('role','status');
+toolbar.after(status);
+const modal=document.createElement('dialog'); modal.className='editor-dialog'; document.body.append(modal);
+let modalResolve=null;
+modal.addEventListener('cancel',()=>{modalResolve?.(null);modalResolve=null;});
+function closeDialog() {const resolve=modalResolve;modalResolve=null;modal.close();resolve?.(null);}
+const el=(tag,cls,text)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;};
+const button=(label,fn,cls='')=>{const b=el('button',cls,label);b.type='button';b.addEventListener('click',fn);return b;};
+const message=(text,error=false)=>{status.textContent=text;status.classList.toggle('is-error',error);};
+const markDirty=()=>{dirty=true;message('저장하지 않은 변경 사항이 있어요. 저장하면 함께 보는 사람에게 반영됩니다.');};
+const data=()=>draft||saved;
+
+async function api(path,options={}) {
+  const controller=new AbortController(); const timeout=setTimeout(()=>controller.abort(),15000);
+  try {
+    const r=await fetch('/api/trip/'+path,{...options,signal:controller.signal,cache:'no-store',credentials:'same-origin',headers:{'Content-Type':'application/json',...options.headers}});
+    const body=await r.json();
+    if(!r.ok) {const e=new Error(body.error||'요청을 처리하지 못했어요.');e.status=r.status;throw e;}
+    return body;
+  } catch(e) {if(!e.status)throw new Error('연결이 원활하지 않아요. 잠시 후 다시 시도해 주세요.');throw e;}
+  finally {clearTimeout(timeout);}
+}
+
+function actions() {
+  toolbar.replaceChildren();
+  if(!draft) {
+    const edit=button('✏️ 일정 편집',startEdit,'primary');edit.disabled=busy||!ready;toolbar.append(edit);
+    toolbar.append(button('새로고침',()=>load(),'quiet'));
+  } else {
+    for(const [label,fn,cls] of [['💾 저장',save,'primary'],['취소',cancel,'quiet'],['편집 잠그기',lock,'quiet']]) {
+      const b=button(label,fn,cls);b.disabled=busy;toolbar.append(b);
+    }
+    toolbar.append(el('span','editor-hint','☰ 끌어서 순서 변경 · 카드 눌러 수정'));
+  }
+}
+
+function setLink(element,href) {
+  if(href && safeLink(href)) {element.href=href;element.target='_blank';element.rel='noopener noreferrer';}
+  else {element.removeAttribute('href');element.removeAttribute('target');}
+}
+
+function cardView(card,template,base) {
+  let node=template?.cloneNode(true);
+  if(!node) {
+    node=el('a','event link');
+    node.innerHTML='<div class="row"><div class="time"></div><div class="icon"></div><div><div class="title"></div></div><div class="out">↗</div></div>';
+  }
+  const option=node.classList.contains('choice');
+  const content=option?(node.querySelector('a')||node):node.querySelector('.row>div:nth-child(3)');
+  const selectors={time:'.time',icon:'.icon',title:'.title,.ctitle,h3',description:'.desc,.cmeta,p',menu:'.menu',cost:'.cost,.ccost'};
+  const classes={time:'time',icon:'icon',title:option?'ctitle':'title',description:option?'cmeta':'desc',menu:'menu',cost:'cost'};
+  for(const [field,selector] of Object.entries(selectors)) {
+    if(base && card[field]===base[field]) continue;
+    let target=node.querySelector(selector);
+    if(!target && card[field] && classes[field]) {target=el(field==='cost'?'span':'div',classes[field]);content.append(target);}
+    if(target)target.textContent=card[field];
+  }
+  node.classList.remove(...CATEGORIES.filter(Boolean));if(card.category)node.classList.add(card.category);
+  if(card.mapLink && !node.matches('a') && !node.querySelector('a')) {
+    const anchor=el('a',node.className);anchor.append(...node.childNodes);node=anchor;
+  }
+  const link=node.matches('a')?node:node.querySelector('a');
+  if(link)setLink(link,card.mapLink);
+  node.classList.toggle('link',!!card.mapLink);
+  return node;
+}
+
+function itemView(item) {
+  const base=baseline.get(item.sourceId);const template=templates.get(item.sourceId);
+  const wrapper=el('div','itinerary-item');wrapper.dataset.item=item.id;
+  for(const route of item.transport) {
+    const transport=el('div','transport'+(route.description||route.mapLink?' transit-detail':''));
+    const box=el(route.mapLink?'a':'span');if(route.mapLink)setLink(box,route.mapLink);
+    if(route.description||route.mapLink) {
+      box.append(el('b','',route.title));const small=el('small','',route.description);
+      if(route.mapLink)small.append(el('em','','↗ 당일 실시간 경로 열기'));
+      box.append(small);
+    } else box.textContent=route.title;
+    transport.append(box);wrapper.append(transport);
+  }
+  if(item.kind==='choices') {
+    const group=el('div','choice-wrap');group.append(el('div','choice-title',item.title));
+    const grid=el('div','choice-grid');
+    const originals=template?Array.from(template.querySelectorAll('.choice')):[];
+    item.options.forEach((option,i)=>grid.append(cardView(option,originals[i],base?.options[i])));
+    group.append(grid);wrapper.append(group);
+  } else wrapper.append(cardView(item,template,base));
+  if(draft) {
+    wrapper.classList.add('editable-item');
+    const controls=el('div','card-edit-controls');
+    const handle=button('☰',()=>{},'drag-handle');handle.setAttribute('aria-label',item.title+' 순서 끌어서 변경');
+    handle.addEventListener('pointerdown',e=>dragStart(e,item.id,handle));
+    controls.append(handle,button('수정',()=>editItem(item.id)),button('↑',()=>step(item.id,-1)),button('↓',()=>step(item.id,1)));
+    controls.children[2].setAttribute('aria-label',item.title+' 위로 이동');controls.children[3].setAttribute('aria-label',item.title+' 아래로 이동');
+    wrapper.prepend(controls);
+    wrapper.addEventListener('click',e=>{if(busy)return;if(e.target.closest('.card-edit-controls'))return;e.preventDefault();editItem(item.id);});
+  }
+  return wrapper;
+}
+
+function render() {
+  for(const lane of data().lanes) {
+    const container=lanes.get(lane.id);container.replaceChildren(...lane.items.map(itemView));
+    if(draft)container.append(button('+ 일정 추가',()=>addItem(lane.id),'add-event'));
+  }
+  document.body.classList.toggle('is-editing',!!draft);
+  if(city==='helsinki') window.showOption(data().selectedOption);
+  actions();
+}
+
+async function load() {
+  if(draft||busy)return;
+  busy=true;actions();message('공유 일정을 불러오는 중…');
+  try {const result=await api(city);saved=result.data;revision=result.revision;ready=true;render();message(result.updatedAt?'공유 일정 · '+new Date(result.updatedAt).toLocaleString('ko-KR')+' 저장':'공유 일정 · 편집 후 저장하면 함께 볼 수 있어요.');}
+  catch(e){ready=false;message(e.message+' 현재 화면의 일정은 계속 볼 수 있어요.',true);}
+  finally{busy=false;actions();}
+}
+
+function formDialog(title) {
+  if(modal.open)closeDialog();modal.replaceChildren();
+  const form=el('form');form.append(el('h2','',title));
+  const error=el('p','form-error');error.setAttribute('role','alert');
+  const footer=el('div','dialog-actions');
+  modal.append(form);return {form,error,footer};
+}
+function field(form,label,value,{type='text',multiline=false,max=4000}={}) {
+  const wrap=el('label','editor-field');wrap.append(el('span','',label));
+  const input=el(multiline?'textarea':'input');if(!multiline)input.type=type;else input.rows=3;
+  input.value=value;input.maxLength=max;wrap.append(input);form.append(wrap);return input;
+}
+function selector(form,label,value,entries) {
+  const wrap=el('label','editor-field');wrap.append(el('span','',label));const select=el('select');
+  for(const [v,text] of entries){const o=el('option','',text);o.value=v;select.append(o);}select.value=value;wrap.append(select);form.append(wrap);return select;
+}
+function ask(title,text,confirmLabel='확인') {
+  const {form,footer}=formDialog(title);form.append(el('p','',text));
+  return new Promise(resolve=>{
+    modalResolve=resolve;footer.append(button('돌아가기',closeDialog),button(confirmLabel,()=>{modalResolve=null;modal.close();resolve(true);},'primary'));
+    form.append(footer);form.addEventListener('submit',e=>e.preventDefault());modal.showModal();
+  });
+}
+
+async function login() {
+  const state=await api('session');if(state.authenticated){authenticated=true;return true;}
+  const {form,error,footer}=formDialog('편집 PIN');
+  form.append(el('p','','PIN을 아는 사람만 일정을 변경할 수 있어요.'));
+  const input=field(form,'PIN','',{type:'password',max:40});input.inputMode='numeric';input.autocomplete='current-password';input.required=true;
+  const submit=el('button','primary','편집 시작');submit.type='submit';footer.append(button('취소',closeDialog),submit);form.append(error,footer);
+  return new Promise(resolve=>{
+    modalResolve=resolve;
+    form.addEventListener('submit',async e=>{e.preventDefault();submit.disabled=true;error.textContent='';
+      try{await api('session',{method:'POST',body:JSON.stringify({pin:input.value})});input.value='';authenticated=true;modalResolve=null;modal.close();resolve(true);}
+      catch(err){error.textContent=err.message;}finally{submit.disabled=false;}
+    });modal.showModal();input.focus();
+  });
+}
+async function startEdit() {
+  if(busy||!ready)return;
+  busy=true;actions();
+  try{if(!await login())return;const current=await api(city);saved=current.data;revision=current.revision;draft=structuredClone(saved);dirty=false;render();message('시간·내용·교통을 수정하거나, ☰ 손잡이와 ↑↓ 버튼으로 순서를 바꾸세요.');}
+  catch(e){message(e.message,true);}finally{busy=false;actions();}
+}
+async function save() {
+  if(busy||!draft)return;busy=true;actions();message('공유 일정 저장 중…');
+  try{
+    if(!authenticated && !await login())return;
+    const snapshot=structuredClone(draft);
+    const result=await api(city,{method:'PUT',body:JSON.stringify({data:snapshot,revision})});
+    revision=result.revision;saved=snapshot;draft=null;dirty=false;render();
+    message('저장 완료! 다른 기기에서 새로고침하면 같은 일정이 보여요.');
+  }catch(e){if(e.status===401){authenticated=false;message(e.message+' 저장을 다시 누르면 PIN을 입력할 수 있어요.',true);}else message(e.message,true);}
+  finally{busy=false;actions();}
+}
+async function cancel() {
+  if(busy)return;if(dirty && !await ask('변경 취소','저장하지 않은 변경 사항을 취소할까요?','변경 취소'))return;
+  draft=null;dirty=false;render();await load();
+}
+async function lock() {
+  if(busy)return;if(dirty && !await ask('편집 잠그기','저장하지 않은 변경 사항을 취소하고 편집을 잠글까요?','잠그기'))return;
+  try{await api('session',{method:'DELETE'});authenticated=false;draft=null;dirty=false;render();message('편집을 잠갔어요.');}catch(e){message(e.message,true);}
+}
+
+function cardFields(form,card) {
+  const fields={};
+  fields.time=field(form,'시간',card.time,{multiline:true,max:80});
+  fields.title=field(form,'일정명',card.title,{multiline:true,max:300});fields.title.required=true;
+  fields.description=field(form,'메모',card.description,{multiline:true});
+  fields.menu=field(form,'메뉴·추가 안내',card.menu,{multiline:true,max:2000});
+  fields.cost=field(form,'비용',card.cost,{max:500});
+  fields.mapLink=field(form,'지도 링크',card.mapLink,{type:'url',max:2000});
+  fields.icon=field(form,'아이콘',card.icon,{max:20});
+  fields.category=selector(form,'종류',card.category,[['','관광·이동'],['food','식사·카페'],['rest','휴식'],['shop','쇼핑'],['culture','문화'],['spa','온천'],['night','야경']]);
+  return ()=>Object.fromEntries(FIELDS.map(k=>[k,fields[k].value]));
+}
+function blankItem() {return {id:crypto.randomUUID(),sourceId:null,kind:'event',time:'',title:'새 일정',description:'',menu:'',cost:'',icon:'📍',category:'',mapLink:'',transport:[]};}
+function addItem(laneId) {if(!busy)editItem(null,laneId);}
+function editItem(id,newLaneId) {
+  if(!draft||busy)return;
+  const lane=draft.lanes.find(l=>l.items.some(i=>i.id===id)) || draft.lanes.find(l=>l.id===newLaneId);
+  const original=id?lane.items.find(i=>i.id===id):blankItem();
+  const {form,error,footer}=formDialog(id?'일정 수정':'새 일정 추가');
+  const destination=selector(form,'날짜·일정안',lane.id,draft.lanes.map(l=>[l.id,l.label]));
+  let readMain,readOptions=[];
+  if(original.kind==='choices') {
+    const title=field(form,'선택 일정 제목',original.title,{max:300});
+    readMain=()=>({...original,title:title.value});
+    original.options.forEach((option,index)=>{const group=el('fieldset');group.append(el('legend','',`선택 ${index+1}`));form.append(group);readOptions.push(cardFields(group,option));});
+  } else readMain=cardFields(form,original);
+  const routes=el('details','transport-fields');routes.append(el('summary','','이 일정으로 오는 교통 안내'));form.append(routes);
+  routes.append(el('p','','순서나 날짜를 바꿀 때 함께 이동합니다. 경로가 달라지면 안내도 확인해 주세요.'));
+  const readers=[];
+  for(const [i,route] of [...original.transport,{title:'',description:'',mapLink:''}].entries()) {
+    const group=el('fieldset');group.append(el('legend','',`교통 ${i+1}${i===original.transport.length?' (추가)':''}`));routes.append(group);
+    const title=field(group,'교통 요약',route.title,{max:500});
+    const description=field(group,'교통 상세',route.description,{multiline:true});
+    const mapLink=field(group,'실시간 경로 링크',route.mapLink,{type:'url',max:2000});
+    readers.push(()=>({title:title.value,description:description.value,mapLink:mapLink.value}));
+  }
+  const submit=el('button','primary','적용');submit.type='submit';
+  footer.append(button('취소',()=>modal.close()),submit);
+  if(id)footer.prepend(button('🗑 삭제',async()=>{
+    modal.close();if(!await ask('일정 삭제','이 일정과 연결된 교통 안내를 삭제할까요? 저장 전에는 전체 취소로 되돌릴 수 있어요.','삭제'))return;
+    lane.items.splice(lane.items.findIndex(i=>i.id===id),1);render();markDirty();
+  },'danger'));
+  form.append(error,footer);
+  form.addEventListener('submit',e=>{
+    e.preventDefault();const next={...original,...readMain(),transport:readers.map(r=>r()).filter(r=>r.title||r.description||r.mapLink)};
+    if(readOptions.length)next.options=readOptions.map(r=>r());
+    if(!next.title.trim()||![next.mapLink,...next.transport.map(t=>t.mapLink),...(next.options||[]).map(o=>o.mapLink)].every(safeLink)){error.textContent='일정명과 http/https 지도 링크를 확인해 주세요.';return;}
+    if(id)lane.items[lane.items.findIndex(i=>i.id===id)]=next;else lane.items.push(next);
+    if(destination.value!==lane.id)moveItem(draft,next.id,destination.value);
+    modal.close();render();markDirty();
+  });modal.showModal();
+}
+
+function step(id,delta) {
+  if(busy)return;const lane=draft.lanes.find(l=>l.items.some(i=>i.id===id));const i=lane.items.findIndex(v=>v.id===id);
+  if(i+delta<0||i+delta>=lane.items.length)return;
+  [lane.items[i],lane.items[i+delta]]=[lane.items[i+delta],lane.items[i]];render();markDirty();
+  document.querySelector(`[data-item="${id}"] .drag-handle`)?.focus();
+}
+function dragStart(event,id,handle) {
+  if(busy||event.button!==0)return;event.preventDefault();handle.setPointerCapture(event.pointerId);
+  const source=handle.closest('.itinerary-item');source.classList.add('dragging');let targetId=null,after=false;
+  const move=e=>{
+    document.querySelectorAll('.drop-before,.drop-after').forEach(n=>n.classList.remove('drop-before','drop-after'));
+    const target=document.elementFromPoint(e.clientX,e.clientY)?.closest('.editable-item');
+    if(target && target.dataset.item!==id){targetId=target.dataset.item;after=e.clientY>target.getBoundingClientRect().top+target.offsetHeight/2;target.classList.add(after?'drop-after':'drop-before');}
+    else targetId=null;
+    if(e.clientY<70)window.scrollBy(0,-24);else if(e.clientY>innerHeight-70)window.scrollBy(0,24);
+  };
+  const end=e=>{
+    handle.removeEventListener('pointermove',move);handle.removeEventListener('pointerup',end);handle.removeEventListener('pointercancel',end);
+    source.classList.remove('dragging');document.querySelectorAll('.drop-before,.drop-after').forEach(n=>n.classList.remove('drop-before','drop-after'));
+    if(e.type==='pointercancel'||!targetId)return;
+    const lane=draft.lanes.find(l=>l.items.some(i=>i.id===targetId));const index=lane.items.findIndex(i=>i.id===targetId);
+    const before=after?lane.items[index+1]?.id||null:targetId;
+    if(moveItem(draft,id,lane.id,before)){render();markDirty();}
+  };
+  handle.addEventListener('pointermove',move);handle.addEventListener('pointerup',end);handle.addEventListener('pointercancel',end);
+}
+
+if(city==='helsinki') {
+  const original=window.showOption;
+  window.showOption=option=>{if(busy&&draft&&draft.selectedOption!==option)return;original(option);if(draft&&draft.selectedOption!==option){draft.selectedOption=option;markDirty();}};
+}
+window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue='';}});
+window.addEventListener('focus',()=>{if(!draft&&!modal.open)load();});
+actions();load();
