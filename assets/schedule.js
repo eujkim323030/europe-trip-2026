@@ -70,19 +70,27 @@ export function recalculateLane(lane) {
   return next;
 }
 export function reflowAfterEdit(lane,edited) {
-  const next=structuredClone(lane),index=next.items.findIndex(item=>item.id===edited.id),notes=[];
+  const next=structuredClone(lane),index=next.items.findIndex(item=>item.id===edited.id);
   next.items[index]=structuredClone(edited);
-  let previous=normalizeSchedule(edited),cursor=previous.start===null||previous.duration===null?null:previous.start+previous.duration,changed=0;
+  return reflowFrom(next,index,lane);
+}
+function reflowFrom(next,index,baseline) {
+  const notes=[],previous=normalizeSchedule(next.items[index]);
+  let cursor=previous.start===null||previous.duration===null?null:previous.start+previous.duration,changed=0;
   for(let i=index+1;i<next.items.length;i++) {
     if(cursor===null){notes.push('시작·소요시간이 미정인 구간 이후는 유지했어요.');break;}
-    const item=next.items[i],s=normalizeSchedule(item),oldPrevious=normalizeSchedule(lane.items[i-1]);
+    const item=next.items[i],s=normalizeSchedule(item);
+    const oldIndex=baseline.items.findIndex(old=>old.id===item.id),oldPrevious=normalizeSchedule(baseline.items[oldIndex-1]||{});
     const stale=s.from!==null&&s.from!==routeKey(next.items[i-1],item);
     let interval;
     if(!stale&&s.travel!==null)interval=s.travel+s.buffer;
     else {
       notes.push('이동시간 미정 구간은 기존 간격을 유지했어요. 이동시간을 확인해 주세요.');
-      if(s.start===null||oldPrevious.start===null||oldPrevious.duration===null)break;
-      interval=Math.max(0,s.start-oldPrevious.start-oldPrevious.duration);
+      if(oldIndex===0)interval=Math.max(0,(s.start??cursor)-cursor);
+      else {
+        if(s.start===null||oldPrevious.start===null||oldPrevious.duration===null)break;
+        interval=Math.max(0,s.start-oldPrevious.start-oldPrevious.duration);
+      }
     }
     const arrival=cursor+interval,start=s.fixed?s.start:arrival;
     if(start===null)break;
@@ -95,6 +103,39 @@ export function reflowAfterEdit(lane,edited) {
     cursor=s.duration===null?null:Math.max(start,arrival)+s.duration;
   }
   return {lane:next,changed,notes:[...new Set(notes)]};
+}
+function invalidateIncoming(lane,index,oldPrevious) {
+  const item=lane.items[index];if(!item)return;
+  item.schedule={...normalizeSchedule(item),travel:null,from:index?routeKey(oldPrevious,item):null};
+}
+export function insertScheduledItem(lane,added) {
+  const next=structuredClone(lane),item=structuredClone(added),s=normalizeSchedule(item);
+  let index=s.start===null?-1:next.items.findIndex(old=>{const start=normalizeSchedule(old).start;return start!==null&&start>=s.start;});
+  if(index<0)index=next.items.length;
+  item.schedule={...s,from:index?routeKey(next.items[index-1],item):null};
+  const oldPrevious=next.items[index-1];
+  next.items.splice(index,0,item);
+  invalidateIncoming(next,index+1,oldPrevious);
+  const result=reflowFrom(next,index,lane);
+  if(index+1<next.items.length)result.notes.push('새로 연결된 구간의 이동시간을 확인해 주세요.');
+  return result;
+}
+export function deleteScheduledItem(lane,id) {
+  const next=structuredClone(lane),index=next.items.findIndex(item=>item.id===id),removed=next.items[index];
+  next.items.splice(index,1);
+  if(index===next.items.length)return {lane:next,changed:0,notes:[]};
+  invalidateIncoming(next,index,removed);
+  let firstChanged=0;
+  if(index===0){
+    const first=next.items[0],s=normalizeSchedule(first),start=normalizeSchedule(removed).start;
+    if(!s.fixed&&start!==null&&start!==s.start){
+      first.schedule={...s,start};first.time=displayTime(start)+(s.duration===null?'':'\n~'+displayTime(start+s.duration));firstChanged=1;
+    }
+  }
+  const result=reflowFrom(next,Math.max(0,index-1),lane);
+  result.changed+=firstChanged;
+  if(index>0)result.notes.push('삭제 후 새로 연결된 구간의 이동시간을 확인해 주세요.');
+  return result;
 }
 export function directionsLink(previous,item) {
   const origin=placeOf(previous||{}),destination=placeOf(item);

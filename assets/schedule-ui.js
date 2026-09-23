@@ -1,6 +1,6 @@
 import {normalizeSchedule,analyzeLane,displayTime,clockTime,parseTime,routeKey,directionsLink,scheduleValid} from './schedule.js';
 const el=(tag,cls,text)=>{const n=document.createElement(tag);n.className=cls;if(text!==undefined)n.textContent=text;return n;};
-export function scheduleFields(form,item,previous,{field,selector,lookup}) {
+export function scheduleFields(form,item,previous,{field,selector,lookup,isNew=false}) {
   const s=normalizeSchedule(item),group=el('fieldset','schedule-fields');
   group.append(el('legend','','시간과 이동'));form.append(group);
   group.append(el('p','','도시 현지 시간 기준 · 시작·소요시간을 바꾸고 적용하면 같은 날짜의 뒤 유동 일정이 자동 조정돼요. 고정 시간은 유지해요. 이동시간이 미정이면 기존 간격을 사용하므로 실제 경로를 확인해 주세요.'));
@@ -19,7 +19,8 @@ export function scheduleFields(form,item,previous,{field,selector,lookup}) {
   let placeRevision=0;
   place.addEventListener('input',()=>{placeRevision++;travel.value='';});
   const buffer=field(group,'이동 여유시간 (분)',s.buffer,{type:'number'});buffer.min='0';buffer.max='180';buffer.step='1';buffer.required=true;
-  if(!previous)group.append(el('p','','하루 첫 일정에는 앞 일정 이동시간을 더하지 않아요.'));
+  if(!previous&&!isNew)group.append(el('p','','하루 첫 일정에는 앞 일정 이동시간을 더하지 않아요.'));
+  if(isNew)group.append(el('p','','입력한 시작 시간 앞에 있는 일정에서 오는 이동시간이에요. 경로 자동 조회는 추가 후 수정 화면에서 사용할 수 있어요.'));
   if(stale)group.append(el('p','form-error','출발지나 목적지가 바뀌었어요. 이동시간을 다시 확인해 주세요.'));
   const summary=el('p','duration-preview');group.append(summary);
   if(previous&&lookup){

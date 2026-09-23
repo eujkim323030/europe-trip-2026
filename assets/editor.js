@@ -1,5 +1,5 @@
 import { extractItinerary, moveItem, FIELDS, CATEGORIES, safeLink } from './itinerary-model.js';
-import {prepareSchedules,analyzeLane,recalculateLane,reflowAfterEdit,normalizeSchedule,displayTime,departureISO,placeOf,routeKey} from './schedule.js';
+import {prepareSchedules,analyzeLane,recalculateLane,reflowAfterEdit,insertScheduledItem,deleteScheduledItem,normalizeSchedule,displayTime,departureISO,placeOf,routeKey} from './schedule.js';
 import {scheduleFields,scheduleBadge,daySummary} from './schedule-ui.js';
 
 const city = location.pathname.split('/').filter(Boolean)[0];
@@ -217,11 +217,12 @@ function editItem(id,newLaneId) {
   const {form,error,footer}=formDialog(id?'일정 수정':'새 일정 추가');
   const destination=selector(form,'날짜·일정안',lane.id,draft.lanes.map(l=>[l.id,l.label]));
   const previous=lane.items[id?lane.items.findIndex(i=>i.id===id)-1:lane.items.length-1];
-  const readSchedule=scheduleFields(form,original,previous,{field,selector,lookup:async destinationPlace=>{
+  if(!id)form.append(el('p','','시작 시간에 맞춰 중간에 추가하고 뒤 일정을 자동 조정해요. 같은 시작 시간이면 기존 일정 앞에 들어갑니다. 시작 시간이 비어 있으면 맨 뒤에 추가해요.'));
+  const readSchedule=scheduleFields(form,original,id?previous:null,{field,selector,isNew:!id,lookup:id?async destinationPlace=>{
     if(!placeOf(previous||{})||!destinationPlace)throw new Error('앞 일정과 현재 일정의 장소명·주소를 먼저 입력해 주세요.');
     const row=analyzeLane(lane).find(r=>r.id===previous.id);
     return api('routes',{method:'POST',body:JSON.stringify({origin:placeOf(previous),destination:destinationPlace,mode:'auto',departureTime:departureISO(city,lane,row?.actualEnd??null)})});
-  }});
+  }:null});
   let readMain,readOptions=[];
   if(original.kind==='choices') {
     const title=field(form,'선택 일정 제목',original.title,{max:300});
@@ -241,8 +242,11 @@ function editItem(id,newLaneId) {
   const submit=el('button','primary','적용');submit.type='submit';
   footer.append(button('취소',()=>modal.close()),submit);
   if(id)footer.prepend(button('🗑 삭제',async()=>{
-    modal.close();if(!await ask('일정 삭제','이 일정과 연결된 교통 안내를 삭제할까요? 저장 전에는 전체 취소로 되돌릴 수 있어요.','삭제'))return;
-    lane.items.splice(lane.items.findIndex(i=>i.id===id),1);render();markDirty();
+    modal.close();if(!await ask('일정 삭제','이 일정을 삭제하고 뒤의 유동 일정을 당겨 조정할까요? 고정 시간은 유지하며 저장 전에는 전체 취소로 되돌릴 수 있어요.','삭제'))return;
+    try{
+      const result=deleteScheduledItem(lane,id);draft.lanes[draft.lanes.indexOf(lane)]=result.lane;
+      render();markDirty();message(`삭제 후 뒤 일정 ${result.changed}개를 자동 조정했어요. ${result.notes.join(' ')} 확인 후 저장해 주세요.`);
+    }catch(err){message(err.message,true);}
   },'danger'));
   form.append(error,footer);
   form.addEventListener('submit',e=>{
@@ -252,12 +256,15 @@ function editItem(id,newLaneId) {
     if(!next.title.trim()||![next.mapLink,...next.transport.map(t=>t.mapLink),...(next.options||[]).map(o=>o.mapLink)].every(safeLink)){error.textContent='일정명과 http/https 지도 링크를 확인해 주세요.';return;}
     const before=normalizeSchedule(original);
     let automatic=null;
-    if(id&&destination.value===lane.id&&(before.start!==timing.schedule.start||before.duration!==timing.schedule.duration)){
+    const targetLane=draft.lanes.find(l=>l.id===destination.value);
+    if(!id){
+      try{automatic=insertScheduledItem(targetLane,next);}catch(err){error.textContent=err.message;return;}
+    }else if(destination.value===lane.id&&(before.start!==timing.schedule.start||before.duration!==timing.schedule.duration)){
       try{automatic=reflowAfterEdit(lane,next);}catch(err){error.textContent=err.message;return;}
     }
-    if(automatic)draft.lanes[draft.lanes.indexOf(lane)]=automatic.lane;
-    else if(id)lane.items[lane.items.findIndex(i=>i.id===id)]=next;else lane.items.push(next);
-    if(destination.value!==lane.id)moveItem(draft,next.id,destination.value);
+    if(automatic)draft.lanes[draft.lanes.indexOf(id?lane:targetLane)]=automatic.lane;
+    else lane.items[lane.items.findIndex(i=>i.id===id)]=next;
+    if(id&&destination.value!==lane.id)moveItem(draft,next.id,destination.value);
     modal.close();render();markDirty();
     if(automatic)message(`뒤 일정 ${automatic.changed}개를 자동 조정했어요. ${automatic.notes.join(' ')} 확인 후 저장하면 함께 반영됩니다.`);
   });modal.showModal();

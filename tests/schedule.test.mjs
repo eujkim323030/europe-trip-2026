@@ -1,7 +1,53 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { normalizeSchedule, analyzeLane, recalculateLane, scheduleValid, routeKey,departureISO,prepareSchedules, reflowAfterEdit } from '../assets/schedule.js';
+import { normalizeSchedule, analyzeLane, recalculateLane, scheduleValid, routeKey,departureISO,prepareSchedules, reflowAfterEdit, insertScheduledItem, deleteScheduledItem } from '../assets/schedule.js';
 const item=(id,start,duration,travel=0,fixed=false)=>({id,title:id,time:'',mapLink:'',transport:[],schedule:{start,duration,travel,buffer:0,fixed,mode:'walking',place:id,from:null}});
+
+test('insert by start time shifts later events and invalidates the changed route',()=>{
+  const lane={items:[item('a',600,60),item('b',680,30,20),item('c',720,30,10)]};
+  const result=insertScheduledItem(lane,item('new',660,30));
+  assert.deepEqual(result.lane.items.map(i=>i.id),['a','new','b','c']);
+  assert.equal(result.lane.items[2].schedule.start,710);
+  assert.equal(result.lane.items[3].schedule.start,750);
+  assert.equal(result.lane.items[2].schedule.travel,null);
+  assert.ok(analyzeLane(result.lane)[2].stale);
+  assert.equal(lane.items.length,3);
+});
+test('delete closes the gap locally despite missing earlier information',()=>{
+  const lane={items:[item('morning',500,null),item('a',600,60),item('b',680,30,20),item('c',720,30,10),item('d',760,30,10)]};
+  const result=deleteScheduledItem(lane,'b');
+  assert.equal(result.lane.items[2].schedule.start,670);
+  assert.equal(result.lane.items[3].schedule.start,710);
+  assert.equal(result.lane.items[2].schedule.travel,null);
+  assert.equal(lane.items.length,5);
+});
+test('first deletion keeps the day start and last or only deletion is safe',()=>{
+  const lane={items:[item('a',600,60),item('b',680,30),item('c',720,30,10)]};
+  const result=deleteScheduledItem(lane,'a');
+  assert.equal(result.lane.items[0].schedule.start,600);
+  assert.equal(result.lane.items[1].schedule.start,640);
+  assert.equal(deleteScheduledItem(lane,'c').lane.items[1].schedule.start,680);
+  assert.deepEqual(deleteScheduledItem({items:[lane.items[0]]},'a').lane.items,[]);
+});
+test('insert and delete respect fixed appointments and unknown durations',()=>{
+  const lane={items:[item('a',600,60),item('b',680,30,20,true),item('c',720,30,10)]};
+  const added=insertScheduledItem(lane,item('new',660,60));
+  assert.equal(added.lane.items[2].schedule.start,680);
+  assert.match(added.notes.join(' '),/60분 부족/);
+  assert.equal(deleteScheduledItem(lane,'a').lane.items[0].schedule.start,680);
+  const unknown=insertScheduledItem(lane,item('new',660,null));
+  assert.equal(unknown.lane.items[2].schedule.start,680);
+  assert.match(unknown.notes.join(' '),/소요시간/);
+});
+test('insert at equal time precedes existing item and midnight is supported',()=>{
+  const lane={items:[item('a',1410,30),item('b',1450,30,10)]};
+  const result=insertScheduledItem(lane,item('new',1450,30));
+  assert.deepEqual(result.lane.items.map(i=>i.id),['a','new','b']);
+  assert.equal(result.lane.items[2].schedule.start,1490);
+  assert.equal(insertScheduledItem({items:[]},item('new',600,30)).lane.items.length,1);
+  const first=insertScheduledItem({items:[item('a',600,30)]},item('new',600,30));
+  assert.equal(first.lane.items[1].schedule.start,630);
+});
 
 test('editing dinner reflows locally despite missing morning and travel information',()=>{
   const lane={items:[item('morning',600,null,null),item('dinner',1110,90,null),item('night',1200,null,null)]};
