@@ -61,3 +61,10 @@ test('fixed time does not erase uncertainty about reaching the reservation',()=>
   assert.equal(analyzeLane(lane)[2].gap,null);
   assert.equal(recalculateLane(lane).items[2].schedule.start,800);
 });
+test('reservation is explicit, independent of fixed time, and survives recalculation',()=>{
+  const a=item('a',600,60);a.schedule.reserved=true;
+  assert.equal(recalculateLane({items:[a]}).items[0].schedule.reserved,true);
+  assert.equal(a.schedule.fixed,false);
+  assert.equal(scheduleValid({...a.schedule,reserved:'yes'}),false);
+  assert.equal(normalizeSchedule({time:'10:00',description:'예약',transport:[]}).reserved,false);
+});

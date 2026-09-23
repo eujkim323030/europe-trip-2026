@@ -7,6 +7,10 @@ export function scheduleFields(form,item,previous,{field,selector,lookup}) {
   const start=field(group,'시작 시간',s.start===null?'':clockTime(s.start),{type:'time'});
   const day=selector(group,'시작 날짜',s.start>=1440?'1':'0',[['0','해당 날짜'],['1','다음날 (자정 이후)']]);
   const duration=field(group,'소요시간 (분)',s.duration??'',{type:'number'});duration.min='0';duration.max='1440';duration.step='1';
+  const reservationLabel=el('label','reservation-checkbox');
+  const reserved=document.createElement('input');reserved.type='checkbox';reserved.checked=s.reserved===true;
+  reservationLabel.append(reserved,el('span','','예약 완료'));group.append(reservationLabel);
+  group.append(el('p','reservation-help','예약한 일정은 체크해 주세요. 정해진 입장·출발 시간은 아래 시간 고정도 설정해 주세요.'));
   const fixed=selector(group,'예약·기차 등 시간 고정',String(s.fixed),[['false','유동 일정 — 재계산 가능'],['true','🔒 고정 일정 — 시간 유지']]);
   const place=field(group,'장소명·주소 (길찾기용)',s.place,{max:500});
   const mode=selector(group,'이곳으로 오는 이동수단',s.mode,[['walking','도보'],['transit','대중교통'],['manual','직접 입력 / 기타']]);
@@ -43,7 +47,7 @@ export function scheduleFields(form,item,previous,{field,selector,lookup}) {
   group.addEventListener('input',update);group.addEventListener('change',update);update();
   return ()=>{
     const t=parseTime(start.value);
-    const schedule={start:t===null?null:t+Number(day.value)*1440,duration:duration.value===''?null:Number(duration.value),fixed:fixed.value==='true',place:place.value.trim(),mode:mode.value,travel:travel.value===''?null:Number(travel.value),buffer:Number(buffer.value),from:null};
+    const schedule={start:t===null?null:t+Number(day.value)*1440,duration:duration.value===''?null:Number(duration.value),reserved:reserved.checked,fixed:fixed.value==='true',place:place.value.trim(),mode:mode.value,travel:travel.value===''?null:Number(travel.value),buffer:Number(buffer.value),from:null};
     schedule.from=previous?routeKey(previous,{...item,schedule}):null;
     if(!scheduleValid(schedule)||schedule.fixed&&schedule.start===null)throw new Error('고정 일정에는 시작 시간이 필요하고, 소요·이동시간은 0~1440분, 여유시간은 0~180분이어야 해요.');
     const time=schedule.start!==s.start||schedule.duration!==s.duration ? (schedule.start===null?'':displayTime(schedule.start)+(schedule.duration===null?'':'\n~'+displayTime(schedule.start+schedule.duration))) : item.time;
@@ -53,6 +57,7 @@ export function scheduleFields(form,item,previous,{field,selector,lookup}) {
 export function scheduleBadge(item,row,previous) {
   const box=el('div','schedule-badge');
   const parts=[];
+  if(item.schedule?.reserved)box.append(el('span','reservation-status','✓ 예약 완료'));
   if(row.fixed)parts.push('🔒 시간 고정');
   parts.push(row.duration===null?'소요시간 미정':`소요 ${row.duration}분`);
   if(row.end!==null)parts.push(`종료 ${displayTime(row.end)}`);

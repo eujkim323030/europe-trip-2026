@@ -1,6 +1,6 @@
 const integer=(v,max)=>Number.isInteger(v)&&v>=0&&v<=max;
 export function scheduleValid(s) {
-  return s===undefined || !!s && ['start','duration','travel'].every(k=>s[k]===null||integer(s[k],k==='start'?2879:1440)) && integer(s.buffer,180) && typeof s.fixed==='boolean' && ['walking','transit','manual'].includes(s.mode) && typeof s.place==='string' && s.place.length<=500 && (s.from===null||typeof s.from==='string'&&s.from.length<=2200);
+  return s===undefined || !!s && ['start','duration','travel'].every(k=>s[k]===null||integer(s[k],k==='start'?2879:1440)) && integer(s.buffer,180) && typeof s.fixed==='boolean' && (s.reserved===undefined||typeof s.reserved==='boolean') && ['walking','transit','manual'].includes(s.mode) && typeof s.place==='string' && s.place.length<=500 && (s.from===null||typeof s.from==='string'&&s.from.length<=2200);
 }
 export function parseTime(text) {
   const match=String(text||'').match(/^(\d{1,2}):(\d{2})$/);
@@ -17,14 +17,14 @@ export function placeOf(card) {
   try {const url=new URL(card.mapLink);return url.searchParams.get('query')||'';}catch{return '';}
 }
 export function normalizeSchedule(card) {
-  if(card.schedule)return {...card.schedule};
+  if(card.schedule)return {reserved:false,...card.schedule};
   const text=card.time || (card.kind==='choices'?card.title:'') || '';
   const range=text.trim().match(/^(\d{1,2}:\d{2})(?:\s*[~–—-]\s*(\d{1,2}:\d{2}))?/);
   const start=range?parseTime(range[1]):null,end=range?.[2]?parseTime(range[2]):null;
   const duration=start!==null&&end!==null?(end-start+1440)%1440:null;
   const routeText=(card.transport||[]).map(t=>t.title).join(' ');
   const walk=(card.transport||[]).length===1&&/^🚶/.test(routeText)?routeText.match(/(?:약\s*)?(\d+)(?:\s*[~–-]\s*(\d+))?분/):null;
-  return {start,duration,travel:walk?Number(walk[2]||walk[1]):null,buffer:5,
+  return {start,duration,reserved:false,travel:walk?Number(walk[2]||walk[1]):null,buffer:5,
     fixed:start!==null&&(new RegExp(clockTime(start)+'\\s*(예약|지정\\s*입장)').test([card.description,card.menu].join(' '))||/MARATHON START/.test(card.title||'')||/🚆|✈/.test(card.icon||'')&&/출발|도착/.test(card.title||'')),
     mode:/🚶/.test(routeText)?'walking':'transit',place:placeOf(card),from:null};
 }
