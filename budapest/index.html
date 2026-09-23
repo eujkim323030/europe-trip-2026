@@ -1,4 +1,254 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f5f9fc"><title>Budapest · Europe Trip 2026</title><style>
-:root{--bg:#f5f9fc;--text:#172033;--muted:#7f8a9d;--blue:#72aef5;--mint:#74cdbf;--card:#fff;--shadow:0 14px 34px rgba(64,92,120,.10)}
-*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Noto Sans KR","Segoe UI",sans-serif;color:var(--text);background:radial-gradient(circle at 0 0,rgba(116,205,191,.14),transparent 28rem),radial-gradient(circle at 100% 10%,rgba(114,174,245,.13),transparent 25rem),var(--bg)}a{color:inherit;text-decoration:none}.wrap{width:min(100%,860px);margin:0 auto;padding:28px 18px 60px}.hero{padding:28px 20px 20px;text-align:center}.eyebrow{font-size:12px;letter-spacing:.38em;color:#7ca8d7;margin-bottom:12px}h1{margin:0;font-size:clamp(30px,7vw,52px);letter-spacing:-.045em}.sub{color:var(--muted);margin-top:10px;line-height:1.6}.city-grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:24px}.card{display:block;background:rgba(255,255,255,.84);border:1px solid rgba(255,255,255,.95);border-radius:26px;padding:20px;box-shadow:var(--shadow);transition:.18s ease}.card:hover{transform:translateY(-2px)}.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.city{font-size:23px;font-weight:850;letter-spacing:-.03em}.date{font-size:12px;color:#7390a9;background:#eef6ff;padding:7px 9px;border-radius:999px;font-weight:800}.desc{margin-top:7px;color:var(--muted);line-height:1.5;font-size:14px}.arrow{margin-top:16px;color:#6e9bc7;font-weight:800;font-size:13px}.ready{opacity:.68}.ready .date{background:#f2f3f6;color:#8a92a1}.footer{text-align:center;color:#97a1af;font-size:11px;letter-spacing:.14em;margin-top:28px}.back{display:inline-flex;align-items:center;gap:7px;margin-bottom:18px;padding:9px 12px;border-radius:14px;background:#eef5fb;color:#547da5;font-size:13px;font-weight:800}.placeholder{margin-top:22px;background:rgba(255,255,255,.84);border-radius:28px;padding:28px 22px;box-shadow:var(--shadow);text-align:center}.placeholder .emoji{font-size:42px}.placeholder h2{font-size:24px;margin:12px 0 8px}.placeholder p{color:var(--muted);line-height:1.65;margin:0}@media(min-width:700px){.city-grid{grid-template-columns:1fr 1fr}}
-</style></head><body><div class="wrap"><a class="back" href="../">← 도시 선택</a><section class="hero"><div class="eyebrow">EUROPE · 2026</div><h1>🇭🇺 Budapest</h1><div class="sub">10/02–10/03</div></section><section class="placeholder"><div class="emoji">🗺️</div><h2>타임라인 준비 중</h2><p>부다페스트 일정<br>다음 대화에서 식당·동선·교통·비용까지 헬싱키처럼 채울 예정이에요.</p></section></div></body></html>
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f7f9fc"><meta name="apple-mobile-web-app-capable" content="yes">
+<title>Budapest · Europe Trip 2026</title>
+<style>
+:root{--bg:#f7f9fc;--card:#fff;--text:#172033;--muted:#7d8797;--blue:#6fa8dc;--red:#d86b6b;--mint:#79c9b8;--gold:#e8c26e;--lav:#f0edff;--peach:#fff0e8;--shadow:0 12px 30px rgba(65,83,105,.09)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Noto Sans KR","Segoe UI",sans-serif;color:var(--text);
+background:radial-gradient(circle at 0 0,rgba(111,168,220,.13),transparent 26rem),radial-gradient(circle at 100% 10%,rgba(216,107,107,.10),transparent 24rem),var(--bg)}
+a{color:inherit;text-decoration:none}.wrap{width:min(100%,920px);margin:0 auto;padding:18px 14px 56px}
+.back{display:inline-flex;padding:9px 12px;border-radius:14px;background:#eef4fb;color:#577b9e;font-size:13px;font-weight:800}
+.hero{margin-top:10px;background:rgba(255,255,255,.84);border-radius:30px;padding:25px 20px;box-shadow:var(--shadow);text-align:center}
+.hero h1{font-size:clamp(29px,6vw,45px);margin:10px 0 7px;letter-spacing:-.04em}
+.eyebrow{font-size:11px;letter-spacing:.42em;color:#86a7c6}.sub{color:#6f7a8c;font-size:14px}
+.chips{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+.chip{background:#eef5ff;color:#4f79a2;padding:8px 11px;border-radius:999px;font-size:12px;font-weight:800}
+.info{margin-top:14px;text-align:left;background:#f8fbff;border-radius:17px;padding:12px 14px;font-size:12.5px;color:#637386;line-height:1.6}
+.day{margin-top:18px;background:rgba(255,255,255,.74);border-radius:28px;box-shadow:var(--shadow);overflow:hidden}
+.dayhead{padding:19px 18px;font-size:21px;font-weight:900}
+.d1{background:linear-gradient(90deg,#e6efff,#f4f8ff)}.d2{background:linear-gradient(90deg,#f6e9e9,#fff5f2)}
+.timeline{position:relative;padding:14px 14px 22px 40px}.timeline:before{content:"";position:absolute;left:20px;top:25px;bottom:28px;width:2px;background:linear-gradient(var(--blue),#d7dee7)}
+.event{position:relative;display:block;background:#fff;border:1px solid #e8edf2;border-radius:21px;padding:15px 14px;margin-bottom:13px;box-shadow:0 7px 18px rgba(70,90,110,.05)}
+.event:before{content:"";position:absolute;width:10px;height:10px;left:-25px;top:23px;border-radius:50%;background:#fff;border:3px solid var(--blue);box-shadow:0 0 0 4px var(--bg)}
+.row{display:grid;grid-template-columns:66px 38px 1fr auto;gap:8px;align-items:start}.time{font-size:13px;font-weight:900;line-height:1.35}
+.ico{width:37px;height:37px;border-radius:13px;background:#edf5ff;display:grid;place-items:center;font-size:19px}
+.food .ico{background:var(--peach)}.rest .ico{background:var(--lav)}.shop .ico{background:#eef8f2}.spa .ico{background:#e8f8f5}.night .ico{background:#eef0ff}
+.title{font-size:15px;font-weight:900;line-height:1.35}.ko{font-size:12px;color:#758296;font-weight:750}
+.desc{margin-top:4px;font-size:12.5px;line-height:1.55;color:var(--muted)}.menu{margin-top:8px;padding:8px 9px;border-radius:13px;background:#f8fafc;font-size:11.5px;line-height:1.55;color:#5f6c7e}
+.cost{display:inline-block;margin-top:6px;padding:5px 8px;border-radius:999px;background:#eef5ff;color:#4e79a6;font-size:10.5px;font-weight:850}
+.move{margin:-4px 0 11px;text-align:center}.move span{display:inline-block;background:#edf4f7;color:#667f92;padding:7px 10px;border-radius:999px;font-size:11.5px}
+.note{margin:0 16px 18px;padding:12px 14px;background:#f7fbfd;border-radius:18px;color:#617184;font-size:12px;line-height:1.55}
+.route{margin-top:18px;background:#fff;border-radius:24px;padding:18px;box-shadow:var(--shadow)}.route h2{margin:0 0 10px;font-size:18px}
+.route p{font-size:12.5px;color:#68768a;line-height:1.6;margin:7px 0}.route b{color:#26374a}
+.footer{text-align:center;color:#98a2b0;font-size:10.5px;letter-spacing:.1em;margin-top:22px}
+@media(min-width:760px){.row{grid-template-columns:75px 40px 1fr auto}}
+</style></head>
+<body><div class="wrap">
+<a class="back" href="../">← 도시 선택</a>
+
+<section class="hero">
+<div class="eyebrow">B U D A P E S T · 2 0 2 6</div>
+<h1>부다페스트 타임라인</h1>
+<div class="sub">10/2(금)–10/3(토) · You Hotel Budapest 기준</div>
+<div class="chips">
+<span class="chip">Night View</span><span class="chip">Széchenyi</span><span class="chip">Hungarian Food</span><span class="chip">Local Shopping</span><span class="chip">Buda Castle</span>
+</div>
+<div class="info">🚆 10/2 Wien Hbf 13:27 → Budapest-Kelenföld 15:58 예정 · ✈️ 10/3 KE964 BUD 20:10 출발. 환율 표시는 2026-09-23 기준 약 1,000 HUF ≈ ₩4,263으로 계산한 대략값.</div>
+</section>
+
+<section class="day">
+<div class="dayhead d1">DAY 1 · 10/2 (금) · HUNGARIAN DINNER & NIGHT VIEW</div>
+<div class="timeline">
+
+<a class="event" href="https://www.google.com/maps/search/?api=1&query=Budapest-Kelenföld" target="_blank">
+<div class="row"><div class="time">15:58</div><div class="ico">🚆</div><div>
+<div class="title">Budapest-Kelenföld 도착</div>
+<div class="desc">빈에서 RegioJet로 도착. 실제 도착 시각은 당일 승차권/운행정보 우선.</div>
+</div><div>↗</div></div></a>
+
+<div class="move"><span>🚇 Kelenföld → You Hotel Budapest 약 35~45분</span></div>
+
+<a class="event rest" href="https://www.google.com/maps/search/?api=1&query=You+Hotel+Budapest+Handwritten+Collection" target="_blank">
+<div class="row"><div class="time">16:40<br>~17:15</div><div class="ico">🧳</div><div>
+<div class="title">체크인 · 짐 정리 · 20분 휴식</div>
+<div class="desc">마지막 도시니까 체크인하자마자 달리지 말고 잠깐 눕기. 숙소는 Szentkirályi u. 8.</div>
+</div><div>↗</div></div></a>
+
+<div class="move"><span>🚶 호텔 → Gettó Gulyás 약 10~15분</span></div>
+
+<a class="event food" href="https://www.google.com/maps/search/?api=1&query=Getto+Gulyas+Budapest" target="_blank">
+<div class="row"><div class="time">17:30<br>~18:50</div><div class="ico">🍲</div><div>
+<div class="title">Gettó Gulyás <span class="ko">(게토 굴라시)</span></div>
+<div class="desc">첫날 저녁은 헝가리식 제대로. 금요일이라 예약 추천.</div>
+<div class="menu">2인 추천: Gulyás soup 3,090 Ft + Beef stew 4,690 Ft 또는 Chicken paprikash 4,490 Ft + 디저트 1개</div>
+<span class="cost">메인 기준 약 3,090~4,690 Ft (약 ₩13,200~20,000)</span>
+</div><div>↗</div></div></a>
+
+<div class="move"><span>🚶 Gettó Gulyás → St. Stephen’s Basilica 약 15분</span></div>
+
+<a class="event night" href="https://www.google.com/maps/search/?api=1&query=St+Stephens+Basilica+Budapest" target="_blank">
+<div class="row"><div class="time">19:05<br>~19:25</div><div class="ico">⛪</div><div>
+<div class="title">St. Stephen’s Basilica 외관</div>
+<div class="desc">광장 분위기 + 야간 외관만 짧게. 내부 관람은 이번 1박 2일 일정에서는 생략.</div>
+</div><div>↗</div></div></a>
+
+<div class="move"><span>🚶 Basilica → Liberty Square → Parliament 약 20~25분</span></div>
+
+<a class="event night" href="https://www.google.com/maps/search/?api=1&query=Hungarian+Parliament+Building" target="_blank">
+<div class="row"><div class="time">19:50<br>~20:25</div><div class="ico">🏛️</div><div>
+<div class="title">Hungarian Parliament · Danube Promenade</div>
+<div class="desc">국회의사당 가까이에서 보고 강변으로 이동. 첫날 야경 핵심 1.</div>
+</div><div>↗</div></div></a>
+
+<div class="move"><span>🚇 Kossuth Lajos tér → Batthyány tér 약 10~15분</span></div>
+
+<a class="event night" href="https://www.google.com/maps/search/?api=1&query=Batthyany+ter+Budapest" target="_blank">
+<div class="row"><div class="time">20:40<br>~21:15</div><div class="ico">✨</div><div>
+<div class="title">Batthyány tér 국회의사당 정면뷰</div>
+<div class="desc">다뉴브 건너 국회의사당을 정면으로 보는 대표 야경 포인트. 사진은 여기서 제대로.</div>
+</div><div>↗</div></div></a>
+
+<div class="move"><span>🚶 강변 따라 Chain Bridge 방향 약 20~25분</span></div>
+
+<a class="event night" href="https://www.google.com/maps/search/?api=1&query=Szechenyi+Chain+Bridge+Budapest" target="_blank">
+<div class="row"><div class="time">21:40<br>~22:05</div><div class="ico">🌉</div><div>
+<div class="title">Chain Bridge 야경 · 다리 건너기</div>
+<div class="desc">첫날 마지막 코스. 다리 건너 페스트 쪽으로 돌아오며 야경 마무리.</div>
+</div><div>↗</div></div></a>
+
+<div class="move"><span>🚕/🚇 숙소 복귀 약 15~25분</span></div>
+
+<div class="event rest">
+<div class="row"><div class="time">22:30<br>전후</div><div class="ico">🛏️</div><div>
+<div class="title">숙소 복귀 · 바로 쉬기</div>
+<div class="desc">다음 날 세체니 오픈런이 있으니 첫날은 술 2차 없이 종료. 체력 저금.</div>
+</div><div></div></div></div>
+
+</div>
+<div class="note">💡 첫날은 관광지 개수보다 야경 퀄리티 우선. 국회의사당 가까운 뷰 + Batthyány tér 정면뷰 + Chain Bridge까지만 잡는다.</div>
+</section>
+
+
+<section class="day">
+<div class="dayhead d2">DAY 2 · 10/3 (토) · BREAKFAST, SZÉCHENYI & BUDA</div>
+<div class="timeline">
+
+<div class="event rest">
+<div class="row"><div class="time">07:00</div><div class="ico">🌤️</div><div>
+<div class="title">기상</div>
+<div class="desc">마지막 날. 세체니가 09:00 예약이라 너무 일찍 일어날 필요 없음.</div>
+</div><div></div></div></div>
+
+<a class="event food" href="https://www.google.com/maps/search/?api=1&query=You+Hotel+Budapest+Handwritten+Collection" target="_blank">
+<div class="row"><div class="time">07:10<br>~07:45</div><div class="ico">🍳</div><div>
+<div class="title">호텔 조식</div>
+<div class="desc">You Hotel Budapest 조식. 온천 전에 너무 과식하지 말고 적당히.</div>
+<div class="menu">빵 · 달걀 · 과일 · 요거트 · 커피 위주로 가볍게</div>
+</div><div>↗</div></div></a>
+
+<div class="event rest">
+<div class="row"><div class="time">07:45<br>~08:05</div><div class="ico">🧳</div><div>
+<div class="title">최종 패킹</div>
+<div class="desc">수영복·수건·슬리퍼·젖은 옷 넣을 파우치는 바로 꺼낼 수 있게 따로.</div>
+</div><div></div></div></div>
+
+<a class="event rest" href="https://www.google.com/maps/search/?api=1&query=You+Hotel+Budapest+Handwritten+Collection" target="_blank">
+<div class="row"><div class="time">08:05<br>~08:15</div><div class="ico">🧳</div><div>
+<div class="title">체크아웃 · 캐리어 보관</div>
+<div class="desc">호텔에 큰 짐 맡기고 온천용 가방만 들고 출발.</div>
+</div><div>↗</div></div></a>
+
+<div class="move"><span>🚇 호텔 → Széchenyi 약 30~35분</span></div>
+
+<a class="event spa" href="https://www.google.com/maps/search/?api=1&query=Szechenyi+Thermal+Bath+Budapest" target="_blank">
+<div class="row"><div class="time">09:00<br>~11:15</div><div class="ico">♨️</div><div>
+<div class="title">Széchenyi Thermal Bath <span class="ko">(세체니 온천)</span></div>
+<div class="desc">실제 10/3 예약 가능 시간 09:00 기준. 야외 온천풀 + 실내풀 + 사우나 위주로 약 2시간 15분.</div>
+<div class="menu">Fast Track + locker 추천 · 수영복 · 수건 · 슬리퍼 필수</div>
+<span class="cost">16,800 Ft (약 ₩71,600) / 1인</span>
+</div><div>↗</div></div></a>
+
+<div class="event rest">
+<div class="row"><div class="time">11:15<br>~11:45</div><div class="ico">🚿</div><div>
+<div class="title">샤워 · 머리 말리기 · 환복</div>
+<div class="desc">온천에서 완전히 씻고 준비 끝낸 뒤 도심 관광 시작.</div>
+</div><div></div></div></div>
+
+<div class="move"><span>🚇 Széchenyi → Paloma Artspace 약 25~30분</span></div>
+
+<a class="event shop" href="https://www.google.com/maps/search/?api=1&query=Paloma+Artspace+Budapest" target="_blank">
+<div class="row"><div class="time">12:10<br>~12:50</div><div class="ico">🛍️</div><div>
+<div class="title">Paloma Artspace</div>
+<div class="desc">헝가리 로컬 디자이너 쇼룸. 주얼리·가죽·의류·그래픽·세라믹 위주로 보기.</div>
+<span class="cost">입장 무료</span>
+</div><div>↗</div></div></a>
+
+<div class="move"><span>🚶 Paloma → Central Market Hall 약 15분</span></div>
+
+<a class="event shop" href="https://www.google.com/maps/search/?api=1&query=Central+Market+Hall+Budapest" target="_blank">
+<div class="row"><div class="time">13:05<br>~13:40</div><div class="ico">🫑</div><div>
+<div class="title">Central Market Hall <span class="ko">(부다페스트 중앙시장)</span></div>
+<div class="desc">파프리카·살라미·식재료·기념품 구경. 35분만 딱 쓰기.</div>
+<span class="cost">입장 무료</span>
+</div><div>↗</div></div></a>
+
+<div class="move"><span>🚶 Váci utca 방향으로 이동</span></div>
+
+<a class="event shop" href="https://www.google.com/maps/search/?api=1&query=Vaci+utca+Budapest" target="_blank">
+<div class="row"><div class="time">13:40<br>~14:00</div><div class="ico">🛍️</div><div>
+<div class="title">Váci utca 짧은 쇼핑</div>
+<div class="desc">관광 기념품/패션 숍 빠르게. 여기서는 오래 머물지 않기.</div>
+</div><div>↗</div></div></a>
+
+<div class="move"><span>🚇/🚕 Váci utca → Stand25 약 15분</span></div>
+
+<a class="event food" href="https://www.google.com/maps/search/?api=1&query=Stand25+Bistro+Budapest" target="_blank">
+<div class="row"><div class="time">14:15<br>~15:15</div><div class="ico">🍽️</div><div>
+<div class="title">Stand25 Bistro</div>
+<div class="desc">마지막 헝가리 점심. 전날 굴라시와 겹치지 않게 다른 헝가리 요리 위주.</div>
+<div class="menu">Lángos / 오리·고기 메인 / Somlói 계열 추천</div>
+<span class="cost">대략 1인 10,000~16,000 Ft (약 ₩42,600~68,200)</span>
+</div><div>↗</div></div></a>
+
+<div class="move"><span>🚶 Stand25 → Buda Castle 권역 약 10~15분</span></div>
+
+<a class="event" href="https://www.google.com/maps/search/?api=1&query=Fishermans+Bastion+Budapest" target="_blank">
+<div class="row"><div class="time">15:20<br>~16:10</div><div class="ico">🏰</div><div>
+<div class="title">Buda Castle · Matthias Church · Fisherman’s Bastion</div>
+<div class="desc">내부 관람 없이 외관 + 전망 중심. 마지막 날엔 부다페스트 전경만 챙기기.</div>
+</div><div>↗</div></div></a>
+
+<div class="move"><span>🚕/🚇 Buda Castle → 호텔 약 25~30분</span></div>
+
+<a class="event rest" href="https://www.google.com/maps/search/?api=1&query=You+Hotel+Budapest+Handwritten+Collection" target="_blank">
+<div class="row"><div class="time">16:40<br>~16:50</div><div class="ico">🧳</div><div>
+<div class="title">호텔에서 캐리어 픽업</div>
+<div class="desc">짐 받고 바로 공항으로. 여기서 관광 일정은 진짜 끝.</div>
+</div><div>↗</div></div></a>
+
+<div class="move"><span>🚶 호텔 → Kálvin tér 약 8~10분</span></div>
+
+<a class="event" href="https://www.google.com/maps/search/?api=1&query=Kalvin+ter+Budapest" target="_blank">
+<div class="row"><div class="time">17:00<br>전후</div><div class="ico">🚌</div><div>
+<div class="title">100E Airport Express</div>
+<div class="desc">Kálvin tér에서 공항으로 이동.</div>
+</div><div>↗</div></div></a>
+
+<a class="event" href="https://www.google.com/maps/search/?api=1&query=Budapest+Ferenc+Liszt+International+Airport" target="_blank">
+<div class="row"><div class="time">17:40<br>전후</div><div class="ico">✈️</div><div>
+<div class="title">Budapest Airport 도착</div>
+<div class="desc">체크인·보안검색·면세점·간식까지 여유 있게.</div>
+</div><div>↗</div></div></a>
+
+<div class="event">
+<div class="row"><div class="time">20:10</div><div class="ico">🇰🇷</div><div>
+<div class="title">KE964 Budapest → Seoul</div>
+<div class="desc">유럽 여행 종료. 캐리어만 무거워지고 인간은 온천으로 말랑해져서 귀국.</div>
+</div><div></div></div></div>
+
+</div>
+<div class="note">💡 최종 흐름: 호텔 조식 → 체크아웃/짐 보관 → 09:00 세체니 → 샤워까지 끝내기 → 쇼핑 → Stand25 → 부다 전망 → 짐 픽업 → 공항.</div>
+</section>
+
+
+<section class="route">
+<h2>🎯 이 일정의 체력 설계</h2>
+<p><b>10/2:</b> 체크인 후 저녁 → 야경만. 온천은 넣지 않아 첫날 체력을 남긴다.</p>
+<p><b>10/3:</b> 세체니에서 사실상 아침 샤워까지 해결 → 쇼핑 → 점심 → 부다 전망 → 공항. 박물관/성 내부 관람은 과감히 제외.</p>
+<p><b>세체니 준비물:</b> 수영복 · 수건 · 슬리퍼 · 젖은 수영복 넣을 비닐/파우치 · 간단 스킨케어.</p>
+</section>
+
+<div class="footer">EUROPE TRIP 2026 · BUDAPEST · UPDATED 2026-09-23</div>
+</div></body></html>
