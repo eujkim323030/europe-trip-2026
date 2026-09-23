@@ -161,11 +161,15 @@ async function login() {
   const {form,error,footer}=formDialog('편집 PIN');
   form.append(el('p','','PIN을 아는 사람만 일정을 변경할 수 있어요.'));
   const input=field(form,'PIN','',{type:'password',max:40});input.inputMode='numeric';input.autocomplete='current-password';input.required=true;
+  const rememberLabel=el('label','remember-device');
+  const remember=el('input');remember.type='checkbox';
+  rememberLabel.append(remember,el('span','','이 기기에서 30일 동안 기억하기'));form.append(rememberLabel);
+  form.append(el('p','','내 기기에서만 선택해 주세요. PIN 대신 로그인 상태를 기억하며, ‘편집 잠그기’를 누르면 해제돼요.'));
   const submit=el('button','primary','편집 시작');submit.type='submit';footer.append(button('취소',closeDialog),submit);form.append(error,footer);
   return new Promise(resolve=>{
     modalResolve=resolve;
     form.addEventListener('submit',async e=>{e.preventDefault();submit.disabled=true;error.textContent='';
-      try{await api('session',{method:'POST',body:JSON.stringify({pin:input.value})});input.value='';authenticated=true;modalResolve=null;modal.close();resolve(true);}
+      try{await api('session',{method:'POST',body:JSON.stringify({pin:input.value,remember:remember.checked})});input.value='';authenticated=true;modalResolve=null;modal.close();resolve(true);}
       catch(err){error.textContent=err.message;}finally{submit.disabled=false;}
     });modal.showModal();input.focus();
   });

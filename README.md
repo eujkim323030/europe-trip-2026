@@ -25,6 +25,10 @@ Choose **일정 편집**, enter the PIN, edit cards, then choose **저장**. Dra
 handle or use arrows to reorder; the card form also supports dates, new cards,
 deletion, and transport details. **취소** discards unsaved edits. **편집 잠그기**
 ends this browser's editing session; sessions otherwise expire after 12 hours.
+Selecting **이 기기에서 30일 동안 기억하기** at PIN login keeps this browser signed in
+for 30 days instead. The PIN is not stored: only the signed HttpOnly session cookie
+persists. Clearing cookies, switching browsers, or choosing **편집 잠그기** requires
+PIN login again.
 
 Saved city data lives in the site-wide `trip-2026` Netlify Blobs store across
 deploys. Other devices see it on refresh. Concurrent edits produce a conflict

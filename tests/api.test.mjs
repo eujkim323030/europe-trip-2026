@@ -37,6 +37,33 @@ test('PIN is checked server-side; unauthorized saves and cross-origin login fail
   assert.equal((await request('vienna','PUT',{data:seeds.vienna,revision:null})).status,401);
   assert.equal((await request('session','POST',{pin:'3141592653'},'','https://evil.example')).status,403);
 });
+
+test('remembered login lasts 30 days while ordinary login still expires after 12 hours',async()=>{
+  let time=Date.UTC(2026,8,23);
+  const {request}=setup({now:()=>time});
+  const normal=await request('session','POST',{pin:'3141592653'});
+  const remembered=await request('session','POST',{pin:'3141592653',remember:true});
+  const normalCookie=normal.headers.get('set-cookie').split(';')[0];
+  const rememberedCookie=remembered.headers.get('set-cookie').split(';')[0];
+  assert.match(normal.headers.get('set-cookie'),/Max-Age=43200/);
+  assert.match(remembered.headers.get('set-cookie'),/Max-Age=2592000/);
+  for(const flag of ['HttpOnly','SameSite=Strict','Secure'])assert.ok(remembered.headers.get('set-cookie').includes(flag));
+  time+=13*60*60*1000;
+  assert.equal((await (await request('session','GET',undefined,normalCookie)).json()).authenticated,false);
+  assert.equal((await (await request('session','GET',undefined,rememberedCookie)).json()).authenticated,true);
+  assert.equal((await request('vienna','PUT',{data:seeds.vienna,revision:null},rememberedCookie)).status,200);
+  time=Date.UTC(2026,8,23)+30*24*60*60*1000;
+  assert.equal((await (await request('session','GET',undefined,rememberedCookie)).json()).authenticated,false);
+});
+
+test('remember requires explicit true and locking clears the persistent cookie',async()=>{
+  const {request}=setup();
+  const login=await request('session','POST',{pin:'3141592653',remember:'true'});
+  assert.match(login.headers.get('set-cookie'),/Max-Age=43200/);
+  const logout=await request('session','DELETE');
+  assert.match(logout.headers.get('set-cookie'),/trip_editor=;.*Max-Age=0/);
+  assert.equal((await (await request('session')).json()).authenticated,false);
+});
 test('authenticated save is visible to independent reader, stale save conflicts', async () => {
   const {request,login}=setup(); const cookie=await login();
   const data=structuredClone(seeds.vienna); data.lanes[0].items[0].title='Shared edit';

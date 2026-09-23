@@ -4,6 +4,7 @@ import { lookupRoutes, validRouteRequest } from './routes.mjs';
 
 const COOKIE = 'trip_editor';
 const HOURS = 12 * 60 * 60;
+const REMEMBER_AGE = 30 * 24 * 60 * 60;
 const hash = value => createHash('sha256').update(value).digest();
 const equal = (a, b) => timingSafeEqual(hash(a), hash(b));
 const response = (status, data, headers = {}) => new Response(JSON.stringify(data), {
@@ -19,7 +20,7 @@ export function createHandler({store, seeds, pin, secret, routeKey, routeLookup=
     if (!token || token.length > 300) return false;
     const [payload, signature] = token.split('.');
     if (!payload || !signature || !equal(signature, sign(payload))) return false;
-    try { const value = JSON.parse(Buffer.from(payload,'base64url').toString()); return value.exp > now() && value.exp <= now()+HOURS*1000; } catch { return false; }
+    try { const value = JSON.parse(Buffer.from(payload,'base64url').toString()); return Number.isSafeInteger(value.exp) && value.exp > now() && value.exp <= now()+REMEMBER_AGE*1000; } catch { return false; }
   }
   const cookie = (token, age=HOURS) => `${COOKIE}=${token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=${age}${secure?'; Secure':''}`;
   async function limit(ip,prefix='auth',maximum=10) {
@@ -60,8 +61,9 @@ export function createHandler({store, seeds, pin, secret, routeKey, routeLookup=
         if(raw.length > 1000) return response(400,{error:'PIN을 확인해 주세요.'});
         let body; try { body=JSON.parse(raw); } catch { return response(400,{error:'PIN을 확인해 주세요.'}); }
         if(typeof body.pin !== 'string' || !equal(body.pin,pin)) return response(401,{error:'PIN이 맞지 않습니다.'});
-        const payload=Buffer.from(JSON.stringify({exp:now()+HOURS*1000,nonce:randomBytes(16).toString('hex')})).toString('base64url');
-        return response(200,{authenticated:true},{'Set-Cookie':cookie(payload+'.'+sign(payload))});
+        const age=body.remember===true?REMEMBER_AGE:HOURS;
+        const payload=Buffer.from(JSON.stringify({exp:now()+age*1000,nonce:randomBytes(16).toString('hex')})).toString('base64url');
+        return response(200,{authenticated:true},{'Set-Cookie':cookie(payload+'.'+sign(payload),age)});
       }
       if(!Object.hasOwn(seeds,resource)) return response(404,{error:'도시를 찾을 수 없습니다.'});
       const key='cities/'+resource;
